@@ -1,0 +1,9 @@
+using System.Collections.Generic;
+
+namespace SerjBal
+{
+    public interface IData
+    {
+        public Dictionary<string, IData> Content { get; set; }
+    }
+}

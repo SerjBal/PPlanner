@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/GUI/UIButtonStyle.uss?fileID=7433441132597879392&amp;guid=b55234f42f9f648b1a1c44dd63cf0eb6&amp;type=3#UIButtonStyle" />
+    <ui:VisualElement name="channel-item" class="channel-item" style="flex-shrink: 0; height: 100px;">
+        <ui:Button text="Long channel Name With Description" display-tooltip-when-elided="true" enable-rich-text="true" name="channel-button" class="channel-button" style="flex-wrap: nowrap; -unity-text-align: middle-center; flex-grow: 1; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
+        <ui:VisualElement name="time-list" style="flex-direction: column; flex-grow: 1;" />
+    </ui:VisualElement>
+</ui:UXML>

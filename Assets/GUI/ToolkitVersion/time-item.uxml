@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/GUI/UIButtonStyle.uss?fileID=7433441132597879392&amp;guid=b55234f42f9f648b1a1c44dd63cf0eb6&amp;type=3#UIButtonStyle" />
+    <ui:VisualElement name="time-iitem" style="flex-direction: row; height: 100px;">
+        <ui:Button text="Button" display-tooltip-when-elided="true" name="time-button" class="time-button" style="flex-shrink: 0; width: 80%; flex-grow: 1; height: auto;" />
+        <ui:DropdownField index="-1" choices="System.Collections.Generic.List`1[System.String]" name="time-checker" style="flex-shrink: 1;" />
+    </ui:VisualElement>
+</ui:UXML>
