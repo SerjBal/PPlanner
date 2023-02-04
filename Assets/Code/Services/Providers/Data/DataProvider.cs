@@ -9,8 +9,8 @@ namespace SerjBal
 {
     public class DataProvider : IDataProvider
     {
-        private Data _data;
-        
+        public Data Data { get; private set; }
+
         private readonly ITemplatesProvider _templates;
 
         public DataProvider(ITemplatesProvider templates)
@@ -18,24 +18,14 @@ namespace SerjBal
             _templates = templates;
         }
 
-        public DateData GetDateData()
+        public IData GetDateData()
         {
-            DateData data = null;
-            if (_data.Date==null)
-            {
-                if (_templates.HasTamplates()) data = _templates.SelectedTemplate;
-            }
-            else
-            {
-                data = _data.Date;
-            }
-
-            return data;
+            return Data.Date;
         }
 
         public void SetData(Data data)
         {
-            _data = data;
+            Data = data;
         }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace SerjBal
 {
-    public class ButtonSwipeController: MonoBehaviour
+    public class ButtonSwipeController: MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         [SerializeField] private RectTransform rightButtonsTransform;
         [SerializeField] private RectTransform leftButtonsTransform;

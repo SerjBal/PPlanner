@@ -13,23 +13,35 @@ namespace SerjBal
         [SerializeField] private Button editButton;
         [SerializeField] private Button removeButton;
         [SerializeField] private TMP_Text nameText;
-        [SerializeField] private Transform ContentContainer;
+        [SerializeField] private Transform contentContainer;
+
+        public Transform ContentContainer => contentContainer;
+
         private List<IViewModel> _contentList;
         private CanvasGroup _canvasGroup;
         private ButtonConfigs _configs;
-        public Action OnAddNewItem;
+        public Action OnAddNewItem{ get; set; }
+        public Action OnEditItem{ get; set; }
         public string Key { get; set; }
 
         public Transform ViewTransform => transform;
 
-        public void Initialize(ButtonConfigs configs)
+        public void Initialize(ButtonConfigs configs, IAppFactory factory)
         {
             //_canvasGroup = gui.GetCanvasGroup();
             _configs = configs;
+            OnAddNewItem = () => factory.CreateNewChannelWindow(this);
+            OnEditItem =  () => factory.CreateEditDateWindow(this);
             newItemButton.onClick.AddListener(AddNewItem);
             editButton.onClick.AddListener(Edit);
             removeButton.onClick.AddListener(Remove);
             buttonsController.Initialize(this, _configs);
+        }
+
+        public void ChangeKey(string newKey)
+        {
+            nameText.text = newKey;
+            Key = newKey;
         }
 
         public void AddNewItem()
@@ -48,20 +60,20 @@ namespace SerjBal
 
         public void Lock(bool isTrue) => _canvasGroup.interactable = isTrue;
 
-        public void Add(IViewModel prefab)
-        { 
-            prefab.ViewTransform.SetParent(ContentContainer);
+        public void AddToList(IViewModel prefab)
+        {
+            if (_contentList==null) _contentList = new List<IViewModel>();
             _contentList.Add(prefab);
         }
 
         public void Remove()
         {
-         Debug.Log("Remove this, content and relese addressable assets");   
+            Destroy(gameObject);
         }
 
         public void Edit()
         {
-           
+            OnEditItem.Invoke();
         }
         
         public void Save()

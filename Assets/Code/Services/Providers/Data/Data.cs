@@ -5,11 +5,24 @@ using SerjBal;
 public class Data
 {
     public DateData Date;
+
+    public Data Default(string date)
+    {
+        return new Data
+        {
+            Date = new DateData
+            {
+                Key = date,
+                Content = null
+            }
+        };
+    }
 }
 
 [Serializable]
 public class DateData : IData
 {
+    public string Key { get; set; }
     public Dictionary<string, IData> Content { get; set; }
 }
 
@@ -17,6 +30,7 @@ public class DateData : IData
 public class ChannelData : IData
 { 
     public Dictionary<string, IData> Content { get; set; }
+    public string Key { get; set; }
 }
 
 [Serializable]

@@ -286,6 +286,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bootloader
       objectReference: {fileID: 0}
+    - target: {fileID: 3376533204363069670, guid: 925a172725417436395158d1e6a3adaa, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3376533204363069672, guid: 925a172725417436395158d1e6a3adaa, type: 3}
       propertyPath: m_RootOrder
       value: 2

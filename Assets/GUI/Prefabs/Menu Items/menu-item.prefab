@@ -1780,8 +1780,8 @@ MonoBehaviour:
   newItemButton: {fileID: 763467895529092996}
   editButton: {fileID: 7397440523390869488}
   removeButton: {fileID: 2821356706989577910}
-  nameText: {fileID: 9131928787833508282}
-  ContentContainer: {fileID: 6185787392682230937}
+  nameText: {fileID: 6185787393883421304}
+  contentContainer: {fileID: 6185787392682230937}
 --- !u!114 &5937062701969452599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1812,7 +1812,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0

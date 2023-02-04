@@ -37,6 +37,18 @@ MonoBehaviour:
     m_Address: time-item
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: d166f0bb18ab647d0bf3b56b8458e737
+    m_Address: new-channel-window
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 164d1e0057de54319babc411b1ed2936
+    m_Address: edit-window
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 666d1aceb42654ef6b979ed749e49a13
+    m_Address: new-post-window
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: bd61458252d3c459597256274ded301f, type: 2}
   m_SchemaSet:

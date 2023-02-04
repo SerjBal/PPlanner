@@ -56,10 +56,7 @@ namespace SerjBal
                 request.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log("Error loading JSON: " + request.error);
-                Data newData = new Data
-                {
-                    Date = new DateData()
-                };
+                Data newData = new Data().Default(date);
                 _data.SetData(newData);
                 onLoaded?.Invoke();
             }

@@ -57,7 +57,7 @@ namespace SerjBal
             _services.RegisterSingle<IDataProvider>(new DataProvider( _services.Single<ITemplatesProvider>()));
             _services.RegisterSingle<IAssetsProvider>(new AssetProvider());
             _services.Single<IAssetsProvider>().Initialize();
-            _services.RegisterSingle<IAppFactory>(new AppFactory(_services.Single<IAssetsProvider>(), _configurations));
+            _services.RegisterSingle<IAppFactory>(new AppFactory(_services.Single<IAssetsProvider>(), _services.Single<IDataProvider>(),  _configurations));
             _services.Single<IAppFactory>().WarmUp();
             _services.RegisterSingle<ISaveLoad>(new SaveLoad(_coroutineRunner,_services.Single<IDataProvider>(), _loaderScreen));
             _services.RegisterSingle<IGUIModelView>(new GUIModelView(_services.Single<IAppFactory>(),   _services.Single<ISaveLoad>()));

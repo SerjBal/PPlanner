@@ -32,10 +32,12 @@ namespace SerjBal
         public Task<GameObject> Instantiate(string address) =>
             Addressables.InstantiateAsync(address).Task;
         
-        public Task<GameObject> Instantiate(string address, Transform parent)
-        {
-            return Addressables.InstantiateAsync(address, parent).Task;
-        }
+         public async Task<T> Instantiate<T>(string address, Transform parent)
+         {
+             GameObject prefab =  await Load <GameObject>(address);
+             GameObject instance = Object.Instantiate(prefab, parent);
+             return instance.GetComponent<T>();
+         }
 
         public void Cleanup()
         {

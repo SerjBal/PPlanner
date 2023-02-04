@@ -4,7 +4,8 @@ namespace SerjBal
 {
     public interface IDataProvider : IService
     {
+        Data Data { get; }
         void SetData(Data data);
-        DateData GetDateData();
+        IData GetDateData();
     }
 }

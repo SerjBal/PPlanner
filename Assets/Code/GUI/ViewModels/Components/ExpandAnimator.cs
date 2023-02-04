@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using UnityEditorInternal;
 using UnityEngine;
 
 namespace SerjBal
@@ -29,6 +28,7 @@ namespace SerjBal
         private IEnumerator Expand()
         {
             Debug.Log("Play expand animation");
+            gameObject.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 2000);
             onExpandEvent.Invoke();
             yield break;
         }
@@ -36,6 +36,7 @@ namespace SerjBal
         private IEnumerator Collapse()
         {
             Debug.Log("Play collapse animation");
+            gameObject.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 150);
             onCollapsedEvent.Invoke();
             yield break;
         }
