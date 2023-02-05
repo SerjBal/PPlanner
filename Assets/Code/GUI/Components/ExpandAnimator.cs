@@ -6,14 +6,18 @@ namespace SerjBal
 {
     public class ExpandAnimator : MonoBehaviour
     {
-        public Transform channelTransform;
         public Action onExpandEvent;
         public Action onCollapsedEvent;
         private AnimationCurve _expandAnimationCurve;
+        private float _buttonHeight;
+        [SerializeField]private RectTransform buttonTransform;
+        private RectTransform _parentTransform;
 
         public void Initialize(AnimationCurve expandAnimationCurve)
         {
             _expandAnimationCurve = expandAnimationCurve;
+            _parentTransform = buttonTransform.parent.GetComponent<RectTransform>();
+            _buttonHeight = buttonTransform.rect.height;
         }
         public void PlayClose()
         {
@@ -27,16 +31,14 @@ namespace SerjBal
 
         private IEnumerator Expand()
         {
-            Debug.Log("Play expand animation");
-            gameObject.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 2000);
+            buttonTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, _parentTransform.rect.height);
             onExpandEvent.Invoke();
             yield break;
         }
         
         private IEnumerator Collapse()
         {
-            Debug.Log("Play collapse animation");
-            gameObject.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 150);
+            buttonTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, _buttonHeight);
             onCollapsedEvent.Invoke();
             yield break;
         }

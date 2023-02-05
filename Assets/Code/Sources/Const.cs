@@ -18,9 +18,19 @@ namespace SerjBal.Code.Sources
         public const string NewChannelWindowPath = "new-channel-window";
         public const string NewChannelWindowFormatText = "Channel Name";
         public const string NewChannelWindowButtonText = "Create";
+        
+        public const string EditChannelWindowFormatText = "Change Name";
+        public const string EditChannelWindowButtonText = "Ok";
 
-        public const string NewPostWindowPath = "new-post-window";
-        public const string NewPostWindowFormatText = "Post at hh:mm";
-        public const string NewPostlWindowButtonText = "Create";
-    };
+        public const string NewTimeWindowPath = "new-post-window";
+        public const string NewTimeWindowFormatText = "Post at hh:mm";
+        public const string NewTimeWindowButtonText = "Create";
+
+        public const string EditTimeWindowFormatText = "Chage Time";
+        public const string EditTimeWindowButtonText = "Ok";
+
+        public const string WarningWindowPath = "warning-window";
+        public const string ReplaceWarningText = "The data already exists! Replace?";
+        public const string ReplaceButtonText = "Ok";
+    }
 }

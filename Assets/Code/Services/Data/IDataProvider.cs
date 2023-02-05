@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 
 namespace SerjBal
 {
@@ -7,5 +8,6 @@ namespace SerjBal
         Data Data { get; }
         void SetData(Data data);
         IData GetDateData();
+        bool DataHasKey(string key, string nameText);
     }
 }

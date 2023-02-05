@@ -13,12 +13,18 @@ namespace SerjBal
         private readonly IDataProvider _data;
         private readonly IProgress _loaderScreen;
         private ICoroutineRunner _coroutineRunner;
+        private IAppFactory _appFactory;
 
         public SaveLoad(ICoroutineRunner coroutineRunner, IDataProvider data, IProgress loaderScreen)
         {
             _coroutineRunner = coroutineRunner;
             _data = data;
             _loaderScreen = loaderScreen;
+        }
+
+        public void Initialize()
+        {
+            _appFactory = new Services().Single<IAppFactory>();
         }
         
         public void Load(string date, Action onLoaded)

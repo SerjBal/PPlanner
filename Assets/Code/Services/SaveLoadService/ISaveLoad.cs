@@ -6,5 +6,6 @@ namespace SerjBal
     {
         void Load(string date, Action onLoaded);
         void Save();
+        void Initialize();
     }
 }

@@ -54,8 +54,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de66165beca74d55bf3554256e53f128, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HighScreenContainer: {fileID: 2075744680278960990}
-  LowScreenContainer: {fileID: 2075744678606658923}
+  highScreenContainer: {fileID: 2075744680278960990}
+  lowScreenContainer: {fileID: 2075744678606658923}
   canvasGroup: {fileID: 6471595841351621592}
 --- !u!223 &2075744678363618900
 Canvas:

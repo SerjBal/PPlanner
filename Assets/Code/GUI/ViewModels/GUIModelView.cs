@@ -9,7 +9,7 @@ namespace SerjBal
     {
         private readonly IAppFactory _factory;
         private readonly ISaveLoad _saveLoad;
-        private MainView _GUI;
+        private MainMenuItemView _GUI;
 
         public GUIModelView(IAppFactory factory, ISaveLoad saveLoad)
         {

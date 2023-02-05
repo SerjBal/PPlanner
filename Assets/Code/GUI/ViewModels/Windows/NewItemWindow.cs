@@ -1,20 +1,22 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace SerjBal
+namespace SerjBal.Windows
 {
-    public class NewPostWindow : MonoBehaviour, IWindow
+    public class NewItemWindow : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI formatText;
         [SerializeField] private TextMeshProUGUI buttonText;
         [SerializeField] private TMP_InputField inputField;
         [SerializeField] private Button acceptButton;
         [SerializeField] private Button closeButton;
-        private Action OnAccept;
+        public UnityAction onAccept;
+        public TMP_InputField InputField => inputField;
+        private IMenuItemViewModel _menuItem;
+        
         public void SetEditFormatText(string inputFormat)
         {
             formatText.text = inputFormat;
@@ -25,13 +27,13 @@ namespace SerjBal
             buttonText.text = button;
         }
 
-        public void Initialize(IAppFactory appFactory, IViewModel menuItem)
+        public virtual void Initialize(IMenuItemViewModel menuItem)
         {
             //block menuItem Button
-            OnAccept = () => appFactory.CreateTimeItem(menuItem, formatText.text);
-            inputField.text = ":";
+            _menuItem = menuItem;
             acceptButton.onClick.AddListener(Accept);
             closeButton.onClick.AddListener(Close);
+            onAccept += OnAccept;
         }
         
         private void Close()
@@ -39,10 +41,24 @@ namespace SerjBal
             Destroy(gameObject);
         }
 
+        private void OnAccept()
+        {
+            new Services().Single<ISaveLoad>().Save();
+            Close();
+        }
+
         private void Accept()
         {
-            OnAccept.Invoke();
-            Close();
+            var dataProvider = new Services().Single<IDataProvider>();
+            bool hasData = dataProvider.DataHasKey(_menuItem.Key, inputField.text);
+            if (hasData)
+            {
+                new Services().Single<IAppFactory>().CreateReplacingDataWindow(onAccept);
+            }
+            else
+            {
+                onAccept.Invoke();
+            }
         }
     }
 }
