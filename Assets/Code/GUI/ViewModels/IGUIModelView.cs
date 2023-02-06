@@ -6,5 +6,6 @@ namespace SerjBal
     public interface IGUIModelView : IService
     {
         Task Initialize();
+        float GetMenuBounds();
     }
 }

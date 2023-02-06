@@ -12,19 +12,14 @@ namespace SerjBal.Windows
         [SerializeField] private TextMeshProUGUI buttonText;
         [SerializeField] private Button acceptButton;
         [SerializeField] private Button closeButton;
-        public void Initialize(UnityAction OnAccept)
+        public void Initialize(UnityAction onAccept)
         {
-            acceptButton.onClick.AddListener(OnAccept);
-        }
-        
-        public void SetWarningText(string warning)
-        {
-            warningText.text = warning;
+            acceptButton.onClick.AddListener(onAccept);
+            closeButton.onClick.AddListener(Close);
         }
 
-        public void SetAcceptButtonText(string button)
-        {
-            buttonText.text = button;
-        }
+        public void SetWarningText(string warning) => warningText.text = warning;
+        public void SetAcceptButtonText(string button) => buttonText.text = button;
+        private void Close() => Destroy(gameObject);
     }
 }

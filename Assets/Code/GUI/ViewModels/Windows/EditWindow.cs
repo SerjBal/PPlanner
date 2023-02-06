@@ -11,6 +11,13 @@ namespace SerjBal
         public override void Initialize(IMenuItemViewModel menuItem)
         {
             InputField.text = menuItem.Key;
+            onAccept += Rename;
+            base.Initialize(menuItem);
+        }
+
+        public void Rename()
+        {
+            _menuItem.ChangeKey( InputField.text);
         }
     }
 }

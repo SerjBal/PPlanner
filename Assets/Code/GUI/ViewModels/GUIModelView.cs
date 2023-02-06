@@ -24,9 +24,12 @@ namespace SerjBal
         }
 
         public CanvasGroup GetCanvasGroup() => _GUI.canvasGroup;
-        
-        
 
+
+        public float GetMenuBounds()
+        {
+            return _GUI.lowScreenContainer.rect.height;
+        }
         public void SaveTemnplate()
         {
             

@@ -15,6 +15,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6185787392741215404, guid: ee48e5963f92f41d1b4f69efa89275e0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6185787392741215406, guid: ee48e5963f92f41d1b4f69efa89275e0, type: 3}
       propertyPath: m_Size
       value: 1
@@ -125,11 +129,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6185787393077460885, guid: ee48e5963f92f41d1b4f69efa89275e0, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6185787393077460885, guid: ee48e5963f92f41d1b4f69efa89275e0, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6185787393077460885, guid: ee48e5963f92f41d1b4f69efa89275e0, type: 3}
       propertyPath: m_AnchorMin.y
@@ -248,6 +252,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3167601632048877426 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5937062701969452599, guid: ee48e5963f92f41d1b4f69efa89275e0, type: 3}
+  m_PrefabInstance: {fileID: 8759848671587377477}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3191204031633282624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34d322c73bb0414ea3fd1750b8e4d7cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &3191204031255979484 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6185787392682230937, guid: ee48e5963f92f41d1b4f69efa89275e0, type: 3}
@@ -271,6 +286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonsController: {fileID: 8571925170112377112}
+  animator: {fileID: 3167601632048877426}
   newItemButton: {fileID: 8289255497992345281}
   editButton: {fileID: 2250048304411737781}
   removeButton: {fileID: 6824716015233087475}

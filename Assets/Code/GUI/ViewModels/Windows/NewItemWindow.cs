@@ -13,10 +13,18 @@ namespace SerjBal.Windows
         [SerializeField] private TMP_InputField inputField;
         [SerializeField] private Button acceptButton;
         [SerializeField] private Button closeButton;
-        public UnityAction onAccept;
-        public TMP_InputField InputField => inputField;
-        private IMenuItemViewModel _menuItem;
+        protected UnityAction onAccept;
+        protected TMP_InputField InputField => inputField;
+        protected IMenuItemViewModel _menuItem;
         
+        public virtual void Initialize(IMenuItemViewModel menuItem)
+        {
+            //block menuItem Button
+            _menuItem = menuItem;
+            acceptButton.onClick.AddListener(Accept);
+            closeButton.onClick.AddListener(Close);
+            onAccept += OnAccept;
+        }
         public void SetEditFormatText(string inputFormat)
         {
             formatText.text = inputFormat;
@@ -27,15 +35,6 @@ namespace SerjBal.Windows
             buttonText.text = button;
         }
 
-        public virtual void Initialize(IMenuItemViewModel menuItem)
-        {
-            //block menuItem Button
-            _menuItem = menuItem;
-            acceptButton.onClick.AddListener(Accept);
-            closeButton.onClick.AddListener(Close);
-            onAccept += OnAccept;
-        }
-        
         private void Close()
         {
             Destroy(gameObject);

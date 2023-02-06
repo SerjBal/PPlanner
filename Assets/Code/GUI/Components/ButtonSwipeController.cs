@@ -2,36 +2,28 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 using Button = UnityEngine.UI.Button;
 
 namespace SerjBal
 {
     public class ButtonSwipeController: MonoBehaviour, IPointerDownHandler, IPointerMoveHandler, IPointerExitHandler
     {
+        public Action onSelectedEvent;
         [SerializeField] private RectTransform frontButtonTransform;
         [SerializeField] private RectTransform rightButtonsTransform;
-        [SerializeField] private RectTransform leftButtonsTransform;
-        [SerializeField] private ExpandAnimator animator;
         [SerializeField] private Button button;
         private float _onOnButtonClickTimer;
         private float _maxSliceDistance;
         private float _timer;
         private bool _isOnButtonClickAllowed;
-        private bool _isExpaned;
         private bool _isOnPointerDown;
         private Vector3 _mouseStartPosition;
 
-        public void Initialize(IMenuItemViewModel channel, ButtonConfigs configs)
+        public void Initialize(ButtonConfigs configs)
         {
             _onOnButtonClickTimer = configs.clickTimer;
             _maxSliceDistance = configs.swipeDistance;
             button.onClick.AddListener(OnPointerUp);
-            
-            animator.onExpandEvent = channel.OnExpand;
-            animator.onCollapsedEvent = channel.OnCollapsed;
-            animator.Initialize(configs.expandAnimationCurve);
         }
        
         public void OnPointerDown(PointerEventData eventData)
@@ -59,7 +51,7 @@ namespace SerjBal
             if (_isOnButtonClickAllowed)
             {
                 Reset();
-                AnimationPlay();
+                onSelectedEvent.Invoke();
             }
             else
             {
@@ -71,13 +63,6 @@ namespace SerjBal
         {
             if (_isOnPointerDown) StartCoroutine(SoftSnapp());
             _isOnPointerDown = false;
-        }
-
-        private void AnimationPlay()
-        {
-            if (_isExpaned) animator.PlayOpen();
-            else animator.PlayClose();
-            _isExpaned = !_isExpaned;
         }
         private void ClickDisallow(float offset)
         {

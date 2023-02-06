@@ -272,6 +272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonsController: {fileID: 4877472568807587754}
+  animator: {fileID: 2211354372821172672}
   newItemButton: {fileID: 5065566643954014323}
   editButton: {fileID: 3061353671797616647}
   removeButton: {fileID: 7778729196885965121}
@@ -286,6 +287,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2211354372821172672 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5937062701969452599, guid: ee48e5963f92f41d1b4f69efa89275e0, type: 3}
+  m_PrefabInstance: {fileID: 5536296165443596279}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1805016405975767282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34d322c73bb0414ea3fd1750b8e4d7cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &3061353671797616647 stripped

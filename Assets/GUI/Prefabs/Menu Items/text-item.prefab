@@ -877,7 +877,6 @@ GameObject:
   - component: {fileID: 7077425780714570531}
   - component: {fileID: 6381814176144217562}
   - component: {fileID: 2388238928328397586}
-  - component: {fileID: 8077981264646295732}
   m_Layer: 5
   m_Name: tools-screen
   m_TagString: Untagged
@@ -976,27 +975,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!223 &8077981264646295732
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3109825714082344060}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 1
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 1209307383
-  m_SortingOrder: 1
-  m_TargetDisplay: 0
 --- !u!1 &3799702982886530205
 GameObject:
   m_ObjectHideFlags: 0
@@ -1207,7 +1185,6 @@ GameObject:
   - component: {fileID: 4032771725409716198}
   - component: {fileID: 4032771725409716197}
   - component: {fileID: 4032771725409716196}
-  - component: {fileID: 5770902607690034160}
   m_Layer: 5
   m_Name: InputField
   m_TagString: Untagged
@@ -1373,27 +1350,6 @@ MonoBehaviour:
   m_isRichTextEditingAllowed: 0
   m_LineLimit: 0
   m_InputValidator: {fileID: 0}
---- !u!223 &5770902607690034160
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4032771725409716194}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 1
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 1209307383
-  m_SortingOrder: 0
-  m_TargetDisplay: 0
 --- !u!1 &4032771725573594870
 GameObject:
   m_ObjectHideFlags: 0
@@ -1515,7 +1471,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4032771725380111212}
   m_HandleRect: {fileID: 4032771725380111211}
   m_Direction: 2
-  m_Value: 0.014
+  m_Value: 0.012
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1824,7 +1780,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 20, y: -21.55384}
+  m_AnchoredPosition: {x: 20, y: -20.87472}
   m_SizeDelta: {x: -40, y: -20.46045}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &4032771726187312735

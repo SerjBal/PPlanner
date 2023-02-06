@@ -1368,7 +1368,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frontButtonTransform: {fileID: 6185787392334221705}
   rightButtonsTransform: {fileID: 315721182753347265}
-  leftButtonsTransform: {fileID: 8849666284299986622}
   animator: {fileID: 5937062701969452599}
   button: {fileID: 6185787392334221706}
 --- !u!1 &6185787392631965158
@@ -1777,6 +1776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34d322c73bb0414ea3fd1750b8e4d7cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layoutGroup: {fileID: 6185787392682230938}
   buttonTransform: {fileID: 6185787392925857542}
 --- !u!223 &6132117769858625736
 Canvas:

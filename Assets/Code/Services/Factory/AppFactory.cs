@@ -30,9 +30,11 @@ namespace SerjBal
             await _assets.Load<GameObject>(Const.ChannelItemPath);
             await _assets.Load<GameObject>(Const.TimeItemPath);
             await _assets.Load<GameObject>(Const.TextItemPath);
+            
             await _assets.Load<GameObject>(Const.EditWindowPath);
             await _assets.Load<GameObject>(Const.NewChannelWindowPath);
             await _assets.Load<GameObject>(Const.NewTimeWindowPath);
+            await _assets.Load<GameObject>(Const.WarningWindowPath);
         }
         
         public async Task<MainMenuItemView> CreateGUI()
@@ -101,16 +103,17 @@ namespace SerjBal
             {
                 if (dateData.Content.Count>0)
                 {
+                    var contentList = new Dictionary<string, IMenuItemViewModel>();
                     foreach (string key in dateData.Content.Keys)
                     {
-                        await CreateChannelItem(item, key);
+                        contentList.Add(key, await CreateChannelItem(item, key));
                     }
+                    item.ContentList = contentList;
                 }
             }
-          
             item.ChangeKey(dateData.Key);
             item.Initialize(_configs.buttonConfigs, this);
-            item.ViewTransform.GetComponent<ExpandAnimator>().PlayOpen();
+            item.ViewTransform.GetComponent<ExpandAnimator>().AnimationPlay();
             return item;
         }
         
@@ -126,10 +129,12 @@ namespace SerjBal
                     IData channelData = dateData.Content[channelKey];
                     if (channelData.Content.Count > 0)
                     {
+                        var contentList = new Dictionary<string, IMenuItemViewModel>();
                         foreach (string key in channelData.Content.Keys)
                         {
-                            await CreateTimeItem(item, key);
+                            contentList.Add(key, await CreateTimeItem(item, key));
                         }
+                        item.ContentList = contentList;
                     }
                 }
             }
@@ -141,11 +146,12 @@ namespace SerjBal
         
         public async Task<IMenuItemViewModel> CreateTimeItem(IMenuItemViewModel parent, string timeKey)
         {
-            IData dateData = _data.GetDateData().Content[parent.Key].Content[timeKey];
-            IMenuItemViewModel item = await _assets.Instantiate<IMenuItemViewModel>(Const.DateItemPath, parent.ContentContainer);
+            //IData dateData = _data.GetDateData().Content[parent.Key].Content[timeKey];
+            IMenuItemViewModel item = await _assets.Instantiate<IMenuItemViewModel>(Const.TimeItemPath, parent.ContentContainer);
             item.ChangeKey(timeKey);
+            item.Initialize(_configs.buttonConfigs, this);
             return item;
-        }
+        }   
         
         public async Task CreateTextEditor(string chunnelID, string timeID)
         {
