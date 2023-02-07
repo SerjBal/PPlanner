@@ -9,5 +9,7 @@ namespace SerjBal
         void SetData(Data data);
         IData GetDateData();
         bool DataHasKey(string key, string nameText);
+
+        public TimeData GetTimeData(string parentKey, string key);
     }
 }

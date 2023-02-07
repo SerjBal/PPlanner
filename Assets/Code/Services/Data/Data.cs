@@ -37,6 +37,12 @@ public class ChannelData : IData
 public class TimeData : IData
 {
     public string Key { get; set; }
+    public string TextKey { get; set; }
     public Dictionary<string, IData> Content { get; set; }
-    public string value;
+}
+
+[Serializable]
+public class TextData
+{
+    public string text;
 }

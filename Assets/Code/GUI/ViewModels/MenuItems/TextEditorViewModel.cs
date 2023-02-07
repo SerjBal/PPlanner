@@ -15,14 +15,6 @@ namespace SerjBal
         public Button linkStyleButton;
         public TMP_InputField inputField;
         public string Key { get; set; }
-        public void Add(GameObject prefab)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Remove()
-        {
-            throw new System.NotImplementedException();
-        }
+        
     }
 }

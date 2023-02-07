@@ -7,6 +7,7 @@ namespace SerjBal
 {
     public interface IMenuItemViewModel
     {
+        public IMenuItemViewModel Parent { get; set; }
         public Transform ViewTransform { get; }
         public Dictionary<string, IMenuItemViewModel> ContentList { get; set; }
         Transform ContentContainer { get;}

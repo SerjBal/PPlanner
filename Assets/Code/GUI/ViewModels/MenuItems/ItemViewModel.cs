@@ -8,6 +8,12 @@ namespace SerjBal
 {
     public class ItemViewModel : MonoBehaviour
     {
+        public IMenuItemViewModel Parent { get; set; }
+        public string Key { get; set; }
+        public Transform ContentContainer => contentContainer;
+        public Dictionary<string, IMenuItemViewModel> ContentList { get; set; }
+        public Transform ViewTransform => transform;
+        
         [SerializeField] private ButtonSwipeController buttonsController;
         [SerializeField] private ExpandAnimator animator;
         [SerializeField] private Button newItemButton;
@@ -15,19 +21,15 @@ namespace SerjBal
         [SerializeField] private Button removeButton;
         [SerializeField] private TMP_Text nameText;
         [SerializeField] private Transform contentContainer;
-        public Transform ContentContainer => contentContainer;
-
-        public Dictionary<string, IMenuItemViewModel> ContentList { get; set; }
-        private CanvasGroup _canvasGroup;
-        public Action OnAddNewItem{ get; set; }
-        public Action OnEditItem{ get; set; }
-        public string Key { get; set; }
-
-        public Transform ViewTransform => transform;
+        protected Action OnAddNewItem{ get; set; }
+        protected Action OnEditItem{ get; set; }
+        
 
         public void Initialize(ButtonConfigs configs, IMenuItemViewModel menuItemViewModel)
         {
             Binds();
+            ContentList = new Dictionary<string, IMenuItemViewModel>();
+            Parent = menuItemViewModel;
             contentContainer.gameObject.SetActive(false);
             
             animator.Initialize(configs.expandAnimationCurve);
@@ -52,15 +54,14 @@ namespace SerjBal
 
         public void AddNewItem() => OnAddNewItem?.Invoke();
 
-        public void OnExpand() => contentContainer.gameObject.SetActive(true);
+        public virtual void OnExpand() => contentContainer.gameObject.SetActive(true);
 
-        public void OnCollapsed() => contentContainer.gameObject.SetActive(false);
+        public virtual void OnCollapsed() => contentContainer.gameObject.SetActive(false);
 
         public void OnSelected() => animator.AnimationPlay();
 
-        public void Lock(bool isTrue) => _canvasGroup.interactable = isTrue;
-
         private void Remove() => Destroy(gameObject);
+        
         private void Edit() => OnEditItem?.Invoke();
     }
 }

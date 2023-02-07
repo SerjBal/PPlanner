@@ -27,6 +27,10 @@ PrefabInstance:
       propertyPath: m_Value
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6185787392878631707, guid: ee48e5963f92f41d1b4f69efa89275e0, type: 3}
+      propertyPath: m_Name
+      value: text-container
+      objectReference: {fileID: 0}
     - target: {fileID: 6185787392925857541, guid: ee48e5963f92f41d1b4f69efa89275e0, type: 3}
       propertyPath: m_Name
       value: time-item
@@ -117,15 +121,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6185787392967271119, guid: ee48e5963f92f41d1b4f69efa89275e0, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6185787392967271119, guid: ee48e5963f92f41d1b4f69efa89275e0, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6185787392967271119, guid: ee48e5963f92f41d1b4f69efa89275e0, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: -17
       objectReference: {fileID: 0}
     - target: {fileID: 6185787393077460885, guid: ee48e5963f92f41d1b4f69efa89275e0, type: 3}
       propertyPath: m_AnchorMax.x
@@ -177,6 +181,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7572649896759612592, guid: ee48e5963f92f41d1b4f69efa89275e0, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8441392343638917414, guid: ee48e5963f92f41d1b4f69efa89275e0, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8496673744956656175, guid: ee48e5963f92f41d1b4f69efa89275e0, type: 3}
@@ -239,7 +247,9 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -75
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8441392343638917414, guid: ee48e5963f92f41d1b4f69efa89275e0, type: 3}
+    - {fileID: 6185787392878631709, guid: ee48e5963f92f41d1b4f69efa89275e0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ee48e5963f92f41d1b4f69efa89275e0, type: 3}
 --- !u!114 &2250048304411737781 stripped
 MonoBehaviour:

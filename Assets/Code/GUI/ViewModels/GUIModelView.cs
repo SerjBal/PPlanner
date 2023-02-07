@@ -20,7 +20,7 @@ namespace SerjBal
         public async Task Initialize()
         {
             _GUI = await _factory.CreateGUI();
-            await _factory.CreateDateItem(_GUI);
+            await _factory.CreateDateItem();
         }
 
         public CanvasGroup GetCanvasGroup() => _GUI.canvasGroup;

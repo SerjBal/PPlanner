@@ -13,15 +13,9 @@ namespace SerjBal
 
         private readonly ITemplatesProvider _templates;
 
-        public DataProvider(ITemplatesProvider templates)
-        {
-            _templates = templates;
-        }
-
-        public IData GetDateData()
-        {
-            return Data.Date;
-        }
+        public DataProvider(ITemplatesProvider templates) => _templates = templates;
+        public IData GetDateData() => Data.Date;
+        public void SetData(Data data) => Data = data;
 
         public bool DataHasKey(string channelKey, string timeKey)
         {
@@ -34,9 +28,22 @@ namespace SerjBal
             return value;
         }
 
-        public void SetData(Data data)
+        public TimeData GetTimeData(string parentKey, string key)
         {
-            Data = data;
+            if (DataHasKey(parentKey, key))
+            {
+                return GetDateData().Content[parentKey].Content[key] as TimeData;
+            }
+            else
+            {
+                var textKey = PlayerPrefs.GetInt(Const.LastTextID, 0) + 1;
+                PlayerPrefs.SetInt(Const.LastTextID, textKey);
+                return new TimeData
+                {
+                    Key = key,
+                    TextKey = textKey.ToString()
+                };
+            }
         }
     }
 }

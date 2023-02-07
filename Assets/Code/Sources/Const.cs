@@ -4,6 +4,7 @@ namespace SerjBal.Code.Sources
 {
     public static class Const{
         public static readonly string DataPath = Application.persistentDataPath + "/data.json";
+        public const string LastTextID = "textID";
         
         public const string GUIPath = "canvas";
         public const string DateItemPath = "date-item";

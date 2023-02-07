@@ -39,6 +39,11 @@ namespace SerjBal
             Debug.Log("LocalSave");
             SaveNetwork();
         }
+
+        public void SaveText(string key)
+        {
+            
+        }
         
         public void LoadNetwork()
         {

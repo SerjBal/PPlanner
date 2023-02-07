@@ -95,10 +95,10 @@ namespace SerjBal
             window.Initialize(onAccept);
         }
 
-        public async Task<IMenuItemViewModel> CreateDateItem(IMenuItemViewModel parent)
+        public async Task<IMenuItemViewModel> CreateDateItem()
         {
             IData dateData = _data.GetDateData();
-            IMenuItemViewModel item = await _assets.Instantiate<IMenuItemViewModel>(Const.DateItemPath, parent.ContentContainer);
+            IMenuItemViewModel item = await _assets.Instantiate<IMenuItemViewModel>(Const.DateItemPath, _GUI.ContentContainer);
             if (dateData.Content!=null)
             {
                 if (dateData.Content.Count>0)
@@ -111,6 +111,8 @@ namespace SerjBal
                     item.ContentList = contentList;
                 }
             }
+
+            item.Parent = null;
             item.ChangeKey(dateData.Key);
             item.Initialize(_configs.buttonConfigs, this);
             item.ViewTransform.GetComponent<ExpandAnimator>().AnimationPlay();
@@ -138,7 +140,7 @@ namespace SerjBal
                     }
                 }
             }
-
+            item.Parent = parent;
             item.ChangeKey(channelKey);
             item.Initialize(_configs.buttonConfigs, this);
             return item;
@@ -148,14 +150,16 @@ namespace SerjBal
         {
             //IData dateData = _data.GetDateData().Content[parent.Key].Content[timeKey];
             IMenuItemViewModel item = await _assets.Instantiate<IMenuItemViewModel>(Const.TimeItemPath, parent.ContentContainer);
+            item.Parent = parent;
             item.ChangeKey(timeKey);
             item.Initialize(_configs.buttonConfigs, this);
             return item;
         }   
         
-        public async Task CreateTextEditor(string chunnelID, string timeID)
+        public async Task CreateTextEditor(IMenuItemViewModel parent, string timeKey)
         {
-            TextEditorViewModel viewModel = await _assets.Instantiate<TextEditorViewModel>(Const.TextItemPath, null);
+            TextEditorViewModel viewModel = await _assets.Instantiate<TextEditorViewModel>(Const.TextItemPath, parent.ContentContainer);
+            viewModel.Key = timeKey;
         }
 
         public void CleanUp()
