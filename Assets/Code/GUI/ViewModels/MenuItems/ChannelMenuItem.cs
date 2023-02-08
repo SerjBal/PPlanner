@@ -11,21 +11,22 @@ namespace SerjBal
 
         public void Initialize(ButtonConfigs configs, IAppFactory factory)
         {
+            itemType = MenuItemType.Channel;
             _factory = factory;
             _data = new Services().Single<IDataProvider>();
             OnAddNewItem = () => factory.CreateNewTimeWindow(this);
             OnEditItem =  () => factory.CreateEditChannelWindow(this);
-            base.Initialize(configs, this);
+            base.Initialize(configs);
         }
         
         public override async void OnExpand()
         {
-            IData channelData = _data.GetOrCreateChannelData(Key);
+            ItemData channelData = _data.GetOrCreateChannelData(Key);
             if (channelData!=null && channelData.Content.Count > 0)
             {
-                foreach (string key in channelData.Content.Keys)
+                foreach (var item in channelData.Content)
                 {
-                    await _factory.CreateTimeItem(this, key);
+                    await _factory.CreateTimeItem(this, item.Key);
                 }
             }
             var addButton = await _factory.CreateAddButton(ContentContainer);

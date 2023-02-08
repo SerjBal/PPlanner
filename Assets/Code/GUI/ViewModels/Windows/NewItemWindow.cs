@@ -17,7 +17,7 @@ namespace SerjBal.Windows
         protected TMP_InputField InputField => inputField;
         protected IMenuItem _menuItem;
 
-        private Services _services;
+        protected Services _services;
         
         public virtual void Initialize(IMenuItem menuItem)
         {
@@ -36,14 +36,14 @@ namespace SerjBal.Windows
 
         private void OnAccept()
         {
-            _services.Single<ISaveLoad>().Save();
+            _services.Single<ISaveLoad>().Save(_menuItem, inputField.text);
             Close();
         }
 
         private void Accept()
         {
-            var dataProvider = new Services().Single<IDataProvider>();
-            bool hasData = dataProvider.DataHasKey(_menuItem.Key, inputField.text);
+            var dataProvider = _services.Single<IDataProvider>();
+            bool hasData = dataProvider.DataHasKey(_menuItem, inputField.text);
             if (hasData)
             {
                 _services.Single<IAppFactory>().CreateReplacingDataWindow(onAccept);

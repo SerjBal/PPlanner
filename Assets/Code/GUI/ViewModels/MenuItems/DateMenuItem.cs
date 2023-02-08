@@ -11,25 +11,25 @@ namespace SerjBal
         private IDataProvider _data;
         public void Initialize(ButtonConfigs configs, IAppFactory factory)
         {
+            itemType = MenuItemType.Date;
             _factory = factory;
             _data = new Services().Single<IDataProvider>();
             OnAddNewItem = () => factory.CreateNewChannelWindow(this);
             OnEditItem = () => factory.CreateEditDateWindow(this);
-            base.Initialize(configs, this);
+            base.Initialize(configs);
             animator.AnimationPlay();
         }
 
         public override async void OnExpand()
         {
-            IData dateData = _data.GetDateData();
+            ItemData dateData = _data.GetOrCreateDateData();
             if (dateData.Content!=null && dateData.Content.Count>0)
             {
-                foreach (string key in dateData.Content.Keys)
+                foreach (ItemData item in dateData.Content)
                 {
-                    await _factory.CreateChannelItem(this, key);
+                    await _factory.CreateChannelItem(this, item.Key);
                 }
             }
-
             var addButton = await _factory.CreateAddButton(ContentContainer);
             addButton.onClick.AddListener(AddNewItem);
             base.OnExpand();

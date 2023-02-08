@@ -17,23 +17,23 @@ namespace SerjBal
             var Data = services.Single<IDataProvider>();
             var Saver = services.Single<ISaveLoad>();
 
-            Dictionary<string, IData> channelList = new Dictionary<string, IData>();
+            var channelList = new List<ItemData>();
             for (int i = 0; i < channelsCount; i++)
             {
-                var channel = new ChannelData();
+                var channel = new ItemData();
                 channel.Key = $"{i} channel";
-                channel.Content = new Dictionary<string, IData>();
+                channel.Content = new List<ItemData>();
                 if (isWithTime)
                 {
-                    var time = new TimeData();
+                    var time = new ItemData();
                     time.Key = $"{12}:{i*2}";
-                    channel.Content.Add(time.Key, time);
+                    channel.Content.Add(time);
                 }
-                channelList.Add(channel.Key, channel);
+                channelList.Add(channel);
             }
             var currentDate = DateTime.Today;
             string date = $"{currentDate.Day}.{currentDate.Month}.{currentDate.Year}";
-            Data.Value.Date = new DateData
+            Data.Value.DateItem = new ItemData
             {
                 Key = date,
                 Content = channelList

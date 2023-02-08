@@ -7,10 +7,13 @@ namespace SerjBal
     {
         Data Value { get; }
         void SetData(Data data);
-        IData GetDateData();
-        bool DataHasKey(string key, string nameText);
+        bool DataHasKey(IMenuItem menuItem, string key);
 
-        public TimeData GetOrCreateTimeData(string parentKey, string key);
-        IData GetOrCreateChannelData(string key);
+        void RemoveKey(IMenuItem menuItem, string key);
+        ItemData GetOrCreateDateData(string key = null);
+        ItemData GetOrCreateChannelData(string key);
+        ItemData GetOrCreateTimeData(string parentKey, string key);
+        
+        
     }
 }

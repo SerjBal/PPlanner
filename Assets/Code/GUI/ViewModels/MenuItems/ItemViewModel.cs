@@ -12,7 +12,8 @@ namespace SerjBal
         public string Key { get; set; }
         public Transform ContentContainer => contentContainer;
         public Transform ViewTransform => transform;
-        
+
+        public MenuItemType itemType { get; set; }
         [SerializeField] private ButtonSwipeController buttonsController;
         [SerializeField] protected ExpandAnimator animator;
         [SerializeField] private Button editButton;
@@ -23,10 +24,9 @@ namespace SerjBal
         protected Action OnEditItem{ get; set; }
         
 
-        public void Initialize(ButtonConfigs configs, IMenuItem menuItem)
+        public void Initialize(ButtonConfigs configs)
         {
             Binds();
-            Parent = menuItem;
             contentContainer.gameObject.SetActive(false);
             
             animator.Initialize(configs.expandAnimationCurve);
@@ -50,7 +50,12 @@ namespace SerjBal
 
         public void AddNewItem() => OnAddNewItem?.Invoke();
 
-        public virtual void OnExpand() => contentContainer.gameObject.SetActive(true);
+        public virtual void OnExpand()
+        {
+            contentContainer.gameObject.SetActive(true);
+            //disable vertical layout group of parent
+            //disable gui interactable
+        }
 
         public virtual void OnCollapsed()
         {
@@ -60,8 +65,14 @@ namespace SerjBal
 
         public void OnSelected() => animator.AnimationPlay();
 
-        private void Remove() => Destroy(gameObject);
-        
+        private void Remove()
+        {
+            var services = new Services();
+            services.Single<IDataProvider>().RemoveKey(Parent, Key);
+            services.Single<ISaveLoad>().Save();
+            Destroy(gameObject);
+        }
+
         private void Edit() => OnEditItem?.Invoke();
     }
 }

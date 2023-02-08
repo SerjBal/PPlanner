@@ -4,33 +4,12 @@ using SerjBal;
 
 public class Data
 {
-    public DateData Date;
+    public ItemData DateItem;
 }
 
 [Serializable]
-public class DateData : IData
+public class ItemData
 {
-    public string Key { get; set; }
-    public Dictionary<string, IData> Content { get; set; }
-}
-
-[Serializable]
-public class ChannelData : IData
-{ 
-    public Dictionary<string, IData> Content { get; set; }
-    public string Key { get; set; }
-}
-
-[Serializable]
-public class TimeData : IData
-{
-    public string Key { get; set; }
-    public string TextKey { get; set; }
-    public Dictionary<string, IData> Content { get; set; }
-}
-
-[Serializable]
-public class TextData
-{
-    public string text;
+    public string Key;
+    public List<ItemData> Content;
 }

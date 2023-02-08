@@ -26,15 +26,53 @@ namespace SerjBal
         {
             _appFactory = new Services().Single<IAppFactory>();
         }
-        
+
         public void Load(string date, Action onLoaded)
         {
-            _coroutineRunner.StartCoroutine(LoadLocal(date, onLoaded));
+            string filePath = Path.Combine(Application.persistentDataPath, $"{date}.json");
+            
+            if (File.Exists(filePath))
+            {
+                string json = File.ReadAllText(filePath);
+                var data = JsonUtility.FromJson<ItemData>(json);
+                Data newData = new Data
+                {
+                    DateItem = data
+                };
+                _data.SetData(newData);
+                onLoaded?.Invoke();
+            }
+            else
+            {
+                var dateData = _data.GetOrCreateDateData(date);
+                Data newData = new Data { DateItem = dateData};
+                _data.SetData(newData);
+                onLoaded?.Invoke();
+            }
         }
 
         public void Save()
         {
-            _coroutineRunner.StartCoroutine(SaveLocal());
+            string json = JsonUtility.ToJson(_data.Value.DateItem);
+            string filePath = Path.Combine(Application.persistentDataPath, $"{_data.Value.DateItem.Key}.json");
+            File.WriteAllText(filePath, json);
+        }
+        
+        public void Save(IMenuItem menuItem, string key)
+        {
+            switch (menuItem.itemType)
+            {
+                case MenuItemType.Date:
+                    _data.GetOrCreateChannelData(key);
+                    break;
+                case MenuItemType.Channel:
+                    _data.GetOrCreateTimeData(menuItem.Key, key);
+                    break;
+                case MenuItemType.Time:
+                    
+                    break;
+            }
+            Save();
         }
 
         public void SaveText(string key)
@@ -42,61 +80,54 @@ namespace SerjBal
             
         }
         
-        public void LoadNetwork()
+        public void LoadFromServer(string date, Action onLoaded)
         {
+            _coroutineRunner.StartCoroutine(LoadFromServerCourutine(date, onLoaded));
         }
 
-        private void SaveNetwork()
+        private void SaveToServer()
         {
+            _coroutineRunner.StartCoroutine(SaveToServerCourutine());
         }
 
-        private IEnumerator SaveLocal()
+        private IEnumerator SaveToServerCourutine()
         {
-            string json = JsonUtility.ToJson(_data.Value.Date);
-            UnityWebRequest request = UnityWebRequest.Put($"file://{Const.DataPath}/{_data.Value.Date.Key}", json);
-            yield return request.SendWebRequest();
-    
-            if (request.isNetworkError || request.isHttpError)
-            {
-                Debug.LogError(request.error);
-            }
-            else
-            {
-                Debug.Log("Data saved successfully");
-            }
+            string json = JsonUtility.ToJson(_data.Value.DateItem);
+            var path = $"";
+            UnityWebRequest request = UnityWebRequest.Put(path, json);
+            request.SendWebRequest();
+           yield break;
         }
-        private IEnumerator LoadLocal(string date, Action onLoaded)
+        private IEnumerator LoadFromServerCourutine(string date, Action onLoaded)
         {
-            UnityWebRequest request = UnityWebRequest.Get( $"file://{Const.DataPath}/{date}");
+            var path = $"";
+            UnityWebRequest request = UnityWebRequest.Get( path);
                 AsyncOperation operation = request.SendWebRequest();
             while (!operation.isDone)
             {
                 _loaderScreen.Progress = request.downloadProgress;
                 yield return null;
             }
-            
-            if (request.result == UnityWebRequest.Result.ConnectionError ||
-                request.result == UnityWebRequest.Result.ProtocolError)
+            if (request.isNetworkError || request.isHttpError)
             {
                 Debug.Log("Error loading JSON: " + request.error);
-                var dateData = _data.GetDateData() as DateData;
-                Data newData = new Data { Date = dateData};
+                var dateData = _data.GetOrCreateDateData(date) as ItemData;
+                Data newData = new Data { DateItem = dateData};
                 _data.SetData(newData);
                 onLoaded?.Invoke();
             }
             else
             {
-                var data = JsonUtility.FromJson<DateData>(request.downloadHandler.text);
+                var data = JsonUtility.FromJson<ItemData>(request.downloadHandler.text);
                 Data newData = new Data
                 {
-                    Date = data
+                    DateItem = data
                 };
                 _data.SetData(newData);
                 onLoaded?.Invoke();
             }
 
             _loaderScreen.Progress = 1;
-            LoadNetwork();
         }
     }
 }

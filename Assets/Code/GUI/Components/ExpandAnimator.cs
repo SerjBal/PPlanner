@@ -28,15 +28,10 @@ namespace SerjBal
             else PlayOpen();
             _isExpaned = !_isExpaned;
         }
-        private void PlayClose()
-        {
-            StartCoroutine(Collapse());
-        }
+        private void PlayClose() => StartCoroutine(Collapse());
 
-        private void PlayOpen()
-        {
-            StartCoroutine(Expand());
-        }
+        private void PlayOpen() => StartCoroutine(Expand());
+
         private IEnumerator Expand()
         {
             buttonTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, _gui.GetMenuBounds());

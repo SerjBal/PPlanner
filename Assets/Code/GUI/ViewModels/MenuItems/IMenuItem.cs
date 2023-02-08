@@ -11,6 +11,7 @@ namespace SerjBal
         public Transform ViewTransform { get; }
         Transform ContentContainer { get;}
         public string Key { get; set; }
+        MenuItemType itemType { get; set; }
         void OnExpand();
         void OnCollapsed();
         void Initialize(ButtonConfigs configs, IAppFactory factory);

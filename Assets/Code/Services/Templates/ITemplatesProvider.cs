@@ -3,6 +3,6 @@ namespace SerjBal
     public interface ITemplatesProvider : IService
     {
         bool HasTamplates();
-        DateData SelectedTemplate { get; set; }
+        ItemData SelectedTemplate { get; set; }
     }
 }

@@ -14,6 +14,6 @@ namespace SerjBal
             return false;
         }
 
-        public DateData SelectedTemplate { get; set; }
+        public ItemData SelectedTemplate { get; set; }
     }
 }

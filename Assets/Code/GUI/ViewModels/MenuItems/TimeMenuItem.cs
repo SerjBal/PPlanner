@@ -9,16 +9,17 @@ namespace SerjBal
 
         public void Initialize(ButtonConfigs configs, IAppFactory factory)
         {
+            itemType = MenuItemType.Time;
             _textKey = GetTextKey();
             OnAddNewItem = () => factory.CreateTextEditor(this, _textKey);
             OnEditItem = () => factory.CreateEditTimeWindow(this);
-            base.Initialize(configs, this);
+            base.Initialize(configs);
         }
 
         private string GetTextKey()
         {
             var data = new Services().Single<IDataProvider>();
-            return data.GetOrCreateTimeData(Parent.Key, Key).TextKey;
+            return data.GetOrCreateTimeData(Parent.Key, Key).Content[0].Key;
         }
 
         public override void OnExpand()

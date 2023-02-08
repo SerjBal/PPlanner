@@ -1,4 +1,5 @@
 using SerjBal.Windows;
+using UnityEngine;
 
 namespace SerjBal
 {
@@ -8,7 +9,24 @@ namespace SerjBal
         {
             base.Initialize(menuItem);
             InputField.text = "New Channel";
-            onAccept += () => new Services().Single<IAppFactory>().CreateChannelItem(menuItem, InputField.text);
+            onAccept += () => UpdateContent(menuItem);
+        }
+
+        private async void UpdateContent(IMenuItem menuItem)
+        {
+            var _factory = _services.Single<IAppFactory>();
+            foreach (Transform item in menuItem.ContentContainer) Destroy(item.gameObject);
+
+            ItemData dateData = _services.Single<IDataProvider>().GetOrCreateDateData();
+            if (dateData.Content!=null && dateData.Content.Count>0)
+            {
+                foreach (ItemData item in dateData.Content)
+                {
+                    await _factory.CreateChannelItem(menuItem, item.Key);
+                }
+            }
+            var addButton = await _factory.CreateAddButton(menuItem.ContentContainer);
+            addButton.onClick.AddListener(((DateMenuItem)menuItem).AddNewItem);
         }
     }
 }

@@ -7,5 +7,6 @@ namespace SerjBal
         void Load(string date, Action onLoaded);
         void Save();
         void Initialize();
+        void Save(IMenuItem menuItem, string inputFieldText);
     }
 }

@@ -1737,6 +1737,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b81593dc5074b3faf45040079bd61fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rectTransform: {fileID: 4032771725882168418}
   fontDropdown: {fileID: 9034820327938080271}
   boldStyleButton: {fileID: 528178757908693143}
   italicStyleButton: {fileID: 1130167852821574601}
@@ -1780,7 +1781,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 20, y: -20.87472}
+  m_AnchoredPosition: {x: 20, y: -20.874756}
   m_SizeDelta: {x: -40, y: -20.46045}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &4032771726187312735

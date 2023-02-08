@@ -1,5 +1,7 @@
 
 using SerjBal.Windows;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace SerjBal
 {
@@ -9,7 +11,26 @@ namespace SerjBal
         {
             base.Initialize(menuItem);
             InputField.text = "0:0";
-            onAccept += () => new Services().Single<IAppFactory>().CreateTimeItem(menuItem, InputField.text);
+            onAccept += () => UpdateContent(menuItem);
+        }
+
+        private async void UpdateContent(IMenuItem menuItem)
+        {
+            var _factory = _services.Single<IAppFactory>();
+            foreach (Transform item in menuItem.ContentContainer) Destroy(item.gameObject);
+
+            ItemData channelData = _services.Single<IDataProvider>().GetOrCreateChannelData(menuItem.Key);
+            if (channelData != null && channelData.Content.Count > 0)
+            {
+                foreach (var item in channelData.Content)
+                {
+                    await _factory.CreateTimeItem(menuItem, item.Key);
+                }
+            }
+
+            var addButton = await _factory.CreateAddButton(menuItem.ContentContainer);
+            addButton.onClick.AddListener(((ChannelMenuItem)menuItem).AddNewItem);
         }
     }
 }
+
