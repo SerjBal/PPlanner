@@ -8,15 +8,13 @@ namespace SerjBal
 {
     public class ItemViewModel : MonoBehaviour
     {
-        public IMenuItemViewModel Parent { get; set; }
+        public IMenuItem Parent { get; set; }
         public string Key { get; set; }
         public Transform ContentContainer => contentContainer;
-        public Dictionary<string, IMenuItemViewModel> ContentList { get; set; }
         public Transform ViewTransform => transform;
         
         [SerializeField] private ButtonSwipeController buttonsController;
-        [SerializeField] private ExpandAnimator animator;
-        [SerializeField] private Button newItemButton;
+        [SerializeField] protected ExpandAnimator animator;
         [SerializeField] private Button editButton;
         [SerializeField] private Button removeButton;
         [SerializeField] private TMP_Text nameText;
@@ -25,11 +23,10 @@ namespace SerjBal
         protected Action OnEditItem{ get; set; }
         
 
-        public void Initialize(ButtonConfigs configs, IMenuItemViewModel menuItemViewModel)
+        public void Initialize(ButtonConfigs configs, IMenuItem menuItem)
         {
             Binds();
-            ContentList = new Dictionary<string, IMenuItemViewModel>();
-            Parent = menuItemViewModel;
+            Parent = menuItem;
             contentContainer.gameObject.SetActive(false);
             
             animator.Initialize(configs.expandAnimationCurve);
@@ -38,7 +35,6 @@ namespace SerjBal
 
         private void Binds()
         {
-            newItemButton.onClick.AddListener(AddNewItem);
             editButton.onClick.AddListener(Edit);
             removeButton.onClick.AddListener(Remove);
             animator.onExpandEvent = OnExpand;
@@ -56,7 +52,11 @@ namespace SerjBal
 
         public virtual void OnExpand() => contentContainer.gameObject.SetActive(true);
 
-        public virtual void OnCollapsed() => contentContainer.gameObject.SetActive(false);
+        public virtual void OnCollapsed()
+        {
+            contentContainer.gameObject.SetActive(false);
+            foreach (Transform item in ContentContainer) {Destroy(item.gameObject);}
+        }
 
         public void OnSelected() => animator.AnimationPlay();
 

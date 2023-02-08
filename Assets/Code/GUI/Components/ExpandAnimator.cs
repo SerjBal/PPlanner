@@ -7,7 +7,7 @@ namespace SerjBal
 {
     public class ExpandAnimator : MonoBehaviour
     {
-        [SerializeField] VerticalLayoutGroup layoutGroup;
+        public VerticalLayoutGroup layoutGroup;
         public Action onExpandEvent;
         public Action onCollapsedEvent;
         private AnimationCurve _expandAnimationCurve;
@@ -41,7 +41,6 @@ namespace SerjBal
         {
             buttonTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, _gui.GetMenuBounds());
             onExpandEvent.Invoke();
-            layoutGroup.SetLayoutVertical();
             yield break;
         }
         

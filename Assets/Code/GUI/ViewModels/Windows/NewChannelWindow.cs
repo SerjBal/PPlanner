@@ -4,7 +4,7 @@ namespace SerjBal
 {
     public class NewChannelWindow : NewItemWindow, IWindow
     {
-        public override void Initialize(IMenuItemViewModel menuItem)
+        public override void Initialize(IMenuItem menuItem)
         {
             base.Initialize(menuItem);
             InputField.text = "New Channel";

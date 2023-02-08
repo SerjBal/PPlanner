@@ -5,11 +5,10 @@ using UnityEngine;
 
 namespace SerjBal
 {
-    public interface IMenuItemViewModel
+    public interface IMenuItem
     {
-        public IMenuItemViewModel Parent { get; set; }
+        public IMenuItem Parent { get; set; }
         public Transform ViewTransform { get; }
-        public Dictionary<string, IMenuItemViewModel> ContentList { get; set; }
         Transform ContentContainer { get;}
         public string Key { get; set; }
         void OnExpand();

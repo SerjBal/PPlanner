@@ -14,6 +14,7 @@ namespace SerjBal
         private readonly LoaderScreen _loaderScreen;
         private ISaveLoad _saveLoad;
         private Configurations _configurations;
+        private ISaveLoad _dataLoader;
 
         public BootloaderState(AppStateMachine stateMachine, Configurations configurations, Services services, ICoroutineRunner coroutineRunner,
              FadeScreen fadeScreen, LoaderScreen loaderScreen)
@@ -32,7 +33,7 @@ namespace SerjBal
         {
             _fadeScreen.Show(true);
             var date = GetCurrentDate();
-            _services.Single<ISaveLoad>().Load(date, OnLoaded);
+            _dataLoader.Load(date, OnLoaded);
         }
 
         private string GetCurrentDate()
@@ -57,11 +58,12 @@ namespace SerjBal
             _services.RegisterSingle<IDataProvider>(new DataProvider( _services.Single<ITemplatesProvider>()));
             _services.RegisterSingle<IAssetsProvider>(new AssetProvider());
             _services.RegisterSingle<ISaveLoad>(new SaveLoad(_coroutineRunner,_services.Single<IDataProvider>(), _loaderScreen));
-            _services.RegisterSingle<IAppFactory>(new AppFactory(_services.Single<IAssetsProvider>(),_services.Single<IDataProvider>(),_services.Single<ISaveLoad>(),  _configurations));
-            _services.Single<IAppFactory>().WarmUp();
+            _services.RegisterSingle<IAppFactory>(new AppFactory(_services.Single<IAssetsProvider>(),_services.Single<IDataProvider>(), _configurations));
             _services.RegisterSingle<IGUIModelView>(new GUIModelView(_services.Single<IAppFactory>(),   _services.Single<ISaveLoad>()));
+            _dataLoader = _services.Single<ISaveLoad>();
+            _services.Single<IAppFactory>().WarmUp();
             _services.Single<IAssetsProvider>().Initialize();
-            _services.Single<ISaveLoad>().Initialize();
+            _dataLoader.Initialize();
         }
     }
 }

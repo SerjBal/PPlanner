@@ -5,7 +5,7 @@ namespace SerjBal
 {
     public class NewPostWindow : NewItemWindow, IWindow
     {
-        public override void Initialize(IMenuItemViewModel menuItem)
+        public override void Initialize(IMenuItem menuItem)
         {
             base.Initialize(menuItem);
             InputField.text = "0:0";

@@ -4,6 +4,6 @@ namespace SerjBal
     {
         void SetEditFormatText(string inputFormat);
         void SetAcceptButtonText(string butoonText);
-        void Initialize(IMenuItemViewModel menuItem);
+        void Initialize(IMenuItem menuItem);
     }
 }

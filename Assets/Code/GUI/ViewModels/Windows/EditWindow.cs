@@ -8,7 +8,7 @@ namespace SerjBal
 {
     public class EditWindow : NewItemWindow, IWindow
     {
-        public override void Initialize(IMenuItemViewModel menuItem)
+        public override void Initialize(IMenuItem menuItem)
         {
             InputField.text = menuItem.Key;
             onAccept += Rename;

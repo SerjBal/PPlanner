@@ -34,10 +34,7 @@ namespace SerjBal
 
         public void Save()
         {
-            string json = JsonUtility.ToJson(_data);
-            File.WriteAllText(Const.DataPath, json);
-            Debug.Log("LocalSave");
-            SaveNetwork();
+            _coroutineRunner.StartCoroutine(SaveLocal());
         }
 
         public void SaveText(string key)
@@ -53,10 +50,25 @@ namespace SerjBal
         {
         }
 
+        private IEnumerator SaveLocal()
+        {
+            string json = JsonUtility.ToJson(_data.Value.Date);
+            UnityWebRequest request = UnityWebRequest.Put($"file://{Const.DataPath}/{_data.Value.Date.Key}", json);
+            yield return request.SendWebRequest();
+    
+            if (request.isNetworkError || request.isHttpError)
+            {
+                Debug.LogError(request.error);
+            }
+            else
+            {
+                Debug.Log("Data saved successfully");
+            }
+        }
         private IEnumerator LoadLocal(string date, Action onLoaded)
         {
             UnityWebRequest request = UnityWebRequest.Get( $"file://{Const.DataPath}/{date}");
-            AsyncOperation operation = request.SendWebRequest();
+                AsyncOperation operation = request.SendWebRequest();
             while (!operation.isDone)
             {
                 _loaderScreen.Progress = request.downloadProgress;
@@ -67,7 +79,8 @@ namespace SerjBal
                 request.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log("Error loading JSON: " + request.error);
-                Data newData = new Data().Default(date);
+                var dateData = _data.GetDateData() as DateData;
+                Data newData = new Data { Date = dateData};
                 _data.SetData(newData);
                 onLoaded?.Invoke();
             }

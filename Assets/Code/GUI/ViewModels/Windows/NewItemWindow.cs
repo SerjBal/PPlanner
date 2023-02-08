@@ -15,34 +15,28 @@ namespace SerjBal.Windows
         [SerializeField] private Button closeButton;
         protected UnityAction onAccept;
         protected TMP_InputField InputField => inputField;
-        protected IMenuItemViewModel _menuItem;
+        protected IMenuItem _menuItem;
+
+        private Services _services;
         
-        public virtual void Initialize(IMenuItemViewModel menuItem)
+        public virtual void Initialize(IMenuItem menuItem)
         {
             //block menuItem Button
             _menuItem = menuItem;
             acceptButton.onClick.AddListener(Accept);
             closeButton.onClick.AddListener(Close);
             onAccept += OnAccept;
+            _services = new Services();
         }
-        public void SetEditFormatText(string inputFormat)
-        {
-            formatText.text = inputFormat;
-        }
+        public void SetEditFormatText(string inputFormat) => formatText.text = inputFormat;
 
-        public void SetAcceptButtonText(string button)
-        {
-            buttonText.text = button;
-        }
+        public void SetAcceptButtonText(string button) => buttonText.text = button;
 
-        private void Close()
-        {
-            Destroy(gameObject);
-        }
+        private void Close() => Destroy(gameObject);
 
         private void OnAccept()
         {
-            new Services().Single<ISaveLoad>().Save();
+            _services.Single<ISaveLoad>().Save();
             Close();
         }
 
@@ -52,7 +46,7 @@ namespace SerjBal.Windows
             bool hasData = dataProvider.DataHasKey(_menuItem.Key, inputField.text);
             if (hasData)
             {
-                new Services().Single<IAppFactory>().CreateReplacingDataWindow(onAccept);
+                _services.Single<IAppFactory>().CreateReplacingDataWindow(onAccept);
             }
             else
             {

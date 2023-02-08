@@ -2,7 +2,7 @@ using System;
 
 namespace SerjBal
 {
-    public class TimeMenuItemViewModel : ItemViewModel, IMenuItemViewModel
+    public class TimeMenuItem : ItemViewModel, IMenuItem
     {
         private Action _onExpand;
         private string _textKey;
@@ -18,7 +18,7 @@ namespace SerjBal
         private string GetTextKey()
         {
             var data = new Services().Single<IDataProvider>();
-            return data.GetTimeData(Parent.Key, Key).TextKey;
+            return data.GetOrCreateTimeData(Parent.Key, Key).TextKey;
         }
 
         public override void OnExpand()

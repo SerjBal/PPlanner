@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace SerjBal
 {
@@ -9,16 +10,16 @@ namespace SerjBal
     {
         Task WarmUp();
         Task<MainMenuItemView> CreateGUI();
-        Task CreateEditDateWindow(IMenuItemViewModel menuItem);
-        Task CreateEditChannelWindow(IMenuItemViewModel channelMenuItemViewModel);
-        Task CreateEditTimeWindow(IMenuItemViewModel channelMenuItemViewModel);
-        Task CreateNewChannelWindow(IMenuItemViewModel menuItem);
-        Task CreateNewTimeWindow(IMenuItemViewModel menuItem);
+        Task CreateEditDateWindow(IMenuItem menuItem);
+        Task CreateEditChannelWindow(IMenuItem channelMenuItem);
+        Task CreateEditTimeWindow(IMenuItem channelMenuItem);
+        Task CreateNewChannelWindow(IMenuItem menuItem);
+        Task CreateNewTimeWindow(IMenuItem menuItem);
         Task CreateReplacingDataWindow(UnityAction onAccept);
-        Task<IMenuItemViewModel> CreateDateItem();
-        Task<IMenuItemViewModel> CreateChannelItem(IMenuItemViewModel parent, string channelKey);
-        Task<IMenuItemViewModel> CreateTimeItem(IMenuItemViewModel parent, string timeKey);
-        Task CreateTextEditor(IMenuItemViewModel parent, string textKey);
-        void CleanUp();
+        Task<IMenuItem> CreateDateItem();
+        Task<IMenuItem> CreateChannelItem(IMenuItem parent, string channelKey);
+        Task<IMenuItem> CreateTimeItem(IMenuItem parent, string timeKey);
+        Task CreateTextEditor(IMenuItem parent, string textKey);
+        Task<Button> CreateAddButton(Transform parent);
     }
 }

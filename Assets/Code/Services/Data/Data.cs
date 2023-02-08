@@ -5,18 +5,6 @@ using SerjBal;
 public class Data
 {
     public DateData Date;
-
-    public Data Default(string date)
-    {
-        return new Data
-        {
-            Date = new DateData
-            {
-                Key = date,
-                Content = null
-            }
-        };
-    }
 }
 
 [Serializable]
