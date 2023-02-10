@@ -158,11 +158,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f010d1c40f84127b19f3ad19ae4f69f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 4263346337644740340}
   formatText: {fileID: 4263346338011152581}
   buttonText: {fileID: 4263346336797402025}
   inputField: {fileID: 4263346335908716360}
   acceptButton: {fileID: 4263346335988135048}
   closeButton: {fileID: 4263346337079682038}
+--- !u!223 &4263346337644740340 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 6102299072589025497, guid: 859c5b02f576a4440a3c76cbb62eb538, type: 3}
+  m_PrefabInstance: {fileID: 8036051534642654765}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4263346338011152581 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6102299072214183656, guid: 859c5b02f576a4440a3c76cbb62eb538, type: 3}

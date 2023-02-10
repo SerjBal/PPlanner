@@ -5,34 +5,35 @@ using UnityEngine;
 
 namespace SerjBal
 {
-    public class DateMenuItem : ItemViewModel, IMenuItem
+    public class DateMenuItem : ItemViewModel
     {
-        private IAppFactory _factory;
-        private IDataProvider _data;
-        public void Initialize(ButtonConfigs configs, IAppFactory factory)
+        public override void Initialize(ButtonConfigs configs)
         {
-            itemType = MenuItemType.Date;
-            _factory = factory;
-            _data = new Services().Single<IDataProvider>();
-            OnAddNewItem = () => factory.CreateNewChannelWindow(this);
-            OnEditItem = () => factory.CreateEditDateWindow(this);
             base.Initialize(configs);
+            itemType = MenuItemType.Date;
+            onAddNewItem += () => _factory.CreateNewChannelWindow(this);
+            onEditItem += () => _factory.CreateEditDateWindow(this);
             animator.AnimationPlay();
         }
 
         public override async void OnExpand()
+        {
+            ShowContent();
+            base.OnExpand();
+        }
+
+        public async void ShowContent()
         {
             ItemData dateData = _data.GetOrCreateDateData();
             if (dateData.Content!=null && dateData.Content.Count>0)
             {
                 foreach (ItemData item in dateData.Content)
                 {
-                    await _factory.CreateChannelItem(this, item.Key);
+                    Childs.Add(await _factory.CreateChannelItem(this, item.Key));
                 }
             }
             var addButton = await _factory.CreateAddButton(ContentContainer);
-            addButton.onClick.AddListener(AddNewItem);
-            base.OnExpand();
+            addButton.onClick.AddListener(OnAddNewItem);
         }
     }
 }

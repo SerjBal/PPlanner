@@ -22,11 +22,11 @@ namespace SerjBal
             {
                 foreach (ItemData item in dateData.Content)
                 {
-                    await _factory.CreateChannelItem(menuItem, item.Key);
+                    menuItem.Childs.Add(await _factory.CreateChannelItem(menuItem, item.Key));
                 }
             }
             var addButton = await _factory.CreateAddButton(menuItem.ContentContainer);
-            addButton.onClick.AddListener(((DateMenuItem)menuItem).AddNewItem);
+            addButton.onClick.AddListener(menuItem.OnAddNewItem);
         }
     }
 }

@@ -19,7 +19,12 @@ namespace SerjBal
         public Data Value { get; private set; }
 
         private readonly ITemplatesProvider _templates;
-        public DataProvider(ITemplatesProvider templates) => _templates = templates;
+        public DataProvider(ITemplatesProvider templates)
+        {
+            Value = new Data { DateItem = null};
+            _templates = templates;
+        }
+
         public void SetData(Data data) => Value = data;
 
         public bool DataHasKey(IMenuItem menuItem, string key)
@@ -54,7 +59,12 @@ namespace SerjBal
 
         public ItemData GetOrCreateDateData(string key = null)
         {
-            if (key != null) Value.DateItem = new ItemData { Key = key, Content = new List<ItemData>() };
+            if (key != null)
+                if (Value.DateItem == null)
+                {
+                    var dateItem = new ItemData { Key = key, Content = new List<ItemData>() };
+                    Value = new Data { DateItem = dateItem };
+                }
             return Value.DateItem;
         }
 

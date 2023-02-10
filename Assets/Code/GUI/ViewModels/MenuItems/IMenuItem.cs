@@ -2,19 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace SerjBal
 {
     public interface IMenuItem
     {
-        public IMenuItem Parent { get; set; }
-        public Transform ViewTransform { get; }
+        IMenuItem Parent { get; set; }
+        List<IMenuItem> Childs { get; set;}
         Transform ContentContainer { get;}
-        public string Key { get; set; }
+        string Key { get; set; }
         MenuItemType itemType { get; set; }
-        void OnExpand();
-        void OnCollapsed();
-        void Initialize(ButtonConfigs configs, IAppFactory factory);
+        void Initialize(ButtonConfigs configs);
         void ChangeKey(string newKey);
+        void Collapse();
+        void OnAddNewItem();
     }
 }

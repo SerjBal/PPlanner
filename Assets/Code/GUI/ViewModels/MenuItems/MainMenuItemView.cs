@@ -8,7 +8,8 @@ namespace SerjBal
     public class MainMenuItemView : MonoBehaviour
     {
         //[SerializeField] private Transform highScreenContainer;
-        public RectTransform lowScreenContainer;
+        public RectTransform calendarContainer;
+        public RectTransform dateContainer;
         public CanvasGroup canvasGroup;
     }
 }

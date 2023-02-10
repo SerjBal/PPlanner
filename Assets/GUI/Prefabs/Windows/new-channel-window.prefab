@@ -152,6 +152,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!223 &4712310193546063907 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 6102299072589025497, guid: 859c5b02f576a4440a3c76cbb62eb538, type: 3}
+  m_PrefabInstance: {fileID: 1570284623619858682}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4712310193546063911 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6102299072589025501, guid: 859c5b02f576a4440a3c76cbb62eb538, type: 3}
@@ -169,6 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa0add2947ee4cbfb21eeee325fc4f14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 4712310193546063907}
   formatText: {fileID: 4712310193241394706}
   buttonText: {fileID: 4712310192295947646}
   inputField: {fileID: 4712310192078344607}

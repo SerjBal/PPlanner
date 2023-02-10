@@ -6,24 +6,24 @@ using Button = UnityEngine.UI.Button;
 
 namespace SerjBal
 {
-    public class ButtonSwipeController: MonoBehaviour, IPointerDownHandler, IPointerMoveHandler, IPointerExitHandler
+    public class ButtonSwipeController: MonoBehaviour, IPointerDownHandler, IPointerExitHandler
     {
         public Action onSelectedEvent;
         [SerializeField] private RectTransform frontButtonTransform;
         [SerializeField] private RectTransform rightButtonsTransform;
-        [SerializeField] private Button button;
         private float _onOnButtonClickTimer;
         private float _maxSliceDistance;
         private float _timer;
         private bool _isOnButtonClickAllowed;
         private bool _isOnPointerDown;
         private Vector3 _mouseStartPosition;
+        private float frontMaxX;
+        private float frontMinX;
 
         public void Initialize(ButtonConfigs configs)
         {
             _onOnButtonClickTimer = configs.clickTimer;
             _maxSliceDistance = configs.swipeDistance;
-            button.onClick.AddListener(OnPointerUp);
         }
        
         public void OnPointerDown(PointerEventData eventData)
@@ -32,9 +32,11 @@ namespace SerjBal
             _timer = _onOnButtonClickTimer;
             _isOnPointerDown = true;
             _isOnButtonClickAllowed = true;
+            frontMaxX = frontButtonTransform.offsetMax.x;
+            frontMinX = frontButtonTransform.offsetMin.x;
         }
 
-        public void OnPointerMove(PointerEventData eventData)
+        private void Update()
         {
             if (_isOnPointerDown)
             {
@@ -42,6 +44,8 @@ namespace SerjBal
                 float offset = mousePosition.x * -1;
                 ButtonResize(offset);
                 ClickDisallow(offset);
+                
+                if (Input.GetMouseButtonUp(0)) OnPointerUp();
             }
         }
         
@@ -64,6 +68,7 @@ namespace SerjBal
             if (_isOnPointerDown) StartCoroutine(SoftSnapp());
             _isOnPointerDown = false;
         }
+        
         private void ClickDisallow(float offset)
         {
             if (_timer > 0 && (offset > _maxSliceDistance || offset < -_maxSliceDistance))
@@ -76,20 +81,12 @@ namespace SerjBal
         private void ButtonResize(float offset)
         {
             float width = frontButtonTransform.rect.width / 2;
-            if (offset > 0)
-            {
-                // var offsetMin = new Vector2(Mathf.Clamp(offset, 0, width), frontButtonTransform.offsetMin.y);
-                // frontButtonTransform.offsetMin = offsetMin;
-                // frontButtonTransform.offsetMax = new Vector2(0, frontButtonTransform.offsetMax.y);
-            }
-            else
-            {
-                var offsetMax = new Vector2(Mathf.Clamp(offset, -width, 0), frontButtonTransform.offsetMax.y);
-                frontButtonTransform.offsetMax = offsetMax;
-                frontButtonTransform.offsetMin = new Vector2(0, frontButtonTransform.offsetMin.y);
+            
+            var offsetMax = new Vector2(Mathf.Clamp(frontMaxX + offset, -width, 0), frontButtonTransform.offsetMax.y);
+            frontButtonTransform.offsetMax = offsetMax;
+            frontButtonTransform.offsetMin = new Vector2(0, frontButtonTransform.offsetMin.y);
                 
-                rightButtonsTransform.offsetMin = new Vector2(Mathf.Clamp(offset, -width, 0), rightButtonsTransform.offsetMax.y);
-            }
+            rightButtonsTransform.offsetMin = new Vector2(Mathf.Clamp(frontMaxX + offset, -width, 0), rightButtonsTransform.offsetMax.y);
         }
 
 
@@ -97,6 +94,8 @@ namespace SerjBal
         {
             float time = 0;
             var width = frontButtonTransform.rect.width/2;
+            var frontOffsetMin = frontButtonTransform.offsetMin.y;
+            var fronOffSetMax = frontButtonTransform.offsetMax.y;
             var minA = frontButtonTransform.offsetMin.x;
             var maxA = frontButtonTransform.offsetMax.x;
             var minCheck = minA > width / 2;
@@ -107,16 +106,20 @@ namespace SerjBal
             
             while (time<1f)
             {
-                var offsetMin = new Vector2(Mathf.Lerp(minA, minB, time), frontButtonTransform.offsetMin.y);
-                var offsetMax = new Vector2(Mathf.Lerp(maxA, maxB, time), frontButtonTransform.offsetMax.y);
+                var offsetMin = new Vector2(Mathf.Lerp(minA, minB, time), frontOffsetMin);
+                var offsetMax = new Vector2(Mathf.Lerp(maxA, maxB, time), fronOffSetMax);
+                var offsetRightMin = new Vector2(Mathf.Lerp(maxA, maxB, time), rightButtonsTransform.offsetMin.y);
                 frontButtonTransform.offsetMin = offsetMin;
                 frontButtonTransform.offsetMax = offsetMax;
-                var offsetRightMin = new Vector2(Mathf.Lerp(maxA, maxB, time), rightButtonsTransform.offsetMin.y);
                 rightButtonsTransform.offsetMin = offsetRightMin;
                 time += Time.deltaTime*10;
                 yield return null;
             }
+            frontButtonTransform.offsetMin = new Vector2(minB, frontOffsetMin);
+            frontButtonTransform.offsetMax = new Vector2(maxB, fronOffSetMax);
+            rightButtonsTransform.offsetMin = new Vector2(maxB, rightButtonsTransform.offsetMin.y);
         }
+        
         private void Reset()
         {
             _isOnButtonClickAllowed = false;

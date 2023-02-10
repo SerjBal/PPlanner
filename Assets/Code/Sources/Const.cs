@@ -6,6 +6,8 @@ namespace SerjBal.Code.Sources
         public const string LastTextID = "textID";
 
         public static readonly string DataPath = Application.persistentDataPath;
+        public const string ServerPath = "";
+        
         public const string AddItemButtonPath = "add-item-button";
         public const string GUIPath = "canvas";
         public const string DateItemPath = "date-item";
@@ -34,8 +36,9 @@ namespace SerjBal.Code.Sources
         public const string WarningWindowPath = "warning-window";
         public const string ReplaceWarningText = "The data already exists! Replace?";
         public const string ReplaceButtonText = "Ok";
-        public const string DateTag = "date";
-        public const string ChannelTag = "channel";
-        public const string TimeTag = "time";
+        
+        public const int SelectedItemSortingOrder = 10;
+        public const int MenuWindowSortingOrder = 11;
+        public const int WarningWindowSortingOrder = 12;
     }
 }

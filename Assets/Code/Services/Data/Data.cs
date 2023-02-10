@@ -4,7 +4,7 @@ using SerjBal;
 
 public class Data
 {
-    public ItemData DateItem;
+    public ItemData DateItem = new ItemData();
 }
 
 [Serializable]

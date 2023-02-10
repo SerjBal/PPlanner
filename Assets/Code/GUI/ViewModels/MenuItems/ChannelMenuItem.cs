@@ -4,19 +4,14 @@ using UnityEngine;
 
 namespace SerjBal
 {
-    public class ChannelMenuItem : ItemViewModel, IMenuItem
+    public class ChannelMenuItem : ItemViewModel
     {
-        private IAppFactory _factory;
-        private IDataProvider _data;
-
-        public void Initialize(ButtonConfigs configs, IAppFactory factory)
+        public override void Initialize(ButtonConfigs configs)
         {
-            itemType = MenuItemType.Channel;
-            _factory = factory;
-            _data = new Services().Single<IDataProvider>();
-            OnAddNewItem = () => factory.CreateNewTimeWindow(this);
-            OnEditItem =  () => factory.CreateEditChannelWindow(this);
             base.Initialize(configs);
+            itemType = MenuItemType.Channel;
+            onAddNewItem += () => _factory.CreateNewTimeWindow(this);
+            onEditItem += () => _factory.CreateEditChannelWindow(this);
         }
         
         public override async void OnExpand()
@@ -26,11 +21,11 @@ namespace SerjBal
             {
                 foreach (var item in channelData.Content)
                 {
-                    await _factory.CreateTimeItem(this, item.Key);
+                    Childs.Add(await _factory.CreateTimeItem(this, item.Key));
                 }
             }
             var addButton = await _factory.CreateAddButton(ContentContainer);
-            addButton.onClick.AddListener(AddNewItem);
+            addButton.onClick.AddListener(OnAddNewItem);
             base.OnExpand();
         }
     }

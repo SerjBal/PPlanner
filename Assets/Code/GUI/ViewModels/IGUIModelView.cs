@@ -7,5 +7,7 @@ namespace SerjBal
     {
         Task Initialize();
         float GetMenuBounds();
+        void UpdateMenu();
+        void DisableMenuInteracton(bool p0);
     }
 }

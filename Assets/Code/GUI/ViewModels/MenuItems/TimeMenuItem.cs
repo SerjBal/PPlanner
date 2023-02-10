@@ -2,30 +2,29 @@ using System;
 
 namespace SerjBal
 {
-    public class TimeMenuItem : ItemViewModel, IMenuItem
+    public class TimeMenuItem : ItemViewModel
     {
         private Action _onExpand;
         private string _textKey;
 
-        public void Initialize(ButtonConfigs configs, IAppFactory factory)
+        public override void Initialize(ButtonConfigs configs)
         {
+            base.Initialize(configs);
             itemType = MenuItemType.Time;
             _textKey = GetTextKey();
-            OnAddNewItem = () => factory.CreateTextEditor(this, _textKey);
-            OnEditItem = () => factory.CreateEditTimeWindow(this);
-            base.Initialize(configs);
+            onAddNewItem += () => _factory.CreateTextEditor(this, _textKey);
+            onEditItem += () => _factory.CreateEditTimeWindow(this);
         }
 
         private string GetTextKey()
         {
-            var data = new Services().Single<IDataProvider>();
-            return data.GetOrCreateTimeData(Parent.Key, Key).Content[0].Key;
+            return _data.GetOrCreateTimeData(Parent.Key, Key).Content[0].Key;
         }
 
         public override void OnExpand()
         {
             base.OnExpand();
-            OnAddNewItem.Invoke();
+            OnAddNewItem();
         }
 
         public override void OnCollapsed()

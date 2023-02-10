@@ -19,6 +19,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6185787392682230938, guid: ee48e5963f92f41d1b4f69efa89275e0, type: 3}
+      propertyPath: m_ChildScaleHeight
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6185787392741215404, guid: ee48e5963f92f41d1b4f69efa89275e0, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -299,6 +303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d54d639f8b9d8430dbd11bc05911e721, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 3208976825852891533}
   buttonsController: {fileID: 8571925170112377112}
   animator: {fileID: 3167601632048877426}
   editButton: {fileID: 2250048304411737781}
@@ -316,6 +321,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!223 &3208976825852891533 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 6132117769858625736, guid: ee48e5963f92f41d1b4f69efa89275e0, type: 3}
+  m_PrefabInstance: {fileID: 8759848671587377477}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &6824716015233087475 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2821356706989577910, guid: ee48e5963f92f41d1b4f69efa89275e0, type: 3}

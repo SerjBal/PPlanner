@@ -22,14 +22,11 @@ namespace SerjBal
             ItemData channelData = _services.Single<IDataProvider>().GetOrCreateChannelData(menuItem.Key);
             if (channelData != null && channelData.Content.Count > 0)
             {
-                foreach (var item in channelData.Content)
-                {
-                    await _factory.CreateTimeItem(menuItem, item.Key);
-                }
+                foreach (var item in channelData.Content) await _factory.CreateTimeItem(menuItem, item.Key);
             }
 
             var addButton = await _factory.CreateAddButton(menuItem.ContentContainer);
-            addButton.onClick.AddListener(((ChannelMenuItem)menuItem).AddNewItem);
+            addButton.onClick.AddListener(menuItem.OnAddNewItem);
         }
     }
 }

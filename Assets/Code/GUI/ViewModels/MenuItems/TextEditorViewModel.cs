@@ -16,6 +16,8 @@ namespace SerjBal
         public Button linkStyleButton;
         public TMP_InputField inputField;
         public string Key { get; set; }
+        public IMenuItem Parent { get; set; }
+
         private Services _services;
 
 

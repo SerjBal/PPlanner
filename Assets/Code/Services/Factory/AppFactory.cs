@@ -97,10 +97,10 @@ namespace SerjBal
 
         public async Task<IMenuItem> CreateDateItem()
         {
-            IMenuItem item = await _assets.Instantiate<IMenuItem>(Const.DateItemPath, _GUI.lowScreenContainer);
+            IMenuItem item = await _assets.Instantiate<IMenuItem>(Const.DateItemPath, _GUI.dateContainer);
 
             item.ChangeKey(_data.GetOrCreateDateData().Key);
-            item.Initialize(_configs.buttonConfigs, this);
+            item.Initialize(_configs.buttonConfigs);
             return item;
         }
         
@@ -114,6 +114,7 @@ namespace SerjBal
         {
             TextEditorViewModel textItem = await _assets.Instantiate<TextEditorViewModel>(Const.TextItemPath, parent.ContentContainer);
             textItem.Key = timeKey;
+            textItem.Parent = parent;
             textItem.Initialize();
         }
 
@@ -128,7 +129,7 @@ namespace SerjBal
 
             item.Parent = parent;
             item.ChangeKey(key);
-            item.Initialize(_configs.buttonConfigs, this);
+            item.Initialize(_configs.buttonConfigs);
             return item;
         }
     }

@@ -29,7 +29,7 @@ namespace SerjBal
 
         public void Load(string date, Action onLoaded)
         {
-            string filePath = Path.Combine(Application.persistentDataPath, $"{date}.json");
+            string filePath = Path.Combine(Const.DataPath, $"{date}.json");
             
             if (File.Exists(filePath))
             {
@@ -44,17 +44,23 @@ namespace SerjBal
             }
             else
             {
-                var dateData = _data.GetOrCreateDateData(date);
-                Data newData = new Data { DateItem = dateData};
-                _data.SetData(newData);
+                _data.GetOrCreateDateData(date);
                 onLoaded?.Invoke();
             }
+
+            _loaderScreen.Progress = 1;
+            LoadFromServer(date);
+        }
+
+        public void UpdateMenu()
+        {
+            new Services().Single<IGUIModelView>().UpdateMenu();
         }
 
         public void Save()
         {
             string json = JsonUtility.ToJson(_data.Value.DateItem);
-            string filePath = Path.Combine(Application.persistentDataPath, $"{_data.Value.DateItem.Key}.json");
+            string filePath = Path.Combine(Const.DataPath, $"{_data.Value.DateItem.Key}.json");
             File.WriteAllText(filePath, json);
         }
         
@@ -68,11 +74,9 @@ namespace SerjBal
                 case MenuItemType.Channel:
                     _data.GetOrCreateTimeData(menuItem.Key, key);
                     break;
-                case MenuItemType.Time:
-                    
-                    break;
             }
             Save();
+            SaveToServer();
         }
 
         public void SaveText(string key)
@@ -80,9 +84,9 @@ namespace SerjBal
             
         }
         
-        public void LoadFromServer(string date, Action onLoaded)
+        public void LoadFromServer(string date)
         {
-            _coroutineRunner.StartCoroutine(LoadFromServerCourutine(date, onLoaded));
+            _coroutineRunner.StartCoroutine(LoadFromServerCourutine(date));
         }
 
         private void SaveToServer()
@@ -92,15 +96,16 @@ namespace SerjBal
 
         private IEnumerator SaveToServerCourutine()
         {
-            string json = JsonUtility.ToJson(_data.Value.DateItem);
-            var path = $"";
+            ItemData dateData = _data.Value.DateItem;
+            string json = JsonUtility.ToJson(dateData);
+            var path = Path.Combine(Const.ServerPath, dateData.Key);
             UnityWebRequest request = UnityWebRequest.Put(path, json);
             request.SendWebRequest();
            yield break;
         }
-        private IEnumerator LoadFromServerCourutine(string date, Action onLoaded)
+        private IEnumerator LoadFromServerCourutine(string date)
         {
-            var path = $"";
+            var path = Path.Combine(Const.ServerPath, date);
             UnityWebRequest request = UnityWebRequest.Get( path);
                 AsyncOperation operation = request.SendWebRequest();
             while (!operation.isDone)
@@ -111,20 +116,13 @@ namespace SerjBal
             if (request.isNetworkError || request.isHttpError)
             {
                 Debug.Log("Error loading JSON: " + request.error);
-                var dateData = _data.GetOrCreateDateData(date) as ItemData;
-                Data newData = new Data { DateItem = dateData};
-                _data.SetData(newData);
-                onLoaded?.Invoke();
             }
             else
             {
                 var data = JsonUtility.FromJson<ItemData>(request.downloadHandler.text);
-                Data newData = new Data
-                {
-                    DateItem = data
-                };
+                Data newData = new Data { DateItem = data };
                 _data.SetData(newData);
-                onLoaded?.Invoke();
+                UpdateMenu();
             }
 
             _loaderScreen.Progress = 1;

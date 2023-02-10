@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
-using SerjBal.Code.Sources;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace SerjBal
 {
@@ -23,16 +23,16 @@ namespace SerjBal
             await _factory.CreateDateItem();
         }
 
-        public CanvasGroup GetCanvasGroup() => _GUI.canvasGroup;
+        public float GetMenuBounds() => _GUI.dateContainer.rect.height;
 
+        public void UpdateMenu()
+        {
+            var date = _GUI.dateContainer.GetChild(0).GetComponent<DateMenuItem>();
+            foreach (Transform item in date.ContentContainer) { Object.Destroy(item.gameObject);}
+            date.ShowContent();
+        }
 
-        public float GetMenuBounds()
-        {
-            return _GUI.lowScreenContainer.rect.height;
-        }
-        public void SaveTemnplate()
-        {
-            
-        }
+        public void DisableMenuInteracton(bool isTrue) => _GUI.canvasGroup.interactable = isTrue;
+        
     }
 }
