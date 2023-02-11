@@ -39,7 +39,7 @@ namespace SerjBal
         private string GetCurrentDate()
         {
             var currentDate = DateTime.Today;
-            string date = $"{currentDate.Day}.{currentDate.Month}.{currentDate.Year}";
+            string date = $"{currentDate.Year}.{currentDate.Month}.{currentDate.Day}";
             return date;
         }
 
@@ -59,7 +59,7 @@ namespace SerjBal
             _services.RegisterSingle<IAssetsProvider>(new AssetProvider());
             _services.RegisterSingle<ISaveLoad>(new SaveLoad(_coroutineRunner,_services.Single<IDataProvider>(), _loaderScreen));
             _services.RegisterSingle<IAppFactory>(new AppFactory(_services.Single<IAssetsProvider>(),_services.Single<IDataProvider>(), _configurations));
-            _services.RegisterSingle<IGUIModelView>(new GUIModelView(_services.Single<IAppFactory>(),   _services.Single<ISaveLoad>()));
+            _services.RegisterSingle<IGUIModelView>(new GUIModelView());
             _dataLoader = _services.Single<ISaveLoad>();
             _services.Single<IAppFactory>().WarmUp();
             _services.Single<IAssetsProvider>().Initialize();

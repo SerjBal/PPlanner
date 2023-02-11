@@ -39,7 +39,7 @@ namespace SerjBal.Code.Sources
         public const string ReplaceButtonText = "Ok";
         
         public const int SelectedItemSortingOrder = 10;
-        public const int MenuWindowSortingOrder = 11;
-        public const int WarningWindowSortingOrder = 12;
+        public const int MenuWindowSortingOrder = 20;
+        public const int WarningWindowSortingOrder = 21;
     }
 }

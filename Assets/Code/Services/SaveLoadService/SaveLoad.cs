@@ -27,7 +27,7 @@ namespace SerjBal
             _appFactory = new Services().Single<IAppFactory>();
         }
 
-        public void Load(string date, Action onLoaded)
+        public void Load(string date, Action onLoaded = null)
         {
             string filePath = Path.Combine(Const.DataPath, $"{date}.json");
             

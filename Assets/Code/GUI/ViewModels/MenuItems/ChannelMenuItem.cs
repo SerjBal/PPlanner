@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using SerjBal.Code.Sources;
 using UnityEngine;
 
 namespace SerjBal
@@ -9,6 +10,7 @@ namespace SerjBal
         public override void Initialize(ButtonConfigs configs)
         {
             base.Initialize(configs);
+            canvas.sortingOrder = Const.SelectedItemSortingOrder+1;
             itemType = MenuItemType.Channel;
             onAddNewItem += () => _factory.CreateNewTimeWindow(this);
             onEditItem += () => _factory.CreateEditChannelWindow(this);

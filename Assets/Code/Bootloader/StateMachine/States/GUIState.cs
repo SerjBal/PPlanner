@@ -27,8 +27,11 @@ namespace SerjBal
             var guiModelView = _services.Single<IGUIModelView>();
             
             var gui = await factory.CreateGUI();
-            gui.Initialize();
+            gui.Initialize(_services);
             guiModelView.Initialize(gui);
+            await factory.CreateDateItem();
+            
+            _stateMachine.Enter<SearchState>();
         }
 
         public void Exit()

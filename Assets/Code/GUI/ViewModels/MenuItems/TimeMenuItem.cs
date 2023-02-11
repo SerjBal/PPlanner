@@ -1,4 +1,5 @@
 using System;
+using SerjBal.Code.Sources;
 
 namespace SerjBal
 {
@@ -10,6 +11,7 @@ namespace SerjBal
         public override void Initialize(ButtonConfigs configs)
         {
             base.Initialize(configs);
+            canvas.sortingOrder = Const.SelectedItemSortingOrder+2;
             itemType = MenuItemType.Time;
             _textKey = GetTextKey();
             onAddNewItem += () => _factory.CreateTextEditor(this, _textKey);

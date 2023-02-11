@@ -13,6 +13,7 @@ namespace SerjBal
         Transform ContentContainer { get;}
         string Key { get; set; }
         MenuItemType itemType { get; set; }
+        bool isSelected { get; set; }
         void Initialize(ButtonConfigs configs);
         void ChangeKey(string newKey);
         void Collapse();

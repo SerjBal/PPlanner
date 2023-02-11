@@ -19,7 +19,7 @@ namespace SerjBal
             var speed = 0.1f / time;
             StopAllCoroutines();
             curtain.alpha = show ? 0 : 1;
-            if (!show)
+            if (show)
                 StartCoroutine(FadeOut(speed));
             else
                 StartCoroutine(FadeIn(speed));

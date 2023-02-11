@@ -10,6 +10,7 @@ namespace SerjBal
         public override void Initialize(ButtonConfigs configs)
         {
             base.Initialize(configs);
+            canvas.sortingOrder = Const.SelectedItemSortingOrder;
             itemType = MenuItemType.Date;
             onAddNewItem += () => _factory.CreateNewChannelWindow(this);
             onEditItem += () => _factory.CreateEditDateWindow(this);

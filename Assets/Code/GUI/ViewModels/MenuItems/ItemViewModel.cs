@@ -15,9 +15,9 @@ namespace SerjBal
         public string Key { get; set; }
         public Transform ContentContainer => contentContainer;
         public Transform ViewTransform => transform;
-
         public MenuItemType itemType { get; set; }
-        [SerializeField] private Canvas canvas;
+        public bool isSelected { get; set; }
+        [SerializeField] protected Canvas canvas;
         [SerializeField] private ButtonSwipeController buttonsController;
         [SerializeField] protected ExpandAnimator animator;
         [SerializeField] private Button editButton;
@@ -47,9 +47,8 @@ namespace SerjBal
             Childs = new List<IMenuItem>();
             _services = new Services();
             _factory = _services.Single<IAppFactory>();
-            _data = new Services().Single<IDataProvider>();
+            _data = _services.Single<IDataProvider>();
             contentContainer.gameObject.SetActive(false);
-            canvas.sortingOrder = Const.SelectedItemSortingOrder;
             animator.Initialize(configs.expandAnimationCurve);
             buttonsController.Initialize(configs);
         }
@@ -65,10 +64,12 @@ namespace SerjBal
             CollapseParentItems();
             contentContainer.gameObject.SetActive(true);
             canvas.overrideSorting = true;
+            isSelected = true;
         }
 
         public virtual void OnCollapsed()
         {
+            isSelected = false;
             Childs = new List<IMenuItem>();
             contentContainer.gameObject.SetActive(false);
             canvas.overrideSorting = false;
@@ -78,7 +79,7 @@ namespace SerjBal
         public void Collapse() => animator.PlayClose();
         public void OnAddNewItem()
         {
-            onAddNewItem.Invoke();
+            onAddNewItem?.Invoke();
         }
 
         public void OnSelected() => animator.AnimationPlay();
@@ -96,7 +97,7 @@ namespace SerjBal
             {
                 foreach (var child in Parent.Childs)
                 {
-                    if (Key != child.Key) child.Collapse();
+                    if (Key != child.Key && child.isSelected) child.Collapse();
                 }
             }
         }
