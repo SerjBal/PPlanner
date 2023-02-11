@@ -1,3 +1,6 @@
+using System;
+using System.Globalization;
+using System.Threading.Tasks;
 using SerjBal.Code.Sources;
 
 namespace SerjBal
@@ -18,10 +21,14 @@ namespace SerjBal
             _fadeScreen = fadeScreen;
         }
 
-        public void Enter()
+        public async void Enter()
         {
-            _GUI = _services.Single<IGUIModelView>();
-            _GUI.Initialize();
+            var factory = _services.Single<IAppFactory>();
+            var guiModelView = _services.Single<IGUIModelView>();
+            
+            var gui = await factory.CreateGUI();
+            gui.Initialize();
+            guiModelView.Initialize(gui);
         }
 
         public void Exit()

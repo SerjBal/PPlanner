@@ -8,6 +8,7 @@ namespace SerjBal.Code.Sources
         public static readonly string DataPath = Application.persistentDataPath;
         public const string ServerPath = "";
         
+        public const string GUITag = "GUI";
         public const string AddItemButtonPath = "add-item-button";
         public const string GUIPath = "canvas";
         public const string DateItemPath = "date-item";

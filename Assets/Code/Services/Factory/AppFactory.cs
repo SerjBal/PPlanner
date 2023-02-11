@@ -39,10 +39,11 @@ namespace SerjBal
         
         public async Task<MainMenuItemView> CreateGUI()
         {
-            GameObject prefab = await _assets.Instantiate(Const.GUIPath);
-            MainMenuItemView mainMenuItemView = prefab.GetComponent<MainMenuItemView>();
-            _GUI = mainMenuItemView;
-            return mainMenuItemView;
+            var guiObject = GameObject.FindGameObjectWithTag(Const.GUITag);
+            if (guiObject==null) guiObject = await _assets.Instantiate(Const.GUIPath);
+            
+            _GUI = guiObject.GetComponent<MainMenuItemView>();
+            return _GUI;
         }
 
         

@@ -17,9 +17,9 @@ namespace SerjBal
             _saveLoad = saveLoad;
         }
 
-        public async Task Initialize()
+        public async Task Initialize(MainMenuItemView gui)
         {
-            _GUI = await _factory.CreateGUI();
+            _GUI = gui;
             await _factory.CreateDateItem();
         }
 

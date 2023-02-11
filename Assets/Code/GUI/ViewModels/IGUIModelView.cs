@@ -5,7 +5,7 @@ namespace SerjBal
 {
     public interface IGUIModelView : IService
     {
-        Task Initialize();
+        Task Initialize(MainMenuItemView gui);
         float GetMenuBounds();
         void UpdateMenu();
         void DisableMenuInteracton(bool p0);
