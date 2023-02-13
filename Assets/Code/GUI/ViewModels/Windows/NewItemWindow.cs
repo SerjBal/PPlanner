@@ -40,13 +40,9 @@ namespace SerjBal.Windows
             var data = _services.Single<IDataProvider>();
             bool hasData = data.DataHasKey(_menuItem, inputField.text);
             if (hasData)
-            {
-                _services.Single<IAppFactory>().CreateReplacingDataWindow(onAccept);
-            }
+                _services.Single<IWindowsFactory>().CreateReplacingDataWindow(onAccept);
             else
-            {
                 onAccept.Invoke();
-            }
         }
         
         private void OnAccept()

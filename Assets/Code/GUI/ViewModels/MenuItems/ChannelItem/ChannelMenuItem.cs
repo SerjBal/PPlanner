@@ -7,13 +7,15 @@ namespace SerjBal
 {
     public class ChannelMenuItem : ItemViewModel
     {
+        private IWindowsFactory _windowsFactory;
         public override void Initialize(ButtonConfigs configs)
         {
             base.Initialize(configs);
+            _windowsFactory = _services.Single<IWindowsFactory>();
             canvas.sortingOrder = Const.SelectedItemSortingOrder+1;
             itemType = MenuItemType.Channel;
-            onAddNewItem += () => _factory.CreateNewTimeWindow(this);
-            onEditItem += () => _factory.CreateEditChannelWindow(this);
+            onAddNewItem += () => _windowsFactory.CreateNewTimeWindow(this);
+            onEditItem += () => _windowsFactory.CreateEditChannelWindow(this);
         }
         
         public override async void OnExpand()

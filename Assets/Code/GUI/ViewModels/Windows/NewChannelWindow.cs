@@ -14,7 +14,7 @@ namespace SerjBal
 
         private async void UpdateContent(IMenuItem menuItem)
         {
-            var _factory = _services.Single<IAppFactory>();
+            var _factory = _services.Single<IMenuFactory>();
             foreach (Transform item in menuItem.ContentContainer) Destroy(item.gameObject);
 
             ItemData dateData = _services.Single<IDataProvider>().GetOrCreateDateData();

@@ -13,7 +13,7 @@ namespace SerjBal
         private readonly IDataProvider _data;
         private readonly IProgress _loaderScreen;
         private ICoroutineRunner _coroutineRunner;
-        private IAppFactory _appFactory;
+        private IMenuFactory _menuFactory;
 
         public SaveLoad(ICoroutineRunner coroutineRunner, IDataProvider data, IProgress loaderScreen)
         {
@@ -24,7 +24,7 @@ namespace SerjBal
 
         public void Initialize()
         {
-            _appFactory = new Services().Single<IAppFactory>();
+            _menuFactory = new Services().Single<IMenuFactory>();
         }
 
         public void Load(string date, Action onLoaded = null)
@@ -79,9 +79,26 @@ namespace SerjBal
             SaveToServer();
         }
 
-        public void SaveText(string key)
+        public void SaveText(string key, TextData textData)
         {
+            string json = JsonUtility.ToJson(textData);
+            string filePath = Path.Combine(Const.DataPath, $"{key}.json");
+            File.WriteAllText(filePath, json);
+        }
+        
+        public TextData LoadText(string key)
+        {
+            string filePath = Path.Combine(Const.DataPath, $"{key}.json");
             
+            if (File.Exists(filePath))
+            {
+                string json = File.ReadAllText(filePath);
+                return JsonUtility.FromJson<TextData>(json);
+            }
+            else
+            {
+                return new TextData { text = "" };
+            }
         }
         
         public void LoadFromServer(string date)

@@ -23,7 +23,7 @@ namespace SerjBal
 
         public async void Enter()
         {
-            var factory = _services.Single<IAppFactory>();
+            var factory = _services.Single<IMenuFactory>();
             var guiModelView = _services.Single<IGUIModelView>();
             
             var gui = await factory.CreateGUI();

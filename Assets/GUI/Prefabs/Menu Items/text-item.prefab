@@ -1342,7 +1342,7 @@ MonoBehaviour:
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
-  m_RichText: 0
+  m_RichText: 1
   m_GlobalFontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_OnFocusSelectAll: 1
   m_ResetOnDeActivation: 1
@@ -1746,6 +1746,7 @@ MonoBehaviour:
   colorStyleButton: {fileID: 408717438602776855}
   linkStyleButton: {fileID: 792076387248349507}
   inputField: {fileID: 4032771725409716196}
+  _textColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &4032771726187312732
 GameObject:
   m_ObjectHideFlags: 0
@@ -1781,7 +1782,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 20, y: -20.874756}
+  m_AnchoredPosition: {x: 20, y: -20.87472}
   m_SizeDelta: {x: -40, y: -20.46045}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &4032771726187312735
@@ -1863,7 +1864,7 @@ MonoBehaviour:
   m_enableKerning: 1
   m_enableExtraPadding: 1
   checkPaddingRequired: 0
-  m_isRichText: 0
+  m_isRichText: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0

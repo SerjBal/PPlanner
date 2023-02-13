@@ -25,7 +25,7 @@ namespace SerjBal
         [SerializeField] private TMP_Text nameText;
         [SerializeField] private Transform contentContainer;
         protected Services _services;
-        protected IAppFactory _factory;
+        protected IMenuFactory _factory;
         protected IDataProvider _data;
         public Action onAddNewItem{ get; set; }
         public Action onEditItem{ get; set; }
@@ -46,7 +46,7 @@ namespace SerjBal
             Binds();
             Childs = new List<IMenuItem>();
             _services = new Services();
-            _factory = _services.Single<IAppFactory>();
+            _factory = _services.Single<IMenuFactory>();
             _data = _services.Single<IDataProvider>();
             contentContainer.gameObject.SetActive(false);
             animator.Initialize(configs.expandAnimationCurve);

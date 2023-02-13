@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace SerjBal
 {
-    public class AppFactory : IAppFactory
+    public class MenuFactory : IMenuFactory
     {
         private IAssetsProvider _assets;
         private readonly Configurations _configs;
@@ -16,7 +16,7 @@ namespace SerjBal
         private ITemplatesProvider _templates;
         private MainMenuItemView _GUI;
 
-        public AppFactory(IAssetsProvider assets,  IDataProvider data, Configurations configs)
+        public MenuFactory(IAssetsProvider assets,  IDataProvider data, Configurations configs)
         {
             _assets = assets;
             _data = data;
@@ -30,11 +30,6 @@ namespace SerjBal
             await _assets.Load<GameObject>(Const.TimeItemPath);
             await _assets.Load<GameObject>(Const.TextItemPath);
             await _assets.Load<GameObject>(Const.AddItemButtonPath);
-            
-            await _assets.Load<GameObject>(Const.EditWindowPath);
-            await _assets.Load<GameObject>(Const.NewChannelWindowPath);
-            await _assets.Load<GameObject>(Const.NewTimeWindowPath);
-            await _assets.Load<GameObject>(Const.WarningWindowPath);
         }
         
         public async Task<MainMenuItemView> CreateGUI()
@@ -44,56 +39,6 @@ namespace SerjBal
             
             _GUI = guiObject.GetComponent<MainMenuItemView>();
             return _GUI;
-        }
-
-        
-        public async Task CreateEditDateWindow(IMenuItem menuItem)
-        {
-            var window = await _assets.Instantiate<IWindow>(Const.EditWindowPath, null);
-            window.SetEditFormatText(Const.EditDateWindowFormatText);
-            window.SetAcceptButtonText(Const.EditDateWindowButtonText);
-            window.Initialize(menuItem);
-        }
-
-        public async Task CreateEditChannelWindow(IMenuItem menuItem)
-        {
-            var window = await _assets.Instantiate<IWindow>(Const.EditWindowPath, null);
-            window.SetEditFormatText(Const.EditChannelWindowFormatText);
-            window.SetAcceptButtonText(Const.EditChannelWindowButtonText);
-            window.Initialize(menuItem);
-        }
-        
-        public async Task CreateNewChannelWindow(IMenuItem menuItem)
-        {
-            var window = await _assets.Instantiate<IWindow>(Const.NewChannelWindowPath, null);
-            window.SetEditFormatText(Const.NewChannelWindowFormatText);
-            window.SetAcceptButtonText(Const.NewChannelWindowButtonText);
-            window.Initialize(menuItem);
-        }
-
-        public async Task CreateEditTimeWindow(IMenuItem menuItem)
-        {
-            var window = await _assets.Instantiate<IWindow>(Const.EditWindowPath, null);
-            window.SetEditFormatText(Const.EditTimeWindowFormatText);
-            window.SetAcceptButtonText(Const.EditTimeWindowButtonText);
-            window.Initialize(menuItem);
-        }
-        
-        
-        public async Task CreateNewTimeWindow(IMenuItem menuItem)
-        {
-            var window = await _assets.Instantiate<IWindow>(Const.NewTimeWindowPath, null);
-            window.SetEditFormatText(Const.NewTimeWindowFormatText);
-            window.SetAcceptButtonText(Const.NewTimeWindowButtonText);
-            window.Initialize(menuItem);
-        }
-
-        public async Task CreateReplacingDataWindow(UnityAction onAccept)
-        {
-            var window = await _assets.Instantiate<IWarningWindow>(Const.WarningWindowPath, null);
-            window.SetWarningText(Const.ReplaceWarningText);
-            window.SetAcceptButtonText(Const.ReplaceButtonText);
-            window.Initialize(onAccept);
         }
 
         public async Task<IMenuItem> CreateDateItem()

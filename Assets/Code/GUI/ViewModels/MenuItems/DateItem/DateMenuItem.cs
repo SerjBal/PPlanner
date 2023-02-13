@@ -7,13 +7,16 @@ namespace SerjBal
 {
     public class DateMenuItem : ItemViewModel
     {
+        private IWindowsFactory _windowsFactory;
+
         public override void Initialize(ButtonConfigs configs)
         {
             base.Initialize(configs);
+            _windowsFactory = _services.Single<IWindowsFactory>();
             canvas.sortingOrder = Const.SelectedItemSortingOrder;
             itemType = MenuItemType.Date;
-            onAddNewItem += () => _factory.CreateNewChannelWindow(this);
-            onEditItem += () => _factory.CreateEditDateWindow(this);
+            onAddNewItem += () => _windowsFactory.CreateNewChannelWindow(this);
+            onEditItem += () => _windowsFactory.CreateEditDateWindow(this);
             animator.AnimationPlay();
         }
 

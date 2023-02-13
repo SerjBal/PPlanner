@@ -7,15 +7,17 @@ namespace SerjBal
     {
         private Action _onExpand;
         private string _textKey;
+        private IWindowsFactory _windowsFactory;
 
         public override void Initialize(ButtonConfigs configs)
         {
             base.Initialize(configs);
+            _windowsFactory = _services.Single<IWindowsFactory>();
             canvas.sortingOrder = Const.SelectedItemSortingOrder+2;
             itemType = MenuItemType.Time;
             _textKey = GetTextKey();
             onAddNewItem += () => _factory.CreateTextEditor(this, _textKey);
-            onEditItem += () => _factory.CreateEditTimeWindow(this);
+            onEditItem += () => _windowsFactory.CreateEditTimeWindow(this);
         }
 
         private string GetTextKey()
