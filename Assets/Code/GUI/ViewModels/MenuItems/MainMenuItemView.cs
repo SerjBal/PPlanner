@@ -27,7 +27,7 @@ namespace SerjBal
             
             int year = calendarData.GetYear(DateTime.Now);
 
-            for (int month = 1; month < calendarView.months.Length; month++)
+            for (int month = 1; month <= calendarView.months.Length; month++)
             {
                 var monthView = calendarView.months[month-1];
                 monthView.nameText.text = dateTimeFormat.GetMonthName(month);
@@ -44,7 +44,8 @@ namespace SerjBal
                         var wheek = monthView.wheeks[j];
                         var dayItem = wheek.days[dayOfWeekNumber];
                         dayItem.nameText.text = $"<size=100%>{day}<br><size=50%>{dayName.Substring(0, 3)}";
-                        dayItem.button.onClick.AddListener(()=>LoadDate(year, month, day));
+                        var dateString = $"{year}.{month}.{day}";
+                        dayItem.button.onClick.AddListener(()=>LoadDate(dateString));
                         dayItem.SetState(GetDateState(year, month, day));
 
                         if (dayOfWeekNumber == 6) j += 1;
@@ -64,19 +65,17 @@ namespace SerjBal
             return false;
         }
 
-        public void LoadDate(int year, int month, int day)
+        public void LoadDate(string date)
         {
-            string date = $"{year}.{month}.{day}";
-            var gui = _services.Single<IGUIModelView>();
             _services.Single<ISaveLoad>().Load(date);
-            gui.UpdateMenu();
+            UpdateMenu();
         }
         
         public void UpdateMenu()
         {
-            var date = dateContainer.GetChild(0).GetComponent<DateMenuItem>();
-            foreach (Transform item in date.ContentContainer) { Destroy(item.gameObject);}
-            date.ShowContent();
+            Destroy( dateContainer.GetChild(0).gameObject);
+            var menuFactory = _services.Single<IMenuFactory>();
+            menuFactory.CreateDateItem();
         }
     }
 }

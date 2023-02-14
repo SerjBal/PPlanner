@@ -29,6 +29,7 @@ namespace SerjBal
 
         public void Load(string date, Action onLoaded = null)
         {
+            _data.Value.DateItem = null;
             string filePath = Path.Combine(Const.DataPath, $"{date}.json");
             
             if (File.Exists(filePath))
@@ -52,10 +53,7 @@ namespace SerjBal
             LoadFromServer(date);
         }
 
-        public void UpdateMenu()
-        {
-            new Services().Single<IGUIModelView>().UpdateMenu();
-        }
+        public void UpdateMenu() => new Services().Single<IGUIModelView>().UpdateMenu();
 
         public void Save()
         {

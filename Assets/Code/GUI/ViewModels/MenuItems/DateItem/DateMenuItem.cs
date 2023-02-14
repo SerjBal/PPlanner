@@ -13,17 +13,22 @@ namespace SerjBal
         {
             base.Initialize(configs);
             _windowsFactory = _services.Single<IWindowsFactory>();
-            canvas.sortingOrder = Const.SelectedItemSortingOrder;
             itemType = MenuItemType.Date;
             onAddNewItem += () => _windowsFactory.CreateNewChannelWindow(this);
             onEditItem += () => _windowsFactory.CreateEditDateWindow(this);
-            animator.AnimationPlay();
         }
 
-        public override async void OnExpand()
+        public override void OnExpandStart()
         {
             ShowContent();
-            base.OnExpand();
+            base.OnExpandStart();
+        }
+
+        public override void OnExpandFinish() => _services.Single<IGUIModelView>().EnableCalendar(false);
+        public override void OnCollapseStart()
+        {
+            _services.Single<IGUIModelView>().EnableCalendar(true);
+            base.OnCollapseStart();
         }
 
         public async void ShowContent()

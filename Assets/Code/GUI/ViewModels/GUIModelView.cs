@@ -17,5 +17,6 @@ namespace SerjBal
 
         public void DisableMenuInteracton(bool isTrue) => _GUI.blocker.SetActive(isTrue);
 
+        public void EnableCalendar(bool isTrue) => _GUI.calendarView.gameObject.SetActive(isTrue);
     }
 }

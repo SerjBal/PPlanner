@@ -17,5 +17,10 @@ public class ItemData
 [Serializable]
 public class TextData
 {
+    public int year;
+    public int munth;
+    public int day;
+    public string channel;
+    public string time;
     public string text;
 }

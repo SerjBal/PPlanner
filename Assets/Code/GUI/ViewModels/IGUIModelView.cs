@@ -8,6 +8,7 @@ namespace SerjBal
         Task Initialize(MainMenuItemView gui);
         float GetMenuBounds();
         void UpdateMenu();
-        void DisableMenuInteracton(bool p0);
+        void DisableMenuInteracton(bool isTrue);
+        public void EnableCalendar(bool isTrue);
     }
 }

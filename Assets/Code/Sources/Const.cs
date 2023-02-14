@@ -38,8 +38,7 @@ namespace SerjBal.Code.Sources
         public const string ReplaceWarningText = "The data already exists! Replace?";
         public const string ReplaceButtonText = "Ok";
         
-        public const int SelectedItemSortingOrder = 10;
-        public const int MenuWindowSortingOrder = 20;
-        public const int WarningWindowSortingOrder = 21;
+        public const int MenuWindowSortingOrder = 10;
+        public const int WarningWindowSortingOrder = 11;
     }
 }

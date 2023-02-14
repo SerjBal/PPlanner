@@ -19,7 +19,7 @@ namespace SerjBal
         public bool isSelected { get; set; }
         [SerializeField] protected Canvas canvas;
         [SerializeField] private ButtonSwipeController buttonsController;
-        [SerializeField] protected ExpandAnimator animator;
+        [SerializeField] protected MenuItemAnimator animator;
         [SerializeField] private Button editButton;
         [SerializeField] private Button removeButton;
         [SerializeField] private TMP_Text nameText;
@@ -34,8 +34,10 @@ namespace SerjBal
         {
             editButton.onClick.AddListener(OnEditItem);
             removeButton.onClick.AddListener(Remove);
-            animator.onExpandEvent = OnExpand;
-            animator.onCollapsedEvent = OnCollapsed;
+            animator.onExpandStartEvent = OnExpandStart;
+            animator.onExpandFinishEvent = OnExpandFinish;
+            animator.onCollapseStartEvent = OnCollapseStart;
+            animator.onCollapseFinishEvent = OnCollapseFinish;
             buttonsController.onSelectedEvent = OnSelected;
         }
 
@@ -59,15 +61,23 @@ namespace SerjBal
             Key = newKey;
         }
 
-        public virtual void OnExpand()
+        public virtual void OnExpandStart()
         {
             CollapseParentItems();
             contentContainer.gameObject.SetActive(true);
             canvas.overrideSorting = true;
             isSelected = true;
         }
+        public virtual void OnExpandFinish() { }
 
-        public virtual void OnCollapsed()
+        public virtual void OnCollapseStart()
+        {
+            if (isSelected)
+            {
+                foreach (IMenuItem child in Childs) child.Collapse();
+            }
+        }
+        public virtual void OnCollapseFinish()
         {
             isSelected = false;
             Childs = new List<IMenuItem>();
@@ -76,12 +86,12 @@ namespace SerjBal
             foreach (Transform item in ContentContainer) {Destroy(item.gameObject);}
         }
 
-        public void Collapse() => animator.PlayClose();
-        public void OnAddNewItem()
+        public void Collapse()
         {
-            onAddNewItem?.Invoke();
+            if (isSelected) animator.PlayClose();
         }
 
+        public void OnAddNewItem() => onAddNewItem?.Invoke();
         public void OnSelected() => animator.AnimationPlay();
 
         private void Remove()

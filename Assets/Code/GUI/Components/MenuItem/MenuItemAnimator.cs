@@ -5,10 +5,12 @@ using UnityEngine.UI;
 
 namespace SerjBal
 {
-    public class ExpandAnimator : MonoBehaviour
+    public class MenuItemAnimator : MonoBehaviour
     {
-        public Action onExpandEvent;
-        public Action onCollapsedEvent;
+        public Action onExpandStartEvent;
+        public Action onExpandFinishEvent;
+        public Action onCollapseStartEvent;
+        public Action onCollapseFinishEvent;
         private AnimationCurve _expandAnimationCurve;
         [SerializeField] private ScrollRect contentScrollRect;
         private bool _isExpaned;
@@ -43,7 +45,7 @@ namespace SerjBal
             _y = buttonTransform.anchoredPosition.y;
             _sizeB = _gui.GetMenuBounds();
             if (_layout != null) _layout.enabled = false;
-            onExpandEvent?.Invoke();
+            onExpandStartEvent?.Invoke();
         }
 
         private void OnExpandFinish()
@@ -51,12 +53,14 @@ namespace SerjBal
             buttonTransform.anchoredPosition = new Vector2( buttonTransform.anchoredPosition.x, 0);
             buttonTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, _sizeB);
             _gui.DisableMenuInteracton(false);
+            onExpandFinishEvent.Invoke();
         }
 
         private void OnCollapseStart()
         {
             contentScrollRect.vertical = false;
             _gui.DisableMenuInteracton(true);
+            onCollapseStartEvent.Invoke();
         }
         
         private void OnCollapseFinish()
@@ -65,14 +69,15 @@ namespace SerjBal
             buttonTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, _buttonHeight);
             _gui.DisableMenuInteracton(false);
             if (_layout != null) _layout.enabled = true;
-            onCollapsedEvent?.Invoke();
+            onCollapseFinishEvent?.Invoke();
         }
 
         private IEnumerator Expand()
         {
             OnExpandStart();
             float timer = 0;
-            while (timer<0.5f)
+            float maxT = _expandAnimationCurve[_expandAnimationCurve.length - 1].time;
+            while (timer<maxT)
             {
                 var t = _expandAnimationCurve.Evaluate(timer);   
                 var x = buttonTransform.anchoredPosition.x;
@@ -88,7 +93,8 @@ namespace SerjBal
         {
             OnCollapseStart();
             float timer = 0;
-            while (timer<0.5f)
+            float maxT = _expandAnimationCurve[_expandAnimationCurve.length - 1].time;
+            while (timer<maxT)
             {
                 var t = _expandAnimationCurve.Evaluate(timer);   
                 var x = buttonTransform.anchoredPosition.x;

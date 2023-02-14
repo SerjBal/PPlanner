@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using SerjBal.Code.Sources;
 using UnityEngine;
 
@@ -12,16 +13,21 @@ namespace SerjBal
         {
             base.Initialize(configs);
             _windowsFactory = _services.Single<IWindowsFactory>();
-            canvas.sortingOrder = Const.SelectedItemSortingOrder+1;
             itemType = MenuItemType.Channel;
             onAddNewItem += () => _windowsFactory.CreateNewTimeWindow(this);
             onEditItem += () => _windowsFactory.CreateEditChannelWindow(this);
         }
         
-        public override async void OnExpand()
+        public override void OnExpandStart()
+        {
+            ShowContent();
+            base.OnExpandStart();
+        }
+
+        private async void ShowContent()
         {
             ItemData channelData = _data.GetOrCreateChannelData(Key);
-            if (channelData!=null && channelData.Content.Count > 0)
+            if (channelData != null && channelData.Content.Count > 0)
             {
                 foreach (var item in channelData.Content)
                 {
@@ -30,7 +36,6 @@ namespace SerjBal
             }
             var addButton = await _factory.CreateAddButton(ContentContainer);
             addButton.onClick.AddListener(OnAddNewItem);
-            base.OnExpand();
         }
     }
 }
