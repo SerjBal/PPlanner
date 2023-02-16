@@ -14,15 +14,29 @@ namespace SerjBal.Windows
         [SerializeField] private TextMeshProUGUI buttonText;
         [SerializeField] private Button acceptButton;
         [SerializeField] private Button closeButton;
-        public void Initialize(UnityAction onAccept)
+        public UnityAction onAccept { get; set; }
+        public IMenuItem menuItem { get; set; }
+        public string currentKey { get; set; }
+        public void Initialize(IMenuItem item)
         {
+            menuItem = item;
             canvas.sortingOrder = Const.WarningWindowSortingOrder;
-            //add on accept override data method by delete compared item and save new by Save(IMenuItem, Key)
-            acceptButton.onClick.AddListener(onAccept);
+            acceptButton.onClick.AddListener(OnAccept);
             closeButton.onClick.AddListener(Close);
         }
 
-        public void SetWarningText(string warning) => warningText.text = warning;
+        private void OnAccept()
+        {
+            for (int i = 0; i < menuItem.Childs.Count; i++)
+            {
+                var item = menuItem.Childs[i];
+                if (item.Key == currentKey) item.Remove();
+            }
+            onAccept.Invoke();
+            Close();
+        }
+        
+        public void SetHeaderText(string warning) => warningText.text = warning;
         public void SetAcceptButtonText(string button) => buttonText.text = button;
         private void Close() => Destroy(gameObject);
     }

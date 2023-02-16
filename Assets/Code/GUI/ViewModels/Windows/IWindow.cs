@@ -2,7 +2,7 @@ namespace SerjBal
 {
     public interface IWindow
     {
-        void SetEditFormatText(string inputFormat);
+        void SetHeaderText(string inputFormat);
         void SetAcceptButtonText(string butoonText);
         void Initialize(IMenuItem menuItem);
     }

@@ -13,18 +13,12 @@ namespace SerjBal
         private readonly IDataProvider _data;
         private readonly IProgress _loaderScreen;
         private ICoroutineRunner _coroutineRunner;
-        private IMenuFactory _menuFactory;
 
         public SaveLoad(ICoroutineRunner coroutineRunner, IDataProvider data, IProgress loaderScreen)
         {
             _coroutineRunner = coroutineRunner;
             _data = data;
             _loaderScreen = loaderScreen;
-        }
-
-        public void Initialize()
-        {
-            _menuFactory = new Services().Single<IMenuFactory>();
         }
 
         public void Load(string date, Action onLoaded = null)
@@ -40,7 +34,7 @@ namespace SerjBal
                 {
                     DateItem = data
                 };
-                _data.SetData(newData);
+                _data.Value = newData;
                 onLoaded?.Invoke();
             }
             else
@@ -60,17 +54,24 @@ namespace SerjBal
             string json = JsonUtility.ToJson(_data.Value.DateItem);
             string filePath = Path.Combine(Const.DataPath, $"{_data.Value.DateItem.Key}.json");
             File.WriteAllText(filePath, json);
+            
+            //remove text data if is
+            foreach (var key in _data.removableTextKeys)
+            {
+                if (File.Exists(key)) File.Delete(key);
+            }
+            _data.removableTextKeys = new List<string>();
         }
-        
-        public void Save(IMenuItem menuItem, string key)
+
+        public void Save(IMenuItem menuItem, string key, ItemData overrideData = null)
         {
             switch (menuItem.itemType)
             {
                 case MenuItemType.Date:
-                    _data.GetOrCreateChannelData(key);
+                    _data.GetOrCreateChannelData(key, overrideData);
                     break;
                 case MenuItemType.Channel:
-                    _data.GetOrCreateTimeData(menuItem.Key, key);
+                    _data.GetOrCreateTimeData(menuItem.Key, key, overrideData);
                     break;
             }
             Save();
@@ -101,12 +102,12 @@ namespace SerjBal
         
         public void LoadFromServer(string date)
         {
-            _coroutineRunner.StartCoroutine(LoadFromServerCourutine(date));
+            //_coroutineRunner.StartCoroutine(LoadFromServerCourutine(date));
         }
 
         private void SaveToServer()
         {
-            _coroutineRunner.StartCoroutine(SaveToServerCourutine());
+            //_coroutineRunner.StartCoroutine(SaveToServerCourutine());
         }
 
         private IEnumerator SaveToServerCourutine()
@@ -136,7 +137,7 @@ namespace SerjBal
             {
                 var data = JsonUtility.FromJson<ItemData>(request.downloadHandler.text);
                 Data newData = new Data { DateItem = data };
-                _data.SetData(newData);
+                _data.Value = newData;
                 UpdateMenu();
             }
 

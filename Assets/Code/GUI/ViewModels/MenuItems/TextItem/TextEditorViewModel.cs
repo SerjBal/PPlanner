@@ -28,7 +28,7 @@ namespace SerjBal
         private IWindowsFactory _windowsFactory;
 
 
-        public void Initialize()
+        public void Initialize(string key)
         {
             Services services = new Services();
             _saveLoad = services.Single<ISaveLoad>();
@@ -37,7 +37,8 @@ namespace SerjBal
             _textEditor = new TextStyleEditor(inputField);
             Resize();
             Bind();
-            
+
+            Key = key;
             inputField.text = _saveLoad.LoadText(Key).text;
         }
 

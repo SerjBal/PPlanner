@@ -11,7 +11,7 @@ namespace SerjBal
             gameObject.transform.SetParent(container, false);
         }
         
-        public static bool ContainsKey(this  List<ItemData> content, string key)
+        public static bool ContainsKey(this List<ItemData> content, string key)
         {
             foreach (ItemData item in content)
             {
@@ -20,7 +20,7 @@ namespace SerjBal
             return false;
         }
 
-        public static ItemData Get(this  List<ItemData> content, string key)
+        public static ItemData Get(this List<ItemData> content, string key)
         {
             foreach (ItemData item in content)
             {
@@ -29,7 +29,15 @@ namespace SerjBal
             return null;
         }
         
-        public static void RemoveKey(this  List<ItemData> content, string key)
+        public static void Override(this List<ItemData> content, string key, ItemData data)
+        {
+            for (int i = 0; i < content.Count; i++)
+            {
+                if (content[i].Key == key) content[i] = data;
+            }
+        }
+        
+        public static void RemoveKey(this List<ItemData> content, string key)
         {
             for (int i = 0; i < content.Count; i++)
             {

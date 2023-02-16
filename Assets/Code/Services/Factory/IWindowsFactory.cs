@@ -11,8 +11,8 @@ namespace SerjBal
         Task CreateEditTimeWindow(IMenuItem channelMenuItem);
         Task CreateNewChannelWindow(IMenuItem menuItem);
         Task CreateNewTimeWindow(IMenuItem menuItem);
-        Task CreateReplacingDataWindow(UnityAction onAccept);
+        Task<IWarningWindow>CreateReplacingDataWindow();
         Task<TextStyleLinkWindow> CreateTextLinkStyleWindow();
-        Task<CreateTextColorWindow> CreateTextColorWindow();
+        Task<TextColorWindow> CreateTextColorWindow();
     }
 }

@@ -1,19 +1,19 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 
 namespace SerjBal
 {
     public interface IDataProvider : IService
     {
-        Data Value { get; }
-        void SetData(Data data);
+        Data Value { get; set; }
+        public List<string> removableTextKeys  { get; set; }
         bool DataHasKey(IMenuItem menuItem, string key);
-
-        void RemoveKey(IMenuItem menuItem, string key);
-        ItemData GetOrCreateDateData(string key = null);
-        ItemData GetOrCreateChannelData(string key);
-        ItemData GetOrCreateTimeData(string parentKey, string key);
-        
-        
+        void RenameKey(IMenuItem parent, string key, string newKey);
+        void RemoveKey(IMenuItem menuItem);
+        public List<ItemData> GetDataOf(IMenuItem menuItem);
+        ItemData GetOrCreateDateData(string key = null, ItemData overrideData = null);
+        ItemData GetOrCreateChannelData(string key, ItemData overrideData= null);
+        ItemData GetOrCreateTimeData(string parentKey, string key, ItemData overrideData= null);
     }
 }

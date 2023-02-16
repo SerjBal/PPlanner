@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using SerjBal.Windows;
 using UnityEngine;
 
@@ -7,8 +8,8 @@ namespace SerjBal
     {
         public override void Initialize(IMenuItem menuItem)
         {
-            base.Initialize(menuItem);
             InputField.text = "New Channel";
+            base.Initialize(menuItem);
             onAccept += () => UpdateContent(menuItem);
         }
 
@@ -16,6 +17,7 @@ namespace SerjBal
         {
             var _factory = _services.Single<IMenuFactory>();
             foreach (Transform item in menuItem.ContentContainer) Destroy(item.gameObject);
+            menuItem.Childs = new List<IMenuItem>();
 
             ItemData dateData = _services.Single<IDataProvider>().GetOrCreateDateData();
             if (dateData.Content!=null && dateData.Content.Count>0)

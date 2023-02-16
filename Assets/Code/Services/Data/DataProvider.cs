@@ -16,29 +16,52 @@ namespace SerjBal
 
     public class DataProvider : IDataProvider
     {
-        public Data Value { get; private set; }
+        public Data Value { get; set; }
+        public List<string> removableTextKeys  { get; set; }
 
         private readonly ITemplatesProvider _templates;
         public DataProvider(ITemplatesProvider templates)
         {
             Value = new Data { DateItem = null};
+            removableTextKeys = new List<string>();
             _templates = templates;
         }
-
-        public void SetData(Data data) => Value = data;
-
-        public bool DataHasKey(IMenuItem menuItem, string key)
+        public bool DataHasKey(IMenuItem menuItem, string key) => GetDataOf(menuItem).ContainsKey(key);
+        public void RenameKey(IMenuItem menuItem, string key, string newKey)
         {
-            return GetContentOf(menuItem).ContainsKey(key);
+            var content = GetDataOf(menuItem.Parent);
+            if (content.ContainsKey(key)) content.Get(key).Key = newKey;
         }
 
-        public void RemoveKey(IMenuItem menuItem, string key)
+        public void RemoveKey(IMenuItem menuItem)
         {
-            var content = GetContentOf(menuItem);
-            if (content.ContainsKey(key)) content.RemoveKey(key);
+            if (menuItem.itemType == MenuItemType.Time)
+            {
+                if (menuItem.Childs.Count>0)
+                {
+                    removableTextKeys.Add(menuItem.Childs[0].Key);
+                } 
+            }
+            else
+            {
+                for (int i = 0; i < menuItem.Childs.Count; i++)
+                {
+                    RemoveKey(menuItem.Childs[i]);
+                }
+            }
+
+            if (menuItem.Parent==null)
+            {
+                GetDataOf(menuItem).Clear();
+            }
+            else
+            {
+                var content = GetDataOf(menuItem.Parent);
+                content.RemoveKey(menuItem.Key);
+            }
         }
 
-        private List<ItemData> GetContentOf(IMenuItem menuItem)
+        public List<ItemData> GetDataOf(IMenuItem menuItem)
         {
             switch (menuItem.itemType)
             {
@@ -57,7 +80,7 @@ namespace SerjBal
             }
         }
 
-        public ItemData GetOrCreateDateData(string key = null)
+        public ItemData GetOrCreateDateData(string key = null, ItemData overrideData = null)
         {
             if (key != null)
                 if (Value.DateItem == null)
@@ -65,26 +88,35 @@ namespace SerjBal
                     var dateItem = new ItemData { Key = key, Content = new List<ItemData>() };
                     Value = new Data { DateItem = dateItem };
                 }
+
+            if (overrideData!=null) Value.DateItem = overrideData;
             return Value.DateItem;
         }
 
-        public ItemData GetOrCreateChannelData(string key)
+        public ItemData GetOrCreateChannelData(string key, ItemData overrideData = null)
         {
             var date = GetOrCreateDateData();
             if (date.Content != null && date.Content.ContainsKey(key))
+            {
+                if (overrideData != null) date.Content.Override(key, overrideData);
                 return date.Content.Get(key);
+            }
+            
 
             var newChannel = new ItemData { Key = key, Content = new List<ItemData>() };
             date.Content.Add(newChannel);
             return newChannel;
         }
 
-        public ItemData GetOrCreateTimeData(string channelKey, string timeKey)
+        public ItemData GetOrCreateTimeData(string channelKey, string timeKey, ItemData overrideData = null)
         {
             var channel = GetOrCreateChannelData(channelKey);
             if (channel.Content.ContainsKey(timeKey))
+            {
+                if (overrideData != null) channel.Content.Override(timeKey, overrideData);
                 return channel.Content.Get(timeKey);
-
+            }
+            
             var textKey = PlayerPrefs.GetInt(Const.LastTextID, 0) + 1;
             var textKeyItem = new ItemData {Key = textKey.ToString() };
             var timeData = new ItemData { Key = timeKey, Content = new List<ItemData>()};

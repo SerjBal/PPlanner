@@ -64,6 +64,20 @@ MonoBehaviour:
         m_Value: ServerData/[BuildTarget]
       - m_Id: dcdd5a3198ecf452faf617ea5d1aa962
         m_Value: http://[PrivateIpAddress]:[HostingServicePort]
+    - m_InheritedParent: 
+      m_Id: c471ce86f573e4f869cea97995379000
+      m_ProfileName: New Profile
+      m_Values:
+      - m_Id: b1d9db393c0d54327a8bc45c272848d1
+        m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
+      - m_Id: b91c6c54bca2146668dbe012763d923c
+        m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
+      - m_Id: c1f17fb18608745c3a4f33611dd795bc
+        m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
+      - m_Id: a583a6bfdcbe043f0819df682688d89e
+        m_Value: ServerData/[BuildTarget]
+      - m_Id: dcdd5a3198ecf452faf617ea5d1aa962
+        m_Value: http://[PrivateIpAddress]:[HostingServicePort]
     m_ProfileEntryNames:
     - m_Id: b1d9db393c0d54327a8bc45c272848d1
       m_Name: BuildTarget
@@ -114,7 +128,7 @@ MonoBehaviour:
           m_Key: HostingServiceUploadSpeed
         - m_AssemblyName: mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
           m_ClassName: System.String
-          m_Data: Library/com.unity.addressables/aa/iOS/iOS
+          m_Data: Library/com.unity.addressables/aa/Android/Android
           m_Key: ContentRoot
         - m_AssemblyName: mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
           m_ClassName: System.Boolean

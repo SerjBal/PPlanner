@@ -3,10 +3,9 @@ using UnityEngine.Events;
 
 namespace SerjBal
 {
-    public interface IWarningWindow
+    public interface IWarningWindow : IWindow
     {
-        void SetWarningText(string warningText);
-        void SetAcceptButtonText(string buttonText);
-        void Initialize(UnityAction OnAccept);
+        string currentKey { get; set; }
+        UnityAction onAccept { get; set; }
     }
 }

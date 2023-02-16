@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using SerjBal.Code.Sources;
 using TMPro;
 using UnityEngine;
@@ -14,12 +15,13 @@ namespace SerjBal
         public List<IMenuItem> Childs { get; set;}
         public string Key { get; set; }
         public Transform ContentContainer => contentContainer;
-        public Transform ViewTransform => transform;
         public MenuItemType itemType { get; set; }
+        public Action onAddNewItem{ get; set; }
+        public Action onEditItem{ get; set; }
         public bool isSelected { get; set; }
-        [SerializeField] protected Canvas canvas;
+        [SerializeField] private Canvas canvas;
         [SerializeField] private ButtonSwipeController buttonsController;
-        [SerializeField] protected MenuItemAnimator animator;
+        [SerializeField] private MenuItemAnimator animator;
         [SerializeField] private Button editButton;
         [SerializeField] private Button removeButton;
         [SerializeField] private TMP_Text nameText;
@@ -27,9 +29,18 @@ namespace SerjBal
         protected Services _services;
         protected IMenuFactory _factory;
         protected IDataProvider _data;
-        public Action onAddNewItem{ get; set; }
-        public Action onEditItem{ get; set; }
 
+        public virtual void Initialize(ButtonConfigs configs)
+        {
+            Binds();
+            Childs = new List<IMenuItem>();
+            _services = new Services();
+            _factory = _services.Single<IMenuFactory>();
+            _data = _services.Single<IDataProvider>();
+            animator.Initialize(configs.expandAnimationCurve);
+            buttonsController.Initialize(configs);
+            contentContainer.gameObject.SetActive(false);
+        }
         private void Binds()
         {
             editButton.onClick.AddListener(OnEditItem);
@@ -41,26 +52,19 @@ namespace SerjBal
             buttonsController.onSelectedEvent = OnSelected;
         }
 
-        public void OnEditItem() => onEditItem.Invoke();
-
-        public virtual void Initialize(ButtonConfigs configs)
+        public void SetKey(string key)
         {
-            Binds();
-            Childs = new List<IMenuItem>();
-            _services = new Services();
-            _factory = _services.Single<IMenuFactory>();
-            _data = _services.Single<IDataProvider>();
-            contentContainer.gameObject.SetActive(false);
-            animator.Initialize(configs.expandAnimationCurve);
-            buttonsController.Initialize(configs);
+            nameText.text = key;
+            Key = key;
         }
-
         public void ChangeKey(string newKey)
         {
-            nameText.text = newKey;
-            Key = newKey;
+            _data.RenameKey(this, Key, newKey);
+            SetKey(newKey);
         }
 
+        public void OnEditItem() => onEditItem.Invoke();
+        
         public virtual void OnExpandStart()
         {
             CollapseParentItems();
@@ -74,7 +78,7 @@ namespace SerjBal
         {
             if (isSelected)
             {
-                foreach (IMenuItem child in Childs) child.Collapse();
+                foreach (IMenuItem child in Childs)child.Collapse();
             }
         }
         public virtual void OnCollapseFinish()
@@ -88,17 +92,30 @@ namespace SerjBal
 
         public void Collapse()
         {
-            if (isSelected) animator.PlayClose();
+            if (isSelected) animator?.PlayClose();
         }
 
         public void OnAddNewItem() => onAddNewItem?.Invoke();
         public void OnSelected() => animator.AnimationPlay();
 
-        private void Remove()
+        public void Remove()
         {
-            _services.Single<IDataProvider>().RemoveKey(Parent, Key);
+            _services.Single<IDataProvider>().RemoveKey(this);
+            if (Parent!=null)
+            {
+                for (int i = 0; i < Parent.Childs.Count; i++)
+                {
+                    var item = Parent.Childs[i];
+                    if ( item.Key == Key) Parent.Childs.RemoveAt(i);
+                }
+                Destroy(gameObject);
+            }
+            else
+            {
+                Collapse();
+            }
+            
             _services.Single<ISaveLoad>().Save();
-            Destroy(gameObject);
         }
         
         private void CollapseParentItems()

@@ -15,8 +15,10 @@ namespace SerjBal
         MenuItemType itemType { get; set; }
         bool isSelected { get; set; }
         void Initialize(ButtonConfigs configs);
+        void SetKey(string key);
         void ChangeKey(string newKey);
         void Collapse();
         void OnAddNewItem();
+        void Remove();
     }
 }

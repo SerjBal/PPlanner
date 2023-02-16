@@ -77,5 +77,10 @@ namespace SerjBal
             var menuFactory = _services.Single<IMenuFactory>();
             menuFactory.CreateDateItem();
         }
+
+        private void OnDestroy()
+        {
+            _services.Single<IAssetsProvider>().Cleanup();
+        }
     }
 }
