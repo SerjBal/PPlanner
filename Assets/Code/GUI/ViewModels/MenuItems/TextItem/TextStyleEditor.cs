@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 
@@ -8,8 +9,6 @@ namespace SerjBal
     public class TextStyleEditor
     {
         private TMP_InputField _inputField;
-        private int start, length;
-        private string selectedText;
         private const string _fontTag = "font";
         private const string _linkTag = "link";
         private const string _strikethroughTag = "s";
@@ -25,7 +24,6 @@ namespace SerjBal
             int length = Mathf.Abs(_inputField.selectionStringAnchorPosition - _inputField.selectionStringFocusPosition);
             string selectedText = _inputField.text.Substring(start, length);
 
-            // Define the bold tags
             string openTag = $"<{openTagLetter}>";
             string closeTag = closeTagLetter==null?$"</{openTagLetter}>":$"</{closeTagLetter}>";
 
@@ -40,13 +38,16 @@ namespace SerjBal
                 selectedText = $"{openTag}{selectedText.Replace(openTag, "")}";
             else if (isSelectedContainsCloseTag)
                 selectedText = $"{selectedText.Replace(closeTag, "")}{closeTag}";
-            else if (isTextAroundSelectionBold)
+            if (isTextAroundSelectionBold)
                 selectedText = $"{closeTag}{selectedText}{openTag}";
             else 
                 selectedText = $"{openTag}{selectedText}{closeTag}";
 
             // Replace the selected text in the input field with the transformed text
-            _inputField.text = _inputField.text.Substring(0, start) + selectedText + _inputField.text.Substring(start + length);
+            var result = _inputField.text.Substring(0, start) + selectedText + _inputField.text.Substring(start + length);
+
+            string pattern = $"{openTag}{closeTag}";
+            _inputField.text = result.Replace(pattern, "");
         }
         public void ApplyBoldStyle() => SetSelectedTextStyle(_boldTag);
         public void ApplyItalicStyle() => SetSelectedTextStyle(_italicTag);

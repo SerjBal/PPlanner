@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: New Button Configs
   m_EditorClassIdentifier: 
   clickTimer: 0.1
-  swipeDistance: 0.1
+  swipeDistance: 0.2
   expandAnimationCurve:
     serializedVersion: 2
     m_Curve:

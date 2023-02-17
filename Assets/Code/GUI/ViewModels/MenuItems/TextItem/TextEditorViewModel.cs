@@ -26,8 +26,7 @@ namespace SerjBal
         private ISaveLoad _saveLoad;
         private IGUIModelView _gui;
         private IWindowsFactory _windowsFactory;
-
-
+        
         public void Initialize(string key)
         {
             Services services = new Services();
@@ -35,11 +34,10 @@ namespace SerjBal
             _gui = services.Single<IGUIModelView>();
             _windowsFactory = services.Single<IWindowsFactory>();
             _textEditor = new TextStyleEditor(inputField);
+            
+            SetKey(key);
             Resize();
             Bind();
-
-            Key = key;
-            inputField.text = _saveLoad.LoadText(Key).text;
         }
 
         private void Bind()
@@ -53,6 +51,12 @@ namespace SerjBal
             linkStyleButton.onClick.AddListener(OpenLinkWindow);
             colorStyleButton.onClick.AddListener(OpenColorWindow);
         }
+        
+        private void SetKey(string key)
+        {
+            Key = key;
+            inputField.text = _saveLoad.LoadText(Key).text;
+        }
 
         private void OnChangedSave(string value)
         {
@@ -60,7 +64,7 @@ namespace SerjBal
             StartCoroutine(DelayAndSave(value));
         }
 
-        IEnumerator DelayAndSave(string value)
+        private IEnumerator DelayAndSave(string value)
         {
             _timer = 3;
             while (_timer>0)

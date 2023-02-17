@@ -19,9 +19,11 @@ namespace SerjBal
         private Vector3 _mouseStartPosition;
         private float frontMaxX;
         private float frontMinX;
+        private float _width;
 
         public void Initialize(ButtonConfigs configs)
         {
+            _width = frontButtonTransform.rect.width/2;
             _onOnButtonClickTimer = configs.clickTimer;
             _maxSliceDistance = configs.swipeDistance;
         }
@@ -80,29 +82,26 @@ namespace SerjBal
 
         private void ButtonResize(float offset)
         {
-            float width = frontButtonTransform.rect.width / 2;
-            
-            var offsetMax = new Vector2(Mathf.Clamp(frontMaxX + offset, -width, 0), frontButtonTransform.offsetMax.y);
+            var offsetMax = new Vector2(Mathf.Clamp(frontMaxX + offset, -_width, 0), frontButtonTransform.offsetMax.y);
             frontButtonTransform.offsetMax = offsetMax;
             frontButtonTransform.offsetMin = new Vector2(0, frontButtonTransform.offsetMin.y);
                 
-            rightButtonsTransform.offsetMin = new Vector2(Mathf.Clamp(frontMaxX + offset, -width, 0), rightButtonsTransform.offsetMax.y);
+            rightButtonsTransform.offsetMin = new Vector2(Mathf.Clamp(frontMaxX + offset, -_width, 0), rightButtonsTransform.offsetMax.y);
         }
 
 
         private IEnumerator SoftSnapp()
         {
             float time = 0;
-            var width = frontButtonTransform.rect.width/2;
             var frontOffsetMin = frontButtonTransform.offsetMin.y;
             var fronOffSetMax = frontButtonTransform.offsetMax.y;
             var minA = frontButtonTransform.offsetMin.x;
             var maxA = frontButtonTransform.offsetMax.x;
-            var minCheck = minA > width / 2;
-            var maxCheck = maxA < -width / 2;
+            var minCheck = minA > _width / 2;
+            var maxCheck = maxA < -_width / 2;
             
-            var minB = minCheck ? width : 0;
-            var maxB = maxCheck ? -width : 0;
+            var minB = minCheck ? _width : 0;
+            var maxB = maxCheck ? -_width : 0;
             
             while (time<1f)
             {
