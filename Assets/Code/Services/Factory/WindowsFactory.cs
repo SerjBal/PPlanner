@@ -68,13 +68,13 @@ namespace SerjBal
             return window;
         }
 
-        public async Task<TextStyleLinkWindow> CreateTextLinkStyleWindow()
+        public async Task<TextStyleLinkWindow> CreateTextLinkStyleWindow(TextStyleEditor textStyleEditor)
         {
             Debug.Log("link window");
             return null;
         }
 
-        public Task<TextColorWindow> CreateTextColorWindow()
+        public Task<TextColorWindow> CreateTextColorWindow(TextStyleEditor textStyleEditor)
         {
             Debug.Log("color window");
             return null;

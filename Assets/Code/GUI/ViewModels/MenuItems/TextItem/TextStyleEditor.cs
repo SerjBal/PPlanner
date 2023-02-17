@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -19,29 +21,32 @@ namespace SerjBal
         
         private void SetSelectedTextStyle(string openTagLetter, string closeTagLetter = null)
         {
-            start = Mathf.Min(_inputField.selectionStringAnchorPosition, _inputField.selectionStringFocusPosition);
-            length = Mathf.Abs(_inputField.selectionStringAnchorPosition - _inputField.selectionStringFocusPosition);
-            selectedText = _inputField.text.Substring(start, length);
-            
-            string boldOpenTag = $"<{openTagLetter}>";
-            string boldCloseTag = closeTagLetter==null? $"</{openTagLetter}>":$"</{closeTagLetter}>";
+            int start = Mathf.Min(_inputField.selectionStringAnchorPosition, _inputField.selectionStringFocusPosition);
+            int length = Mathf.Abs(_inputField.selectionStringAnchorPosition - _inputField.selectionStringFocusPosition);
+            string selectedText = _inputField.text.Substring(start, length);
 
-            int boldOpenTagIndex = selectedText.IndexOf(boldOpenTag);
-            int boldCloseTagIndex = selectedText.IndexOf(boldCloseTag);
+            // Define the bold tags
+            string openTag = $"<{openTagLetter}>";
+            string closeTag = closeTagLetter==null?$"</{openTagLetter}>":$"</{closeTagLetter}>";
 
-            if (boldOpenTagIndex != -1 && boldCloseTagIndex != -1)
-            {
-                // Remove existing bold tags
-                selectedText = selectedText.Remove(boldCloseTagIndex, boldCloseTag.Length);
-                selectedText = selectedText.Remove(boldOpenTagIndex, boldOpenTag.Length);
-            }
-            else
-            {
-                // Add bold tags
-                selectedText = boldOpenTag + selectedText + boldCloseTag;
-            }
+            bool isSelectedContainsOpenTag = selectedText.Contains(openTag);
+            bool isSelectedContainsCloseTag = selectedText.Contains(closeTag);
+            bool isSelectedTextBold = isSelectedContainsOpenTag && isSelectedContainsCloseTag;
+            bool isTextAroundSelectionBold = _inputField.text.Substring(0, start).Contains(openTag) && _inputField.text.Substring(start + length).Contains(closeTag);
 
-            ReplaceSelectedText();
+            if (isSelectedTextBold)
+                selectedText = selectedText.Replace(openTag, "").Replace(closeTag, "");
+            else if (isSelectedContainsOpenTag)
+                selectedText = $"{openTag}{selectedText.Replace(openTag, "")}";
+            else if (isSelectedContainsCloseTag)
+                selectedText = $"{selectedText.Replace(closeTag, "")}{closeTag}";
+            else if (isTextAroundSelectionBold)
+                selectedText = $"{closeTag}{selectedText}{openTag}";
+            else 
+                selectedText = $"{openTag}{selectedText}{closeTag}";
+
+            // Replace the selected text in the input field with the transformed text
+            _inputField.text = _inputField.text.Substring(0, start) + selectedText + _inputField.text.Substring(start + length);
         }
         public void ApplyBoldStyle() => SetSelectedTextStyle(_boldTag);
         public void ApplyItalicStyle() => SetSelectedTextStyle(_italicTag);
@@ -50,13 +55,5 @@ namespace SerjBal
         public void ApplyColor(Color col) => SetSelectedTextStyle($"{_colorTag}={col.GetHexColor()}", _colorTag);
         public void ApplyLink(string link) => SetSelectedTextStyle($"{_linkTag}={link}", _linkTag);
         public void ApplyFont(string font) => SetSelectedTextStyle($"{_fontTag}={font}", _fontTag);
-
-
-        private void ReplaceSelectedText()
-        {
-            string beforeSelection = _inputField.text.Substring(0, start);
-            string afterSelection = _inputField.text.Substring(start + length);
-            _inputField.text = beforeSelection + selectedText + afterSelection;
-        }
     }
 }

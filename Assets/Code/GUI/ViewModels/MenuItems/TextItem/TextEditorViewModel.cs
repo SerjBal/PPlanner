@@ -54,8 +54,6 @@ namespace SerjBal
             colorStyleButton.onClick.AddListener(OpenColorWindow);
         }
 
-        public void Resize() => rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, _gui.GetMenuBounds());
-
         private void OnChangedSave(string value)
         {
             StopAllCoroutines();
@@ -74,16 +72,10 @@ namespace SerjBal
             _timer = 0;
             _saveLoad.SaveText(Key, new TextData{ text = value});
         }
-        public async void OpenLinkWindow()
-        {
-           var windiw = await _windowsFactory.CreateTextLinkStyleWindow();
-        }
-
-        public async void OpenColorWindow()
-        {
-            var windiw = await _windowsFactory.CreateTextColorWindow();
-        }
-
+        
+        public async void OpenLinkWindow() => await _windowsFactory.CreateTextLinkStyleWindow(_textEditor);
+        public async void OpenColorWindow() => await _windowsFactory.CreateTextColorWindow(_textEditor);
+        public void Resize() => rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, _gui.GetMenuBounds());
         private void OnDestroy() => _saveLoad.SaveText(Key, new TextData{ text = inputField.text});
     }
 }

@@ -12,7 +12,7 @@ namespace SerjBal
         Task CreateNewChannelWindow(IMenuItem menuItem);
         Task CreateNewTimeWindow(IMenuItem menuItem);
         Task<IWarningWindow>CreateReplacingDataWindow();
-        Task<TextStyleLinkWindow> CreateTextLinkStyleWindow();
-        Task<TextColorWindow> CreateTextColorWindow();
+        Task<TextStyleLinkWindow> CreateTextLinkStyleWindow(TextStyleEditor textStyleEditor);
+        Task<TextColorWindow> CreateTextColorWindow(TextStyleEditor textStyleEditor);
     }
 }
