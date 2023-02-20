@@ -8,12 +8,13 @@ namespace SerjBal
     {
         Data Value { get; set; }
         public List<string> removableTextKeys  { get; set; }
-        bool DataHasKey(IMenuItem menuItem, string key);
-        void RenameKey(IMenuItem parent, string key, string newKey);
-        void RemoveKey(IMenuItem menuItem);
-        public List<ItemData> GetDataOf(IMenuItem menuItem);
-        ItemData GetOrCreateDateData(string key = null, ItemData overrideData = null);
-        ItemData GetOrCreateChannelData(string key, ItemData overrideData= null);
-        ItemData GetOrCreateTimeData(string parentKey, string key, ItemData overrideData= null);
+        bool HasKey(string keyPath);
+        void RenameKey(string keyPath, string newKey);
+        void RemoveKey(string keyPath); 
+        void SetData(string keyPath, ItemData data);
+        ItemData GetOrCreateData(string keyPath);
+        ItemData GetOrCreateDateData(string[] keyParts = null);
+        ItemData GetOrCreateChannelData(string[] keyParts );
+        ItemData GetOrCreateTimeData(string[] keyParts);
     }
 }

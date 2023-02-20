@@ -41,6 +41,20 @@ namespace SerjBal
             return _GUI;
         }
 
+        public Task<IMenuItem> CreateMenuItem(IMenuItem parent, string key)
+        {
+            switch (parent.itemType)
+            {
+                case MenuItemType.Date:
+                    return CreateChannelItem(parent, key);
+                case MenuItemType.Channel:
+                    return CreateTimeItem(parent, key);
+                case MenuItemType.Time:
+                default:
+                    return null;
+            }
+        } 
+
         public async Task<IMenuItem> CreateDateItem()
         {
             IMenuItem item = await _assets.Instantiate<IMenuItem>(Const.DateItemPath, _GUI.dateContainer);
@@ -49,12 +63,6 @@ namespace SerjBal
             item.Initialize(_configs.buttonConfigs);
             return item;
         }
-        
-        public async Task<IMenuItem> CreateChannelItem(IMenuItem parent, string channelKey) => 
-            await CreateMenuItem(Const.ChannelItemPath, channelKey, parent);
-
-        public async Task<IMenuItem> CreateTimeItem(IMenuItem parent, string timeKey) => 
-            await CreateMenuItem(Const.TimeItemPath, timeKey, parent);
 
         public async Task CreateTextEditor(IMenuItem parent, string timeKey)
         {
@@ -63,17 +71,17 @@ namespace SerjBal
             textItem.Initialize(timeKey);
         }
 
-        public async Task<Button> CreateAddButton(Transform parent)
+        public async Task<Button> CreateAddButton(Transform parent) => 
+            await _assets.Instantiate<Button>(Const.AddItemButtonPath, parent);
+
+        private async Task<IMenuItem> CreateChannelItem(IMenuItem parent, string channelKey)
         {
-            return await _assets.Instantiate<Button>(Const.AddItemButtonPath, parent);
+            return await CreateMenuItemInstance(Const.ChannelItemPath, channelKey, parent);
         }
 
-        public void Clear()
-        {
-            
-        }
-
-        private async Task<IMenuItem> CreateMenuItem(string path, string key = null, IMenuItem parent = null)
+        private async Task<IMenuItem> CreateTimeItem(IMenuItem parent, string timeKey) => 
+            await CreateMenuItemInstance(Const.TimeItemPath, timeKey, parent);
+        private async Task<IMenuItem> CreateMenuItemInstance(string path, string key = null, IMenuItem parent = null)
         {
             IMenuItem item = await _assets.Instantiate<IMenuItem>(path, parent.ContentContainer);
             

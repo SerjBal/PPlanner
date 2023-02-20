@@ -1,10 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using SerjBal.Code.Sources;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace SerjBal
@@ -59,19 +56,19 @@ namespace SerjBal
         }
         public void ChangeKey(string newKey)
         {
-            _data.RenameKey(this, Key, newKey);
+            _data.RenameKey(this.GetKeyPath(), newKey);
             SetKey(newKey);
         }
-
         public void OnEditItem() => onEditItem.Invoke();
         
         public virtual void OnExpandStart()
         {
-            CollapseParentItems();
+            UpdateContent();
             contentContainer.gameObject.SetActive(true);
             canvas.overrideSorting = true;
             isSelected = true;
         }
+        
         public virtual void OnExpandFinish() { }
 
         public virtual void OnCollapseStart()
@@ -98,35 +95,36 @@ namespace SerjBal
         public void OnAddNewItem() => onAddNewItem?.Invoke();
         public void OnSelected() => animator.AnimationPlay();
 
+        public virtual async void UpdateContent()
+        {
+            var keyPath = this.GetKeyPath();
+            
+            Childs.Clear();
+            ContentContainer.Clear();
+                
+            ItemData itemData =  _data.GetOrCreateData(keyPath);
+            for (int i = 0; i < itemData.Content.Count; i++)
+            {
+                Childs.Add(await _factory.CreateMenuItem(this, itemData.Content[i].Key));
+            }
+            
+            var addButton = await _factory.CreateAddButton(ContentContainer);
+            addButton.onClick.AddListener(OnAddNewItem);
+            animator.onExpandFinishEvent?.Invoke();
+        }
+
         public void Remove()
         {
-            _services.Single<IDataProvider>().RemoveKey(this);
+            _services.Single<IDataProvider>().RemoveKey(this.GetKeyPath());
             if (Parent!=null)
             {
-                for (int i = 0; i < Parent.Childs.Count; i++)
-                {
-                    var item = Parent.Childs[i];
-                    if ( item.Key == Key) Parent.Childs.RemoveAt(i);
-                }
-                Destroy(gameObject);
+                Parent.UpdateContent();
             }
             else
             {
                 Collapse();
             }
-            
             _services.Single<ISaveLoad>().Save();
-        }
-        
-        private void CollapseParentItems()
-        {
-            if (Parent!=null)
-            {
-                foreach (var child in Parent.Childs)
-                {
-                    if (Key != child.Key && child.isSelected) child.Collapse();
-                }
-            }
         }
     }
 }

@@ -17,25 +17,5 @@ namespace SerjBal
             onAddNewItem += () => _windowsFactory.CreateNewTimeWindow(this);
             onEditItem += () => _windowsFactory.CreateEditChannelWindow(this);
         }
-        
-        public override void OnExpandStart()
-        {
-            ShowContent();
-            base.OnExpandStart();
-        }
-
-        private async void ShowContent()
-        {
-            ItemData channelData = _data.GetOrCreateChannelData(Key);
-            if (channelData != null && channelData.Content.Count > 0)
-            {
-                foreach (var item in channelData.Content)
-                {
-                    Childs.Add(await _factory.CreateTimeItem(this, item.Key));
-                }
-            }
-            var addButton = await _factory.CreateAddButton(ContentContainer);
-            addButton.onClick.AddListener(OnAddNewItem);
-        }
     }
 }

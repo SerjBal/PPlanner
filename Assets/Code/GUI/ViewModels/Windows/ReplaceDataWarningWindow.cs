@@ -16,7 +16,6 @@ namespace SerjBal.Windows
         [SerializeField] private Button closeButton;
         public UnityAction onAccept { get; set; }
         public IMenuItem menuItem { get; set; }
-        public string currentKey { get; set; }
         public void Initialize(IMenuItem item)
         {
             menuItem = item;
@@ -27,11 +26,6 @@ namespace SerjBal.Windows
 
         private void OnAccept()
         {
-            for (int i = 0; i < menuItem.Childs.Count; i++)
-            {
-                var item = menuItem.Childs[i];
-                if (item.Key == currentKey) item.Remove();
-            }
             onAccept.Invoke();
             Close();
         }

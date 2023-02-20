@@ -16,7 +16,7 @@ namespace SerjBal.Windows
         [SerializeField] private TMP_InputField inputField;
         [SerializeField] private Button acceptButton;
         [SerializeField] private Button closeButton;
-        private string _currentKey;
+        protected string _currentKey;
         protected UnityAction onAccept;
         protected TMP_InputField InputField => inputField;
         protected IMenuItem _menuItem;
@@ -37,39 +37,38 @@ namespace SerjBal.Windows
            closeButton.onClick.AddListener(Close);
         }
 
-        private async void Accept()
+        public async virtual void Accept()
         {
-            string key = inputField.text;
-            ItemData keyData;
-            var data = _services.Single<IDataProvider>();
-            bool hasData = data.DataHasKey(_menuItem, key);
+            var itemKey = _menuItem.GetKeyPath();
+            string newKey = $"{itemKey}/{inputField.text}";
+            ItemData keyData = new ItemData { Key = inputField.text, Content = new List<ItemData>() };
+            IDataProvider data = _services.Single<IDataProvider>();
+            bool hasData = data.HasKey(newKey);
             if (hasData)
             {
-                keyData = data.GetDataOf(_menuItem).Get(_currentKey);
-
                 var replaceWinow = await _services.Single<IWindowsFactory>().CreateReplacingDataWindow();
-                replaceWinow.currentKey = _currentKey;
                 replaceWinow.onAccept = () => OnAccept(keyData);
                 replaceWinow.Initialize(_menuItem);
             }
             else
             {
-                keyData = new ItemData { Key = key, Content = new List<ItemData>() };
+                keyData = new ItemData { Key = inputField.text, Content = new List<ItemData>() };
                 OnAccept(keyData);
             }
         }
         
-        private void OnAccept(ItemData keyData)
+        protected void OnAccept(ItemData newData)
         {
-            keyData.Key = inputField.text;
-            _services.Single<ISaveLoad>().Save(_menuItem, inputField.text, keyData);
-            onAccept.Invoke();
+            onAccept?.Invoke();
+            
+            string newPath = $"{ _menuItem.GetKeyPath()}/{inputField.text}";
+            _services.Single<ISaveLoad>().Save(newPath, newData);
+            _menuItem.UpdateContent();
             Close();
         }
         
         public void SetHeaderText(string inputFormat) => formatText.text = inputFormat;
-
         public void SetAcceptButtonText(string button) => buttonText.text = button;
-        private void Close() => Destroy(gameObject);
+        protected void Close() => Destroy(gameObject);
     }
 }

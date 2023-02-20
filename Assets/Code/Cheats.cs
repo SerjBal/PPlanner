@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using SerjBal.Code.Sources;
 using UnityEngine;
 
 namespace SerjBal
@@ -39,6 +40,11 @@ namespace SerjBal
                 Content = channelList
             };
             Saver.Save();
+        }
+
+        public void ClearSaves()
+        {
+            File.Delete(Const.DataPath);
         }
     }
 }

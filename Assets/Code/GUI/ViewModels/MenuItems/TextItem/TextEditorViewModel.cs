@@ -66,7 +66,7 @@ namespace SerjBal
 
         private IEnumerator DelayAndSave(string value)
         {
-            _timer = 3;
+            _timer = 2f;
             while (_timer>0)
             {
                 _timer -= Time.deltaTime;

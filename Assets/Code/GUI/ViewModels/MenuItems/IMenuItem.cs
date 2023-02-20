@@ -17,6 +17,7 @@ namespace SerjBal
         void Initialize(ButtonConfigs configs);
         void SetKey(string key);
         void ChangeKey(string newKey);
+        void UpdateContent();
         void Collapse();
         void OnAddNewItem();
         void Remove();

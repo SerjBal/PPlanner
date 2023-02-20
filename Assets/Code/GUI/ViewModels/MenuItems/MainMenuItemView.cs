@@ -67,7 +67,9 @@ namespace SerjBal
 
         public void LoadDate(string date)
         {
-            _services.Single<ISaveLoad>().Load(date);
+            var saveload = _services.Single<ISaveLoad>();
+            saveload.Save();
+            saveload.Load(date);
             UpdateMenu();
         }
         

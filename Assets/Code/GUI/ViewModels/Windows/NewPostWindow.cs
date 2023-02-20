@@ -12,23 +12,6 @@ namespace SerjBal
         {
             InputField.text = "0:0";
             base.Initialize(menuItem);
-            onAccept += () => UpdateContent(menuItem);
-        }
-
-        private async void UpdateContent(IMenuItem menuItem)
-        {
-            var _factory = _services.Single<IMenuFactory>();
-            foreach (Transform item in menuItem.ContentContainer) Destroy(item.gameObject);
-            menuItem.Childs = new List<IMenuItem>();
-
-            ItemData channelData = _services.Single<IDataProvider>().GetOrCreateChannelData(menuItem.Key);
-            if (channelData != null && channelData.Content.Count > 0)
-            {
-                foreach (var item in channelData.Content) await _factory.CreateTimeItem(menuItem, item.Key);
-            }
-
-            var addButton = await _factory.CreateAddButton(menuItem.ContentContainer);
-            addButton.onClick.AddListener(menuItem.OnAddNewItem);
         }
     }
 }

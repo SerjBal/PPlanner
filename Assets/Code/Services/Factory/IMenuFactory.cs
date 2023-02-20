@@ -10,9 +10,9 @@ namespace SerjBal
     {
         Task WarmUp();
         Task<MainMenuItemView> CreateGUI();
+
+        Task<IMenuItem> CreateMenuItem(IMenuItem parent, string channelKey);
         Task<IMenuItem> CreateDateItem();
-        Task<IMenuItem> CreateChannelItem(IMenuItem parent, string channelKey);
-        Task<IMenuItem> CreateTimeItem(IMenuItem parent, string timeKey);
         Task CreateTextEditor(IMenuItem parent, string textKey);
         Task<Button> CreateAddButton(Transform parent);
     }

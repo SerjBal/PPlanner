@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Claims;
 using SerjBal.Code.Sources;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -12,7 +13,6 @@ namespace SerjBal
     {
         Date, Channel, Time
     }
-    
 
     public class DataProvider : IDataProvider
     {
@@ -26,104 +26,161 @@ namespace SerjBal
             removableTextKeys = new List<string>();
             _templates = templates;
         }
-        public bool DataHasKey(IMenuItem menuItem, string key) => GetDataOf(menuItem).ContainsKey(key);
-        public void RenameKey(IMenuItem menuItem, string key, string newKey)
+        public bool HasKey(string keyPath)
         {
-            var content = GetDataOf(menuItem.Parent);
-            if (content.ContainsKey(key)) content.Get(key).Key = newKey;
+            var keyParts = keyPath.Split("/");
+            switch (keyParts.Length)
+            {
+                case 1:
+                    return Value.DateItem != null;
+                case 2:
+                    return Value.DateItem.Content.Get(keyParts[1]) != null;
+                case 3:
+                    return Value.DateItem.Content.Get(keyParts[1]).Content.Get(keyParts[2]) != null;
+                default:
+                    Debug.Log("Key path is corrupt!");
+                    return false;
+            }
         }
 
-        public void RemoveKey(IMenuItem menuItem)
+        public void RenameKey(string keyPath, string newKey)
         {
-            if (menuItem.itemType == MenuItemType.Time)
+            ItemData data = GetOrCreateData(keyPath);
+            data.Key = newKey;
+        }
+
+        public void RemoveKey(string keyPath)
+        {
+            void RemoveChilds(List<ItemData> content)
             {
-                if (menuItem.Childs.Count>0)
+                for (int i = 0; i < content.Count; i++)
                 {
-                    removableTextKeys.Add(menuItem.Childs[0].Key);
-                } 
-            }
-            else
-            {
-                for (int i = 0; i < menuItem.Childs.Count; i++)
-                {
-                    RemoveKey(menuItem.Childs[i]);
+                    RemoveKey($"{keyPath}/{content[i].Key}");
                 }
             }
 
-            if (menuItem.Parent==null)
+            var keyParts = keyPath.Split("/");
+            if (keyParts.Length == 3)
             {
-                GetDataOf(menuItem).Clear();
+                var timeData = Value.DateItem.Content.Get(keyParts[1]).Content.Get(keyParts[2]);
+                var timeContent = timeData.Content;
+                if (timeContent.Count > 0) removableTextKeys.Add(timeContent[0].Key);
             }
-            else
+            else if (keyParts.Length == 2)
             {
-                var content = GetDataOf(menuItem.Parent);
-                content.RemoveKey(menuItem.Key);
+                RemoveChilds(Value.DateItem.Content.Get(keyParts[1]).Content);
             }
+            else if (keyParts.Length == 1)
+            {
+                RemoveChilds(Value.DateItem.Content);
+            }
+            SetData(keyPath, null);
         }
 
-        public List<ItemData> GetDataOf(IMenuItem menuItem)
+        public void SetData(string keyPath, ItemData data)
         {
-            switch (menuItem.itemType)
+            var keyParts = keyPath.Split("/");
+            switch (keyParts.Length)
             {
-                case MenuItemType.Date:
-                    return Value.DateItem.Content;
+                case 1:
+                    if (data != null)
+                    {
+                        Value.DateItem = data;
+                    }
                     break;
-                case MenuItemType.Channel:
-                    return Value.DateItem.Content.Get(menuItem.Key).Content;
+                case 2:
+                    if (data == null)
+                        Value.DateItem.Content.RemoveKey(keyParts[1]);
+                    else
+                        Value.DateItem.Content.Override(keyParts[1], data);
                     break;
-                case MenuItemType.Time:
-                    return Value.DateItem.Content.Get(menuItem.Parent.Key).Content.Get(menuItem.Key).Content;
+                case 3:
+                    if (data == null)
+                        Value.DateItem.Content.Get(keyParts[1]).Content.RemoveKey(keyParts[2]);
+                    else
+                        Value.DateItem.Content.Get(keyParts[1]).Content.Override(keyParts[2], data);
                     break;
                 default:
-                    Debug.Log("No content found");
+                    Debug.Log("Key path is corrupt!");
+                    break;
+            }
+        }
+        public ItemData GetOrCreateData(string keyPath)
+        {
+            var keyParts = keyPath.Split("/");
+            switch (keyParts.Length)
+            {
+                case 1:
+                    return GetOrCreateDateData(keyParts);
+                case 2:
+                    return GetOrCreateChannelData(keyParts);
+                case 3:
+                    return GetOrCreateTimeData(keyParts);
+                default:
+                    Debug.Log("Key path is corrupt!");
                     return null;
             }
         }
-
-        public ItemData GetOrCreateDateData(string key = null, ItemData overrideData = null)
+        
+        public ItemData GetOrCreateDateData(string[] keyPath = null)
         {
-            if (key != null)
+            if (keyPath != null)
                 if (Value.DateItem == null)
                 {
-                    var dateItem = new ItemData { Key = key, Content = new List<ItemData>() };
+                    var dateItem = new ItemData { Key = keyPath[0], Content = new List<ItemData>() };
                     Value = new Data { DateItem = dateItem };
                 }
 
-            if (overrideData!=null) Value.DateItem = overrideData;
             return Value.DateItem;
         }
 
-        public ItemData GetOrCreateChannelData(string key, ItemData overrideData = null)
+        public ItemData GetOrCreateChannelData(string[] keyParts)
         {
-            var date = GetOrCreateDateData();
-            if (date.Content != null && date.Content.ContainsKey(key))
+            ItemData channel;
+            var keyChannel = keyParts[1];
+            var dateContent = Value.DateItem.Content;
+            if (dateContent.ContainsKey(keyChannel))
             {
-                if (overrideData != null) date.Content.Override(key, overrideData);
-                return date.Content.Get(key);
+                channel = dateContent.Get(keyChannel);
             }
-            
-
-            var newChannel = new ItemData { Key = key, Content = new List<ItemData>() };
-            date.Content.Add(newChannel);
-            return newChannel;
+            else
+            {
+                channel = new ItemData { Key = keyChannel, Content = new List<ItemData>() };
+                dateContent.Add(channel);
+            }
+            return channel;
         }
 
-        public ItemData GetOrCreateTimeData(string channelKey, string timeKey, ItemData overrideData = null)
+        public ItemData GetOrCreateTimeData(string[] keyParts)
         {
-            var channel = GetOrCreateChannelData(channelKey);
-            if (channel.Content.ContainsKey(timeKey))
+            ItemData time;
+            string keyChannel = keyParts[1];
+            string keyTime = keyParts[2];
+            var channelContent = Value.DateItem.Content.Get(keyChannel).Content;
+            if (channelContent.ContainsKey(keyTime))
             {
-                if (overrideData != null) channel.Content.Override(timeKey, overrideData);
-                return channel.Content.Get(timeKey);
+                time = channelContent.Get(keyTime);
             }
-            
+            else
+            {
+                time = new ItemData { Key = keyTime, Content = new List<ItemData>()};
+                channelContent.Add(time);
+            }
+
+            if (time.Content.Count==0)
+            {
+                var keyTextItem = new ItemData { Key = GenerateTextKey() };
+                time.Content.Add(keyTextItem);
+                
+            }
+            return time;
+        }
+
+        private string GenerateTextKey()
+        {
             var textKey = PlayerPrefs.GetInt(Const.LastTextID, 0) + 1;
-            var textKeyItem = new ItemData {Key = textKey.ToString() };
-            var timeData = new ItemData { Key = timeKey, Content = new List<ItemData>()};
-            timeData.Content.Add(textKeyItem);
-            channel.Content.Add(timeData);
             PlayerPrefs.SetInt(Const.LastTextID, textKey);
-            return timeData;
+            return textKey.ToString();
         }
     }
 }

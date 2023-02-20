@@ -20,12 +20,17 @@ namespace SerjBal
             onEditItem += () => _windowsFactory.CreateEditTimeWindow(this);
         }
 
-        private string GetTextKey() => _data.GetOrCreateTimeData(Parent.Key, Key).Content[0].Key;
+        private string GetTextKey() => _data.GetOrCreateData(this.GetKeyPath()).Content[0].Key;
 
         public override void OnExpandStart()
         {
             base.OnExpandStart();
             OnAddNewItem();
+        }
+        
+        public override async void UpdateContent()
+        {
+            await _factory.CreateTextEditor(this, _textKey);
         }
     }
 }

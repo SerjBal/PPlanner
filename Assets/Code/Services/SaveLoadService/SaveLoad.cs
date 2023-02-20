@@ -21,30 +21,27 @@ namespace SerjBal
             _loaderScreen = loaderScreen;
         }
 
-        public void Load(string date, Action onLoaded = null)
+        public void Load(string keyDate, Action onLoaded = null)
         {
             _data.Value.DateItem = null;
-            string filePath = Path.Combine(Const.DataPath, $"{date}.json");
+            string filePath = Path.Combine(Const.DataPath, $"{keyDate}.json");
             
             if (File.Exists(filePath))
             {
                 string json = File.ReadAllText(filePath);
                 var data = JsonUtility.FromJson<ItemData>(json);
-                Data newData = new Data
-                {
-                    DateItem = data
-                };
+                Data newData = new Data { DateItem = data };
                 _data.Value = newData;
                 onLoaded?.Invoke();
             }
             else
             {
-                _data.GetOrCreateDateData(date);
+                _data.GetOrCreateData(keyDate);
                 onLoaded?.Invoke();
             }
 
             _loaderScreen.Progress = 1;
-            LoadFromServer(date);
+            LoadFromServer(keyDate);
         }
 
         public void UpdateMenu() => new Services().Single<IGUIModelView>().UpdateMenu();
@@ -63,17 +60,13 @@ namespace SerjBal
             _data.removableTextKeys = new List<string>();
         }
 
-        public void Save(IMenuItem menuItem, string key, ItemData overrideData = null)
+        public void Save(string keyPath, ItemData overrideData = null)
         {
-            switch (menuItem.itemType)
-            {
-                case MenuItemType.Date:
-                    _data.GetOrCreateChannelData(key, overrideData);
-                    break;
-                case MenuItemType.Channel:
-                    _data.GetOrCreateTimeData(menuItem.Key, key, overrideData);
-                    break;
-            }
+            if (overrideData == null)
+                _data.GetOrCreateData(keyPath);
+            else
+                _data.SetData(keyPath, overrideData);
+            
             Save();
             SaveToServer();
         }
