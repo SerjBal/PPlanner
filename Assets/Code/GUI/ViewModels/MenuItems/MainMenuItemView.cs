@@ -9,8 +9,9 @@ namespace SerjBal
     public class MainMenuItemView : MonoBehaviour
     {
         //[SerializeField] private Transform highScreenContainer;
-        public CalendarView calendarView;
+        public CalendarViewModel calendarViewModel;
         public RectTransform dateContainer;
+        public SearchViewModel searchingViewModel;
         public GameObject blocker;
         private Services _services;
         
@@ -18,59 +19,8 @@ namespace SerjBal
         public void Initialize(Services servics)
         {
             _services = servics;
-            CalendarInitialize();
-        }
-        public void CalendarInitialize()
-        {
-            DateTimeFormatInfo dateTimeFormat = CultureInfo.CurrentCulture.DateTimeFormat;
-            Calendar calendarData = new GregorianCalendar();
-            
-            int year = calendarData.GetYear(DateTime.Now);
-
-            for (int month = 1; month <= calendarView.months.Length; month++)
-            {
-                var monthView = calendarView.months[month-1];
-                monthView.nameText.text = dateTimeFormat.GetMonthName(month);
-
-                int daysInMonth = calendarData.GetDaysInMonth(year, month);
-
-                for (int day = 1; day < daysInMonth;)
-                {
-                    for (int j = 0; j < monthView.wheeks.Length;)
-                    {
-                        DateTime date = new DateTime(year, month, day);
-                        string dayName = dateTimeFormat.GetDayName(date.DayOfWeek);
-                        int dayOfWeekNumber = (int)date.DayOfWeek;
-                        var wheek = monthView.wheeks[j];
-                        var dayItem = wheek.days[dayOfWeekNumber];
-                        dayItem.nameText.text = $"<size=100%>{day}<br><size=50%>{dayName.Substring(0, 3)}";
-                        var dateString = $"{year}.{month}.{day}";
-                        dayItem.button.onClick.AddListener(()=>LoadDate(dateString));
-                        dayItem.SetState(GetDateState(year, month, day));
-
-                        if (dayOfWeekNumber == 6) j += 1;
-                        day++;
-                        if (day >= daysInMonth)
-                        {
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        private bool GetDateState(int year, int month, int day)
-        {
-            //check is date saved
-            return false;
-        }
-
-        public void LoadDate(string date)
-        {
-            var saveload = _services.Single<ISaveLoad>();
-            saveload.Save();
-            saveload.Load(date);
-            UpdateMenu();
+            calendarViewModel.Initialize();
+            searchingViewModel.Initialize();
         }
         
         public void UpdateMenu()
@@ -80,9 +30,6 @@ namespace SerjBal
             menuFactory.CreateDateItem();
         }
 
-        private void OnDestroy()
-        {
-            _services.Single<IAssetsProvider>().Cleanup();
-        }
+        private void OnDestroy() => _services.Single<IAssetsProvider>().Cleanup();
     }
 }

@@ -1,13 +1,19 @@
-namespace SerjBal.GUI.Components.Searching
+using System;
+using UnityEngine;
+
+namespace SerjBal
 {
     public class Search
     {
-        string text = "Extension methods have all the capabilities of regular static methods.";
-        private string textToSearch = "";
-        bool ignoreCaseSearchResult = factMessage.StartsWith("extension", System.StringComparison.CurrentCultureIgnoreCase);
-        Console.WriteLine($"Starts with \"extension\"? {ignoreCaseSearchResult} (ignoring case)");
+        public int FindText(string text, string textToFind)
+        {
+            bool ignoreCaseSearchResult = text.StartsWith("extension", System.StringComparison.CurrentCultureIgnoreCase);
+            var startResult = ($"Starts with \"extension\"? {ignoreCaseSearchResult} (ignoring case)");
 
-        bool endsWithSearchResult = factMessage.EndsWith(".", System.StringComparison.CurrentCultureIgnoreCase);
-        Console.WriteLine($"Ends with '.'? {endsWithSearchResult}");
+            bool endsWithSearchResult = text.EndsWith(".", System.StringComparison.CurrentCultureIgnoreCase);
+            var endResult = ($"Ends with '.'? {endsWithSearchResult}");
+
+            return -1;
+        }
     }
 }
