@@ -9,6 +9,7 @@ namespace SerjBal
         private Action _onExpand;
         private string _textKey;
         private IWindowsFactory _windowsFactory;
+        private bool _exists;
 
         public override void Initialize(ButtonConfigs configs)
         {
@@ -20,7 +21,13 @@ namespace SerjBal
             onEditItem += () => _windowsFactory.CreateEditTimeWindow(this);
         }
 
-        private string GetTextKey() => _data.GetOrCreateData(this.GetKeyPath()).Content[0].Key;
+        private string GetTextKey()
+        {
+            _exists = _data.HasKey(this.GetKeyPath());
+            var key = _data.GetOrCreateData(this.GetKeyPath()).Content[0].Key;
+            if (_exists) _services.Single<ISaveLoad>().Save();
+            return key;
+        }
 
         public override void OnExpandStart()
         {

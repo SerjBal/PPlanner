@@ -171,7 +171,6 @@ namespace SerjBal
             {
                 var keyTextItem = new ItemData { Key = GenerateTextKey() };
                 time.Content.Add(keyTextItem);
-                
             }
             return time;
         }

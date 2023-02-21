@@ -17,12 +17,9 @@ namespace SerjBal
         
         public async override void Accept()
         {
-            var itemKey = _menuItem.GetKeyPath();
+            string itemKey = _menuItem.GetKeyPath();
             string newKey = $"{itemKey}/{InputField.text}";
-            ItemData keyData;
-            IDataProvider data = _services.Single<IDataProvider>();
-            bool hasData = data.HasKey(newKey);
-            if (hasData)
+            if (_data.HasKey(newKey))
             {
                 var replaceWinow = await _services.Single<IWindowsFactory>().CreateReplacingDataWindow();
                 replaceWinow.onAccept = () => OnAccept();
@@ -30,7 +27,7 @@ namespace SerjBal
             }
             else
             {
-                data.RenameKey($"{itemKey}/{_currentKey}",InputField.text );
+                _data.RenameKey($"{itemKey}/{_currentKey}",InputField.text );
                 _services.Single<ISaveLoad>().Save();
                 _menuItem.UpdateContent();
             }
@@ -38,11 +35,10 @@ namespace SerjBal
         
         private void OnAccept()
         {
-            IDataProvider data = _services.Single<IDataProvider>();
-            var itemKey = _menuItem.GetKeyPath();
-            data.RemoveKey($"{itemKey}/{InputField.text}");
-            data.RenameKey($"{itemKey}/{_currentKey}",InputField.text );
-            _services.Single<ISaveLoad>().Save();
+            string itemKey = _menuItem.GetKeyPath();
+            _data.RemoveKey($"{itemKey}/{InputField.text}");
+            _data.RenameKey($"{itemKey}/{_currentKey}",InputField.text );
+            _saveLoad.Save();
             _menuItem.UpdateContent();
             Close();
         }

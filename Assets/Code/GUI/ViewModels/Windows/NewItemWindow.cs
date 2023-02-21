@@ -21,6 +21,8 @@ namespace SerjBal.Windows
         protected TMP_InputField InputField => inputField;
         protected IMenuItem _menuItem;
         protected Services _services;
+        protected IDataProvider _data;
+        protected ISaveLoad _saveLoad;
         
         public virtual void Initialize(IMenuItem menuItem)
         {
@@ -29,6 +31,8 @@ namespace SerjBal.Windows
             _currentKey = inputField.text;
             _menuItem = menuItem;
             _services = new Services();
+            _data = _services.Single<IDataProvider>();
+            _saveLoad = _services.Single<ISaveLoad>();
         }
 
         private void Bind()
@@ -39,12 +43,9 @@ namespace SerjBal.Windows
 
         public async virtual void Accept()
         {
-            var itemKey = _menuItem.GetKeyPath();
-            string newKey = $"{itemKey}/{inputField.text}";
-            ItemData keyData = new ItemData { Key = inputField.text, Content = new List<ItemData>() };
-            IDataProvider data = _services.Single<IDataProvider>();
-            bool hasData = data.HasKey(newKey);
-            if (hasData)
+            var keyData = new ItemData { Key = inputField.text, Content = new List<ItemData>() };
+            string newKey = $"{_menuItem.GetKeyPath()}/{inputField.text}";
+            if (_data.HasKey(newKey))
             {
                 var replaceWinow = await _services.Single<IWindowsFactory>().CreateReplacingDataWindow();
                 replaceWinow.onAccept = () => OnAccept(keyData);
@@ -62,7 +63,7 @@ namespace SerjBal.Windows
             onAccept?.Invoke();
             
             string newPath = $"{ _menuItem.GetKeyPath()}/{inputField.text}";
-            _services.Single<ISaveLoad>().Save(newPath, newData);
+            _saveLoad.Save(newPath, newData);
             _menuItem.UpdateContent();
             Close();
         }

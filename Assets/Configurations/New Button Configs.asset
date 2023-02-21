@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78d04b597f0d47a5879c1660bacda19e, type: 3}
   m_Name: New Button Configs
   m_EditorClassIdentifier: 
-  clickTimer: 0.1
-  swipeDistance: 0.2
+  clickTimer: 0.01
+  swipeDistance: 0.5
   expandAnimationCurve:
     serializedVersion: 2
     m_Curve:
@@ -27,13 +27,13 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.024574392
     - serializedVersion: 3
-      time: 0.00022187829
-      value: 1.0001156
-      inSlope: 1.1875935
-      outSlope: 1.1875935
+      time: 0.07431856
+      value: 1.008115
+      inSlope: 0.75082576
+      outSlope: 0.75082576
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.051994096
+      inWeight: 0.0941737
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
