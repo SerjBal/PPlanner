@@ -13,7 +13,7 @@ namespace SerjBal.Windows
         [SerializeField] private Canvas canvas;
         [SerializeField] private TextMeshProUGUI formatText;
         [SerializeField] private TextMeshProUGUI buttonText;
-        [SerializeField] private TMP_InputField inputField;
+        [SerializeField] protected TMP_InputField inputField;
         [SerializeField] private Button acceptButton;
         [SerializeField] private Button closeButton;
         protected string _currentKey;

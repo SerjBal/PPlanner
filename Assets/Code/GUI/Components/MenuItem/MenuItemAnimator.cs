@@ -56,7 +56,7 @@ namespace SerjBal
             }
             OnExpandFinish();
         }
-        
+
         private IEnumerator Collapse()
         {
             OnCollapseStart();
@@ -79,7 +79,8 @@ namespace SerjBal
             _gui.InteractonEnable(true);
             contentScrollRect.vertical = true;
             _yPos = buttonTransform.anchoredPosition.y;
-            _sizeB = _gui.GetMenuBounds();
+            float parentYPositionInWorldSpace = buttonTransform.parent.position.y;
+            _sizeB = parentYPositionInWorldSpace;
             if (_layout != null) _layout.enabled = false;
             onExpandStartEvent?.Invoke();
         }
