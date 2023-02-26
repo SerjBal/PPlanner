@@ -18,8 +18,8 @@ namespace SerjBal
             _states = new Dictionary<Type, IExitableState>
             {
                 [typeof(BootloaderState)] = new BootloaderState( this, configurations, services, coroutineRunner, fadeScreen, loaderScreen),
-                [typeof(GUIState)] = new GUIState(this, services, fadeScreen),
-                [typeof(SearchState)] = new SearchState(this, configurations, services),
+                [typeof(GUIState)] = new GUIState(this, configurations, services, fadeScreen),
+                [typeof(LoopState)] = new LoopState(this)
             };
         }
 

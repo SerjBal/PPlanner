@@ -17,7 +17,7 @@ namespace SerjBal
         private bool _isExpaned;
         private float _buttonHeight;
         private IGUIModelView _gui;
-        private float _y;
+        private float _yPos;
         private float _sizeB;
         private VerticalLayoutGroup _layout;
 
@@ -28,30 +28,28 @@ namespace SerjBal
             _gui = new Services().Single<IGUIModelView>();
             _buttonHeight = buttonTransform.rect.height;
         }
-        public void AnimationPlay()
-        {
-            StopAllCoroutines();
-            if (_isExpaned) PlayClose();
-            else PlayOpen();
-            _isExpaned = !_isExpaned;
-        }
         public void PlayClose()
         {
+            StopAllCoroutines();
             StartCoroutine(Collapse());
         }
 
-        public void PlayOpen() => StartCoroutine(Expand());
-        
+        public void PlayOpen()
+        {
+            StopAllCoroutines();
+            StartCoroutine(Expand());
+        }
+
         private IEnumerator Expand()
         {
             OnExpandStart();
             float timer = 0;
-            float maxT = _expandAnimationCurve[_expandAnimationCurve.length - 1].time;
-            while (timer<maxT)
+            float maxTime = _expandAnimationCurve[_expandAnimationCurve.length - 1].time;
+            while (timer<maxTime)
             {
                 var t = _expandAnimationCurve.Evaluate(timer);   
                 var x = buttonTransform.anchoredPosition.x;
-                buttonTransform.anchoredPosition = new Vector2(x, Mathf.Lerp(_y, 0, t));
+                buttonTransform.anchoredPosition = new Vector2(x, Mathf.Lerp(_yPos, 0, t));
                 buttonTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Mathf.Lerp(_buttonHeight, _sizeB, t));
                 timer += Time.deltaTime;
                 yield return null;
@@ -63,12 +61,12 @@ namespace SerjBal
         {
             OnCollapseStart();
             float timer = 0;
-            float maxT = _expandAnimationCurve[_expandAnimationCurve.length - 1].time;
-            while (timer<maxT)
+            float maxTime = _expandAnimationCurve[_expandAnimationCurve.length - 1].time;
+            while (timer<maxTime)
             {
                 var t = _expandAnimationCurve.Evaluate(timer);   
                 var x = buttonTransform.anchoredPosition.x;
-                buttonTransform.anchoredPosition = new Vector2(x, Mathf.Lerp(0, _y, t));
+                buttonTransform.anchoredPosition = new Vector2(x, Mathf.Lerp(0, _yPos, t));
                 buttonTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Mathf.Lerp(_sizeB, _buttonHeight, t));
                 timer += Time.deltaTime;
                 yield return null;
@@ -78,9 +76,9 @@ namespace SerjBal
 
         private void OnExpandStart()
         {
-            _gui.DisableMenuInteracton(true);
+            _gui.InteractonEnable(true);
             contentScrollRect.vertical = true;
-            _y = buttonTransform.anchoredPosition.y;
+            _yPos = buttonTransform.anchoredPosition.y;
             _sizeB = _gui.GetMenuBounds();
             if (_layout != null) _layout.enabled = false;
             onExpandStartEvent?.Invoke();
@@ -90,22 +88,22 @@ namespace SerjBal
         {
             buttonTransform.anchoredPosition = new Vector2( buttonTransform.anchoredPosition.x, 0);
             buttonTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, _sizeB);
-            _gui.DisableMenuInteracton(false);
+            _gui.InteractonEnable(false);
             onExpandFinishEvent?.Invoke();
         }
 
         private void OnCollapseStart()
         {
             contentScrollRect.vertical = false;
-            _gui.DisableMenuInteracton(true);
+            _gui.InteractonEnable(true);
             onCollapseStartEvent?.Invoke();
         }
         
         private void OnCollapseFinish()
         {
-            buttonTransform.anchoredPosition = new Vector2( buttonTransform.anchoredPosition.x, _y);
+            buttonTransform.anchoredPosition = new Vector2( buttonTransform.anchoredPosition.x, _yPos);
             buttonTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, _buttonHeight);
-            _gui.DisableMenuInteracton(false);
+            _gui.InteractonEnable(false);
             if (_layout != null) _layout.enabled = true;
             onCollapseFinishEvent?.Invoke();
         }

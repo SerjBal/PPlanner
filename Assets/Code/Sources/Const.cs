@@ -15,6 +15,7 @@ namespace SerjBal.Code.Sources
         public const string ChannelItemPath = "channel-item";
         public const string TimeItemPath = "time-item";
         public const string TextItemPath = "text-item";
+        public const string SearchResultItemPath = "search-item";
 
         public const string EditWindowPath = "edit-window";
         public const string EditDateWindowFormatText = "Day.Month.Year";
@@ -40,5 +41,6 @@ namespace SerjBal.Code.Sources
         
         public const int MenuWindowSortingOrder = 10;
         public const int WarningWindowSortingOrder = 11;
+        
     }
 }

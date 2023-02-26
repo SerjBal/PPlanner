@@ -17,8 +17,8 @@ namespace SerjBal
             _windowsFactory = _services.Single<IWindowsFactory>();
             itemType = MenuItemType.Time;
             _textKey = GetTextKey();
-            onAddNewItem += () => _factory.CreateTextEditor(this, _textKey);
-            onEditItem += () => _windowsFactory.CreateEditTimeWindow(this);
+            onAddAction += () => _factory.CreateTextEditor(this, _textKey);
+            onEditAction += () => _windowsFactory.CreateEditTimeWindow(this);
         }
 
         private string GetTextKey()

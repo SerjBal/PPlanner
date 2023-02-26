@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 78d04b597f0d47a5879c1660bacda19e, type: 3}
-  m_Name: New Button Configs
+  m_Name: Button Configs
   m_EditorClassIdentifier: 
   clickTimer: 0.01
   swipeDistance: 0.5
@@ -20,20 +20,20 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 21.590464
-      outSlope: 21.590464
+      inSlope: 7.9395003
+      outSlope: 7.9395003
       tangentMode: 0
       weightedMode: 3
       inWeight: 0
-      outWeight: 0.024574392
+      outWeight: 0.16466276
     - serializedVersion: 3
-      time: 0.07431856
-      value: 1.008115
-      inSlope: 0.75082576
-      outSlope: 0.75082576
+      time: 0.2
+      value: 1
+      inSlope: 0.012328952
+      outSlope: 0.012328952
       tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.0941737
+      weightedMode: 1
+      inWeight: 0.38540846
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using SerjBal.Code.Sources;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -21,12 +22,12 @@ namespace SerjBal
             _loaderScreen = loaderScreen;
         }
 
-        public void Load(string keyDate, Action onLoaded = null)
+        public void Load(string keyDate, Action onLoaded)
         {
             _data.Value.DateItem = null;
             string filePath = Path.Combine(Const.DataPath, $"{keyDate}.json");
             
-            if (File.Exists(filePath))
+            if (Exists(filePath))
             {
                 string json = File.ReadAllText(filePath);
                 var data = JsonUtility.FromJson<ItemData>(json);
@@ -43,6 +44,20 @@ namespace SerjBal
             _loaderScreen.Progress = 1;
             LoadFromServer(keyDate);
         }
+        
+        public ItemData Load(string keyDate)
+        {
+            string filePath = Path.Combine(Const.DataPath, $"{keyDate}.json");
+            
+            if (Exists(filePath))
+            {
+                string json = File.ReadAllText(filePath);
+                var data = JsonUtility.FromJson<ItemData>(json);
+                return data;
+            }
+
+            return null;
+        }
 
         public void UpdateMenu() => new Services().Single<IGUIModelView>().UpdateMenu();
 
@@ -55,25 +70,25 @@ namespace SerjBal
             //remove text data if is
             foreach (var key in _data.removableTextKeys)
             {
-                if (File.Exists(key)) File.Delete(key);
+                if (Exists(key)) File.Delete(key);
             }
             _data.removableTextKeys = new List<string>();
         }
 
-        public void Save(string keyPath, ItemData overrideData = null)
+        public void Save(string keyPath, ItemData data = null)
         {
-            if (overrideData == null)
+            if (data == null)
                 _data.GetOrCreateData(keyPath);
             else
-                _data.SetData(keyPath, overrideData);
+                _data.SetData(keyPath, data);
             
             Save();
             SaveToServer();
         }
 
-        public void SaveText(string key, TextData textData)
+        public void Save(string key, TextData data)
         {
-            string json = JsonUtility.ToJson(textData);
+            string json = JsonUtility.ToJson(data);
             string filePath = Path.Combine(Const.DataPath, $"{key}.json");
             File.WriteAllText(filePath, json);
         }
@@ -82,7 +97,7 @@ namespace SerjBal
         {
             string filePath = Path.Combine(Const.DataPath, $"{key}.json");
             
-            if (File.Exists(filePath))
+            if (Exists(filePath))
             {
                 string json = File.ReadAllText(filePath);
                 return JsonUtility.FromJson<TextData>(json);
@@ -93,38 +108,38 @@ namespace SerjBal
             }
         }
         
-        public void LoadFromServer(string date)
+        public bool Exists(string key) => File.Exists(key);
+        
+        private void LoadFromServer(string date)
         {
-            //_coroutineRunner.StartCoroutine(LoadFromServerCourutine(date));
+            //LoadFromServerAsync(date);
         }
 
         private void SaveToServer()
         {
-            //_coroutineRunner.StartCoroutine(SaveToServerCourutine());
+           // SaveToServerAsync();
         }
 
-        private IEnumerator SaveToServerCourutine()
+        private async Task SaveToServerAsync()
         {
             ItemData dateData = _data.Value.DateItem;
             string json = JsonUtility.ToJson(dateData);
             var path = Path.Combine(Const.ServerPath, dateData.Key);
-            UnityWebRequest request = UnityWebRequest.Put(path, json);
-            request.SendWebRequest();
-           yield break;
+            using (UnityWebRequest request = UnityWebRequest.Put(path, json))
+            {
+                if (request.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.LogError($"Save To Server Error: {request.error}");
+                }
+            }
         }
-        private IEnumerator LoadFromServerCourutine(string date)
+        private async Task LoadFromServerAsync(string date)
         {
             var path = Path.Combine(Const.ServerPath, date);
-            UnityWebRequest request = UnityWebRequest.Get( path);
-                AsyncOperation operation = request.SendWebRequest();
-            while (!operation.isDone)
+            using UnityWebRequest request = UnityWebRequest.Get(path);
+            if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
             {
-                _loaderScreen.Progress = request.downloadProgress;
-                yield return null;
-            }
-            if (request.isNetworkError || request.isHttpError)
-            {
-                Debug.Log("Error loading JSON: " + request.error);
+                Debug.LogError("Error loading JSON: " + request.error);
             }
             else
             {

@@ -57,7 +57,7 @@ namespace SerjBal
             if (_isOnButtonClickAllowed)
             {
                 Reset();
-                onSelectedEvent.Invoke();
+                onSelectedEvent?.Invoke();
             }
             else
             {

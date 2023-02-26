@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace SerjBal
@@ -10,17 +6,17 @@ namespace SerjBal
     {
         //[SerializeField] private Transform highScreenContainer;
         public CalendarViewModel calendarViewModel;
+        public SearchViewModel searchViewModel;
         public RectTransform dateContainer;
-        public SearchViewModel searchingViewModel;
         public GameObject blocker;
         private Services _services;
         
         
-        public void Initialize(Services servics)
+        public void Initialize(Services servics, ButtonConfigs configs)
         {
             _services = servics;
-            calendarViewModel.Initialize();
-            searchingViewModel.Initialize();
+            calendarViewModel.Initialize(servics);
+            searchViewModel.Initialize(servics, configs);
         }
         
         public void UpdateMenu()

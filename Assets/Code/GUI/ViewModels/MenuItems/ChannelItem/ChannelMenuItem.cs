@@ -14,8 +14,8 @@ namespace SerjBal
             base.Initialize(configs);
             _windowsFactory = _services.Single<IWindowsFactory>();
             itemType = MenuItemType.Channel;
-            onAddNewItem += () => _windowsFactory.CreateNewTimeWindow(this);
-            onEditItem += () => _windowsFactory.CreateEditChannelWindow(this);
+            onAddAction += () => _windowsFactory.CreateNewTimeWindow(this);
+            onEditAction += () => _windowsFactory.CreateEditChannelWindow(this);
         }
     }
 }

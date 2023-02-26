@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using SerjBal.Code.Sources;
 using UnityEngine;
@@ -30,6 +31,7 @@ namespace SerjBal
             await _assets.Load<GameObject>(Const.TimeItemPath);
             await _assets.Load<GameObject>(Const.TextItemPath);
             await _assets.Load<GameObject>(Const.AddItemButtonPath);
+            await _assets.Load<GameObject>(Const.SearchResultItemPath);
         }
         
         public async Task<MainMenuItemView> CreateGUI()
@@ -71,13 +73,25 @@ namespace SerjBal
             textItem.Initialize(timeKey);
         }
 
+        public async Task<IMenuItem> CreateSearchResultItem(IMenuItem parent, TextData data)
+        {
+            var stringBuilder = new StringBuilder();
+            stringBuilder.AppendFormat("{0}.{1}.{2}/{3}/{4}", data.year, data.month, data.day, data.channel, data.time);
+            string key = stringBuilder.ToString();
+            
+            var item = await _assets.Instantiate<SearchResultItem>(Const.SearchResultItemPath, parent.ContentContainer);
+            item.Parent = parent;
+            item.SetKey(key);
+            item.Initialize(_configs.buttonConfigs);
+            item.Setup(data);
+            return item;
+        }
+
         public async Task<Button> CreateAddButton(Transform parent) => 
             await _assets.Instantiate<Button>(Const.AddItemButtonPath, parent);
-
-        private async Task<IMenuItem> CreateChannelItem(IMenuItem parent, string channelKey)
-        {
-            return await CreateMenuItemInstance(Const.ChannelItemPath, channelKey, parent);
-        }
+        
+        private async Task<IMenuItem> CreateChannelItem(IMenuItem parent, string channelKey) => 
+            await CreateMenuItemInstance(Const.ChannelItemPath, channelKey, parent);
 
         private async Task<IMenuItem> CreateTimeItem(IMenuItem parent, string timeKey) => 
             await CreateMenuItemInstance(Const.TimeItemPath, timeKey, parent);
@@ -90,5 +104,10 @@ namespace SerjBal
             item.Initialize(_configs.buttonConfigs);
             return item;
         }
+    }
+
+    public interface ISearchItem
+    {
+        void Setup(TextData data);
     }
 }

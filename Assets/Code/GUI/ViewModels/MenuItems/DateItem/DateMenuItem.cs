@@ -14,14 +14,8 @@ namespace SerjBal
             base.Initialize(configs);
             _windowsFactory = _services.Single<IWindowsFactory>();
             itemType = MenuItemType.Date;
-            onAddNewItem += () => _windowsFactory.CreateNewChannelWindow(this);
-            onEditItem += () => _windowsFactory.CreateEditDateWindow(this);
-        }
-        public override void OnExpandFinish() => _services.Single<IGUIModelView>().EnableCalendar(false);
-        public override void OnCollapseStart()
-        {
-            _services.Single<IGUIModelView>().EnableCalendar(true);
-            base.OnCollapseStart();
+            onAddAction += () => _windowsFactory.CreateNewChannelWindow(this);
+            onEditAction += () => _windowsFactory.CreateEditDateWindow(this);
         }
     }
 }

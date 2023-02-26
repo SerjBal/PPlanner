@@ -74,12 +74,12 @@ namespace SerjBal
             }
 
             _timer = 0;
-            _saveLoad.SaveText(Key, new TextData{ text = value});
+            _saveLoad.Save(Key, new TextData{ text = value});
         }
         
         public async void OpenLinkWindow() => await _windowsFactory.CreateTextLinkStyleWindow(_textEditor);
         public async void OpenColorWindow() => await _windowsFactory.CreateTextColorWindow(_textEditor);
         public void Resize() => rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, _gui.GetMenuBounds());
-        private void OnDestroy() => _saveLoad.SaveText(Key, new TextData{ text = inputField.text});
+        private void OnDestroy() => _saveLoad.Save(Key, new TextData{ text = inputField.text});
     }
 }

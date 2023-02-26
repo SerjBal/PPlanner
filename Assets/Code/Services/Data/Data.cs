@@ -18,7 +18,7 @@ public class ItemData
 public class TextData
 {
     public int year;
-    public int munth;
+    public int month;
     public int day;
     public string channel;
     public string time;

@@ -1,36 +1,31 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace SerjBal
 {
     public class CalendarViewModel : MonoBehaviour
     {
-        public TMP_Dropdown yearDropdown;
-        public ScrollRect scrollRect;
-        public MonthView[] months;
+        [SerializeField] private TMP_Dropdown yearDropdown;
+        [SerializeField] private MonthView[] months;
         private Services _services;
+        private Calendar _calendarData;
         
-         public void Initialize()
+         public void Initialize(Services services)
         {
-            _services = new Services();
+            _calendarData = new GregorianCalendar();
+            _services = services;
             
             DateTimeFormatInfo dateTimeFormat = CultureInfo.CurrentCulture.DateTimeFormat;
-            Calendar calendarData = new GregorianCalendar();
-            
-            int year = calendarData.GetYear(DateTime.Now);
 
+            int year = _calendarData.GetYear(DateTime.Now);
             for (int month = 1; month <= months.Length; month++)
             {
                 var monthView = months[month-1];
                 monthView.nameText.text = dateTimeFormat.GetMonthName(month);
 
-                int daysInMonth = calendarData.GetDaysInMonth(year, month);
-
+                int daysInMonth = _calendarData.GetDaysInMonth(year, month);
                 for (int day = 1; day < daysInMonth;)
                 {
                     for (int j = 0; j < monthView.wheeks.Length;)
@@ -43,7 +38,7 @@ namespace SerjBal
                         dayItem.nameText.text = $"<size=100%>{day}<br><size=50%>{dayName.Substring(0, 3)}";
                         var dateString = $"{year}.{month}.{day}";
                         dayItem.button.onClick.AddListener(()=>LoadDate(dateString));
-                        dayItem.SetState(GetDateState(year, month, day));
+                        dayItem.SetState(IsDateExists(year, month, day));
 
                         if (dayOfWeekNumber == 6) j += 1;
                         day++;
@@ -56,9 +51,9 @@ namespace SerjBal
             }
         }
 
-        private bool GetDateState(int year, int month, int day)
+        private bool IsDateExists(int year, int month, int day)
         {
-            //check is date saved
+            _services.Single<ISaveLoad>().Exists($"{year}{month}{day}");
             return false;
         }
 
@@ -66,7 +61,7 @@ namespace SerjBal
         {
             var saveload = _services.Single<ISaveLoad>();
             saveload.Save();
-            saveload.Load(date);
+            saveload.Load(date, null);
             _services.Single<IGUIModelView>().UpdateMenu();
         }
     }
