@@ -1,7 +1,8 @@
 # PPlanner
+In progress..
 
 ### Introduction
-This Unity project showcases the implementation of state machine, factory, MVC and singleton design patterns and features in Unity engine, including UI development, Addressables, save/load data.
+This Unity project showcases the implementation of state machine, factory, MVC and singleton design patterns and features in Unity engine, including UI development, addressables, save/load data, working with a strings, async methods and so on.
 
 ### UI Development
 The project demonstrates the creation and management of UI elements using Unity's built-in tools. It shows how to interact with buttons, panels, text elements, and more, to create a functional and aesthetically pleasing user interface.
