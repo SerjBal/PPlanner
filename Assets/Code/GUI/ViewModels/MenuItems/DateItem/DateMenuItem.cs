@@ -1,8 +1,3 @@
-
-using System.Collections.Generic;
-using SerjBal.Code.Sources;
-using UnityEngine;
-
 namespace SerjBal
 {
     public class DateMenuItem : ItemViewModel

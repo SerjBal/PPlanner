@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Button = UnityEngine.UI.Button;
 
 namespace SerjBal
 {

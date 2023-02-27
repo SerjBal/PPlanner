@@ -39,6 +39,7 @@ namespace SerjBal
             bool isSelectedTextBold = isContainsOpenTag || isContainsCloseTag || isLeftSideContainsTag || isRightSideContainsTag;
 
             if (isSelectedTextBold)
+                //add mechanics
                 selectedText = selectedText.Replace(openTag, "").Replace(closeTag, "");
             else
                 selectedText = $"{openTag}{selectedText}{closeTag}";

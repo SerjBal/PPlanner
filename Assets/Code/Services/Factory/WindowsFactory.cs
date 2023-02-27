@@ -1,14 +1,12 @@
 using System.Threading.Tasks;
 using SerjBal.Code.Sources;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace SerjBal
 {
     public class WindowsFactory : IWindowsFactory
     {
         private IAssetsProvider _assets;
-
         public WindowsFactory(IAssetsProvider assets) => _assets = assets;
 
         public async Task WarmUp()

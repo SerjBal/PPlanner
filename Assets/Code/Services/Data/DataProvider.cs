@@ -1,11 +1,6 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Security.Claims;
 using SerjBal.Code.Sources;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace SerjBal
 {

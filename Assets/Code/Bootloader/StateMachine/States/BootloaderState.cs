@@ -1,6 +1,5 @@
 using System;
 using SerjBal.Code.Sources;
-using Object = UnityEngine.Object;
 
 namespace SerjBal
 {
