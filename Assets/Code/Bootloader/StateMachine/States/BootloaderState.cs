@@ -31,25 +31,18 @@ namespace SerjBal
         public void Enter()
         {
             _fadeScreen.Show(true);
-            var date = GetCurrentDate();
-            _dataLoader.Load(date, OnLoaded);
+            _dataLoader.Load(GetCurrentDate(), OnLoaded);
         }
 
+        public void Exit() { }
+        
         private string GetCurrentDate()
         {
             var currentDate = DateTime.Today;
-            string date = $"{currentDate.Year}.{currentDate.Month}.{currentDate.Day}";
-            return date;
+            return $"{currentDate.Year}.{currentDate.Month}.{currentDate.Day}";
         }
 
-        private void OnLoaded()
-        {
-            _stateMachine.Enter<GUIState>();
-        }
-
-        public void Exit()
-        {
-        }
+        private void OnLoaded() => _stateMachine.Enter<GUIState>();
 
         private void RegisterServices()
         {
@@ -59,7 +52,7 @@ namespace SerjBal
             _services.RegisterSingle<ISaveLoad>(new SaveLoad(_coroutineRunner,_services.Single<IDataProvider>(), _loaderScreen));
             _services.RegisterSingle<IWindowsFactory>(new WindowsFactory(_services.Single<IAssetsProvider>()));
             _services.RegisterSingle<IMenuFactory>(new MenuFactory(_services.Single<IAssetsProvider>(),_services.Single<IDataProvider>(), _configurations));
-            _services.RegisterSingle<IGUIModelView>(new GUIModelView());
+            _services.RegisterSingle<IGUI>(new GUI());
             _dataLoader = _services.Single<ISaveLoad>();
             _services.Single<IWindowsFactory>().WarmUp();
             _services.Single<IMenuFactory>().WarmUp();

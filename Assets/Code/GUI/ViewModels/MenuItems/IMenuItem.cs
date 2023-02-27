@@ -13,9 +13,9 @@ namespace SerjBal
         string Key { get; }
         MenuItemType itemType { get; set; }
         void Initialize(ButtonConfigs configs);
-        void SetKey(string key);
+        void SetName(string key);
         void UpdateContent();
-        void Close();
+        void HideContent();
         void Remove();
     }
 }

@@ -16,7 +16,7 @@ namespace SerjBal
         private AnimationCurve _expandAnimationCurve;
         private bool _isExpaned;
         private float _buttonHeight;
-        private IGUIModelView _gui;
+        private IGUI _iguiView;
         private float _yPos;
         private float _sizeB;
         private VerticalLayoutGroup _layout;
@@ -25,7 +25,7 @@ namespace SerjBal
         {
             _layout = transform.parent.GetComponent<VerticalLayoutGroup>();
             _expandAnimationCurve = expandAnimationCurve;
-            _gui = new Services().Single<IGUIModelView>();
+            _iguiView = new Services().Single<IGUI>();
             _buttonHeight = buttonTransform.rect.height;
         }
         public void PlayClose()
@@ -76,7 +76,7 @@ namespace SerjBal
 
         private void OnExpandStart()
         {
-            _gui.InteractonEnable(true);
+            _iguiView.InteractonEnable(true);
             contentScrollRect.vertical = true;
             _yPos = buttonTransform.anchoredPosition.y;
             float parentYPositionInWorldSpace = buttonTransform.parent.position.y;
@@ -89,14 +89,14 @@ namespace SerjBal
         {
             buttonTransform.anchoredPosition = new Vector2( buttonTransform.anchoredPosition.x, 0);
             buttonTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, _sizeB);
-            _gui.InteractonEnable(false);
+            _iguiView.InteractonEnable(false);
             onExpandFinishEvent?.Invoke();
         }
 
         private void OnCollapseStart()
         {
             contentScrollRect.vertical = false;
-            _gui.InteractonEnable(true);
+            _iguiView.InteractonEnable(true);
             onCollapseStartEvent?.Invoke();
         }
         
@@ -104,7 +104,7 @@ namespace SerjBal
         {
             buttonTransform.anchoredPosition = new Vector2( buttonTransform.anchoredPosition.x, _yPos);
             buttonTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, _buttonHeight);
-            _gui.InteractonEnable(false);
+            _iguiView.InteractonEnable(false);
             if (_layout != null) _layout.enabled = true;
             onCollapseFinishEvent?.Invoke();
         }

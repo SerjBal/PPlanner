@@ -59,7 +59,7 @@ namespace SerjBal
             return null;
         }
 
-        public void UpdateMenu() => new Services().Single<IGUIModelView>().UpdateMenu();
+        public void UpdateMenu() => new Services().Single<IGUI>().UpdateMenu();
 
         public void Save()
         {

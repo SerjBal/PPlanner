@@ -62,7 +62,7 @@ namespace SerjBal
             var saveload = _services.Single<ISaveLoad>();
             saveload.Save();
             saveload.Load(date, null);
-            _services.Single<IGUIModelView>().UpdateMenu();
+            _services.Single<IGUI>().UpdateMenu();
         }
     }
 }

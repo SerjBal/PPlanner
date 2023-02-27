@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace SerjBal
@@ -22,35 +23,23 @@ namespace SerjBal
 
         public List<TextData> GetResults() => _resultDataList;
 
-        public bool FindText(string text, string textToFind) => 
-            text.StartsWith(textToFind, StringComparison.CurrentCultureIgnoreCase);
+        public bool FindText(string text, string substring) => 
+            text?.IndexOf(substring, StringComparison.OrdinalIgnoreCase) > -1;
 
-        public void Search(string goal, Action onFinishAction, int daysRange = 0)
+        public Task<bool> Search(string goal, int daysRange = 0)
         {
             int[] date = _data.Value.DateItem.Key.ToIntArray();
-
-            Search(goal, date); //Search in current date
-            if (daysRange == 0)
+            
+            Search(goal, date);
+            if (daysRange != 0)
             {
-                onFinishAction?.Invoke();
+                SearchAround(goal, daysRange, date);
             }
-            else
-            {
-                int[] nextDate = date;
-                int[] prevDate = date;
-                for (int i = 0; i < daysRange; i++)
-                {
-                    nextDate = GetNextDate(nextDate);
-                    prevDate = GetPrevDate(prevDate);
 
-                    Search(goal, nextDate);
-                    Search(goal, prevDate);
-                }
-                onFinishAction?.Invoke();
-            }
+            return Task.FromResult(_resultDataList.Count > 0);
         }
 
-        public void Search(string goal, int[] date)
+        private void Search(string goal, int[] date)
         {
             int year = date[0]; int month = date[1]; int day = date[2];
             GetPostsByDate($"{year}.{month}.{day}");
@@ -61,8 +50,21 @@ namespace SerjBal
                 if (goalExists)
                 {
                     _resultDataList.Add(_posts[i]);
-                    Debug.Log($"{_posts[i].year}.{_posts[i].month}.{_posts[i].day}, channel: {_resultDataList[i].channel}, time: {_posts[i].time}");
                 }
+            }
+        }
+        
+        private void SearchAround(string goal, int daysRange, int[] date)
+        {
+            int[] nextDate = date;
+            int[] prevDate = date;
+            for (int i = 0; i < daysRange; i++)
+            {
+                nextDate = GetNextDate(nextDate);
+                prevDate = GetPrevDate(prevDate);
+
+                Search(goal, nextDate);
+                Search(goal, prevDate);
             }
         }
 

@@ -5,13 +5,11 @@ using Object = UnityEngine.Object;
 
 namespace SerjBal
 {
-    public class GUIModelView : IGUIModelView
+    public class GUI : IGUI
     {
         private MainMenuItemView _GUI;
 
         public async Task Initialize(MainMenuItemView gui) => _GUI = gui;
-
-        public float GetMenuBounds() => _GUI.dateContainer.rect.height;
 
         public void UpdateMenu() => _GUI.UpdateMenu();
 

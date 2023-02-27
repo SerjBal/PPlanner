@@ -61,7 +61,7 @@ namespace SerjBal
         {
             IMenuItem item = await _assets.Instantiate<IMenuItem>(Const.DateItemPath, _GUI.dateContainer);
             
-            item.SetKey(_data.GetOrCreateDateData().Key);
+            item.SetName(_data.GetOrCreateDateData().Key);
             item.Initialize(_configs.buttonConfigs);
             return item;
         }
@@ -81,7 +81,7 @@ namespace SerjBal
             
             var item = await _assets.Instantiate<SearchResultItem>(Const.SearchResultItemPath, parent.ContentContainer);
             item.Parent = parent;
-            item.SetKey(key);
+            item.SetName(key);
             item.Initialize(_configs.buttonConfigs);
             item.Setup(data);
             return item;
@@ -100,7 +100,7 @@ namespace SerjBal
             IMenuItem item = await _assets.Instantiate<IMenuItem>(path, parent.ContentContainer);
             
             item.Parent = parent;
-            item.SetKey(key);
+            item.SetName(key);
             item.Initialize(_configs.buttonConfigs);
             return item;
         }

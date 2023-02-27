@@ -14,10 +14,17 @@ namespace SerjBal
 
         public void CheckFormat(string value)
         {
-            var split = value.Split(':');
-            string hours = Regex.Replace(split[0], @"\D", "0");
-            string minutes = Regex.Replace(split[1], @"\D", "0");
-            inputField.text = string.Format("{0:00}:{1:00}", hours, minutes);
+            if (value.Contains(':'))
+            {
+                var split = value.Split(':');
+                string hours = Regex.Replace(split[0], @"\D", "0");
+                string minutes = Regex.Replace(split[1], @"\D", "0");
+                inputField.text = $"{hours:00}:{minutes:00}";
+            }
+            else
+            {
+                inputField.text = "00:00";
+            }
         }
     }
 }

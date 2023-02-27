@@ -11,7 +11,7 @@ namespace SerjBal
         private readonly Configurations _configurations;
         private readonly Services _services;
         private readonly FadeScreen _fadeScreen;
-        private IGUIModelView _GUI;
+        private IGUI _iguiView;
         private ITemplatesProvider _templates;
         private IDataProvider _data;
         private ButtonConfigs _buttonConfigs;
@@ -28,11 +28,12 @@ namespace SerjBal
         public async void Enter()
         {
             var factory = _services.Single<IMenuFactory>();
-            var guiModelView = _services.Single<IGUIModelView>();
-            
             var gui = await factory.CreateGUI();
             gui.Initialize(_services, _configurations.buttonConfigs);
-            guiModelView.Initialize(gui);
+            
+            var guiService = _services.Single<IGUI>();
+            guiService.Initialize(gui);
+            
             await factory.CreateDateItem();
             
             _stateMachine.Enter<LoopState>();

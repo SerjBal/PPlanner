@@ -24,19 +24,18 @@ namespace SerjBal
         private TextStyleEditor _textEditor;
         private float _timer;
         private ISaveLoad _saveLoad;
-        private IGUIModelView _gui;
+        private IGUI _iguiView;
         private IWindowsFactory _windowsFactory;
         
         public void Initialize(string key)
         {
             Services services = new Services();
             _saveLoad = services.Single<ISaveLoad>();
-            _gui = services.Single<IGUIModelView>();
+            _iguiView = services.Single<IGUI>();
             _windowsFactory = services.Single<IWindowsFactory>();
             _textEditor = new TextStyleEditor(inputField);
             
             SetKey(key);
-            Resize();
             Bind();
         }
 
@@ -66,7 +65,7 @@ namespace SerjBal
 
         private IEnumerator DelayAndSave(string value)
         {
-            _timer = 2f;
+            _timer = 1f;
             while (_timer>0)
             {
                 _timer -= Time.deltaTime;
@@ -79,7 +78,6 @@ namespace SerjBal
         
         public async void OpenLinkWindow() => await _windowsFactory.CreateTextLinkStyleWindow(_textEditor);
         public async void OpenColorWindow() => await _windowsFactory.CreateTextColorWindow(_textEditor);
-        public void Resize() => rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, _gui.GetMenuBounds());
         private void OnDestroy() => _saveLoad.Save(Key, new TextData{ text = inputField.text});
     }
 }

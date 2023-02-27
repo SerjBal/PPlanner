@@ -11,10 +11,10 @@ namespace SerjBal
         public IMenuItem Parent { get; set; }
         public List<IMenuItem> Childs { get; set;}
         public string Key { get;  set; }
-        public Transform ContentContainer => contentContainer;
         public MenuItemType itemType { get; set; }
         public Action onAddAction{ get; set; }
         public Action onEditAction{ get; set; }
+        public Transform ContentContainer => contentContainer;
         
         [SerializeField] protected Canvas canvas;
         [SerializeField] private ButtonSwipeController buttonsController;
@@ -30,7 +30,7 @@ namespace SerjBal
 
         public virtual void Initialize(ButtonConfigs configs)
         {
-            Binds();
+            Bind();
             _isSelected = false;
             _services = new Services();
             _factory = _services.Single<IMenuFactory>();
@@ -40,7 +40,7 @@ namespace SerjBal
             contentContainer.gameObject.SetActive(false);
             buttonsController?.Initialize(configs);
         }
-        private void Binds()
+        private void Bind()
         {
             animator.onExpandStartEvent = OnExpandStart;
             animator.onExpandFinishEvent = OnExpandFinish;
@@ -54,13 +54,13 @@ namespace SerjBal
             }
         }
 
-        public void SetKey(string key)
+        public void SetName(string key)
         {
             nameText.text = key;
             Key = key;
         }
         
-        public void Open()
+        public void ShowContent()
         {
             if (!_isSelected)
             {
@@ -68,7 +68,7 @@ namespace SerjBal
                 animator?.PlayOpen();
             }
         }
-        public void Close()
+        public void HideContent()
         {
             if (_isSelected)
             {
@@ -80,9 +80,9 @@ namespace SerjBal
         public void OnSelected()
         {
             if (!_isSelected)
-                {Open();}
+                {ShowContent();}
             else
-                Close();
+                HideContent();
         }
         public void OnEdit() => onEditAction.Invoke();
         
@@ -99,7 +99,7 @@ namespace SerjBal
         {
             if (_isSelected)
             {
-                foreach (IMenuItem child in Childs) child.Close();
+                foreach (IMenuItem child in Childs) child.HideContent();
             }
         }
         public virtual void OnCollapseFinish()
@@ -114,12 +114,10 @@ namespace SerjBal
 
         public virtual async void UpdateContent()
         {
-            var keyPath = this.GetKeyPath();
-            
             Childs.Clear();
             ContentContainer.Clear();
                 
-            ItemData itemData =  _data.GetOrCreateData(keyPath);
+            ItemData itemData =  _data.GetOrCreateData(this.GetKeyPath());
             for (int i = 0; i < itemData.Content.Count; i++)
             {
                 Childs.Add(await _factory.CreateMenuItem(this, itemData.Content[i].Key));
@@ -137,7 +135,7 @@ namespace SerjBal
             if (Parent != null)
                 Parent.UpdateContent();
             else
-                Close();
+                HideContent();
         }
     }
 }

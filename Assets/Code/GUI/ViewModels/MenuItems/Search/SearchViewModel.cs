@@ -18,20 +18,20 @@ namespace SerjBal
         {
             base.Initialize(configs);
             _searchEngine = new SearchEngine(services);
-            Binds();
+            Bind();
         }
 
-        private void Binds() => inputField.onValueChanged.AddListener(delegate {ShowResults(); });
+        private void Bind() => inputField.onValueChanged.AddListener(ShowResults);
 
-        public void ShowResults()
+        public void ShowResults(string value)
         {
             _cancelationToken?.Cancel();
             _cancelationToken = new CancellationTokenSource();
 
-            if (inputField.text.Length > 0)
+            if (value.Length > 0)
                 DelayAndSearch(_cancelationToken.Token);
             else
-                Close();
+                HideContent();
         }
 
         public override async void UpdateContent()
@@ -50,7 +50,19 @@ namespace SerjBal
         private async Task DelayAndSearch(CancellationToken token)
         {
             await Task.Delay(TimeSpan.FromSeconds(1), token);
-            _searchEngine.Search(inputField.text, Open);
+            bool isFounded = await _searchEngine.Search(inputField.text);
+            ShowResults(isFounded);
+        }
+
+        public void ShowResults(bool isFounded)
+        {
+            if (isFounded)
+            {
+                UpdateContent();
+                ShowContent();
+            }
+            else
+                HideContent();
         }
     }
 }
