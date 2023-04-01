@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 292cadfaa22fb4cee868e052395f6249
+  m_SerializeEntries:
+  - m_GUID: 2aa2434def2a24e55bd70457c8fe0563
+    m_Address: canvas
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 49b44b192f0ab4b07b459125a3a0430f
+    m_Address: date-item
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 874817cd5c312442597ed1279df685aa
+    m_Address: text-item
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: bef968a5db56c4106a277e9f964ccf5e
+    m_Address: channel-item
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4456c46a505924004b2a3bc8a994a251
+    m_Address: time-item
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 223636f5e569440f3816f6c35b98a045
+    m_Address: warning-window
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b6eaba146ad3640498d49963ccda5d17
+    m_Address: add-item-button
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 753958336579a4648bffe34b2cbb7564
+    m_Address: search-item
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 859c5b02f576a4440a3c76cbb62eb538
+    m_Address: window-generic
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: bd61458252d3c459597256274ded301f, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 43333e0a366d440b9b8649c164fd6897, type: 2}
+    - {fileID: 11400000, guid: c5b74c95f80b04c29a8bfd199871ed32, type: 2}
