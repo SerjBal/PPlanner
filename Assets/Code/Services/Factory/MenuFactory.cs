@@ -49,26 +49,35 @@ namespace SerjBal
                 case MenuItemType.Channel:
                     return await CreateButton<TimeButton>(Const.TimeItemPath, parent, path);
                 case MenuItemType.Search:
-                    return await CreateButton<SearchResultButton>(Const.SearchResultItemPath, parent, path);
+                    var itemViewModel = CreateViewModel<SearchResultButton>(parent, path);
+                    var itemView = await _assets.Instantiate<SearchResultButtonView>(Const.SearchResultItemPath, parent.ContentContainer);
+                    itemView.Setup(itemViewModel);
+                    itemView.Initialize(_configs.buttonConfigs);
+                    return itemViewModel as IHierarchical;
                 default:
                     Debug.LogError("Wrong button type");
                     return null;
             }
         }
         
-        private async Task<IHierarchical> CreateButton<TButton>(string instance, IHierarchical parent, string key) where TButton : ButtonViewModel, new()
+        private async Task<IHierarchical> CreateButton<TButton>(string instance, IHierarchical parent, string path) where TButton : ButtonViewModel, new()
         {
-            ButtonViewModel itemViewModel = new TButton();
-            itemViewModel.Parent = parent;
-            itemViewModel.Path = key;
-            itemViewModel.Initialize(_services);
-            
+            var itemViewModel = CreateViewModel<TButton>(parent, path);
             var itemView = await _assets.Instantiate<ButtonView>(instance, parent.ContentContainer);
             itemView.Setup(itemViewModel);
             itemView.Initialize(_configs.buttonConfigs);
             return itemViewModel as IHierarchical;
         }
-        
+
+        private ButtonViewModel CreateViewModel<TButton>(IHierarchical parent, string path) where TButton : ButtonViewModel, new()
+        {
+            ButtonViewModel itemViewModel = new TButton();
+            itemViewModel.Parent = parent;
+            itemViewModel.Path = path;
+            itemViewModel.Initialize(_services);
+            return itemViewModel;
+        }
+
         public async Task<TextEditorViewModel> CreateTextEditor(IHierarchical parent, string path)
         {
             var textItem = await _assets.Instantiate<TextEditorViewModel>(Const.TextItemPath, parent.ContentContainer);

@@ -12,6 +12,13 @@ namespace SerjBal
 
         public void Execute(object param = null)
         {
+            if (param != null)
+            {
+                var value = (string)param;
+                if ( value.Length > 15) 
+                    value = value.Substring(0, 15);
+                _viewModel.InputString = value;
+            }
         }
     }
 }

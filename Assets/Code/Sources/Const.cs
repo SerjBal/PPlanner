@@ -39,6 +39,6 @@ namespace SerjBal
         public const int MenuWindowSortingOrder = 10;
         public const int WarningWindowSortingOrder = 11;
         public const string TextItemName = "text";
-        public static readonly string DataPath = Application.streamingAssetsPath;
+        public static readonly string DataPath = Application.persistentDataPath;
     }
 }

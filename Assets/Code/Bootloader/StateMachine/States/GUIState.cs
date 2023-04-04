@@ -5,6 +5,7 @@ namespace SerjBal
     public class GUIState : IState
     {
         private readonly FadeScreen _fadeScreen;
+        private readonly LoaderScreen _loaderScreen;
         private readonly Services _services;
         private readonly AppStateMachine _stateMachine;
         private ButtonConfigs _buttonConfigs;
@@ -13,11 +14,12 @@ namespace SerjBal
         private ITemplatesProvider _templates;
 
         public GUIState(AppStateMachine stateMachine, Services services,
-            FadeScreen fadeScreen)
+            FadeScreen fadeScreen, LoaderScreen loaderScreen)
         {
             _stateMachine = stateMachine;
             _services = services;
             _fadeScreen = fadeScreen;
+            _loaderScreen = loaderScreen;
         }
 
         public async void Enter()
@@ -35,6 +37,7 @@ namespace SerjBal
         public void Exit()
         {
             _fadeScreen.Show(false);
+            _loaderScreen.Show(false);
         }
     }
 }

@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: Sergei Baluberdin
+  companyName: com.Sergei-Balyberdin
   productName: PPlanner
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -156,7 +156,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
     Android: com.DefaultCompany.PostNavigator
-    Standalone: com.DefaultCompany.2DProject
+    Standalone: com.Sergei-Baluberdin.PPlanner
     iPhone: com.Sergei-Baluberdin.PPlanner
   buildNumber:
     Standalone: 0

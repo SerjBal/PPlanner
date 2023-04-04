@@ -1,34 +1,47 @@
+using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace SerjBal
 {
-    public class LoaderScreen : MonoBehaviour, IProgress
+    public class LoaderScreen : MonoBehaviour
     {
-        [SerializeField] private Image loadingProgressBar;
-
-        public float Progress
-        {
-            get => loadingProgressBar.fillAmount;
-            set
-            {
-                SetActivity(value);
-                loadingProgressBar.fillAmount = value;
-            }
-        }
+        [SerializeField] private RectTransform loadingProgressBar;
+        private bool _isCanceled;
+        [SerializeField] float rotationSpeed = 500;
 
         public void Initialize()
         {
-            Progress = 0;
+            Show(true);
             DontDestroyOnLoad(this);
         }
 
-        private void SetActivity(float value)
+        public void Show(bool value)
         {
-            if (value >= 1 && gameObject.activeSelf)
-                gameObject.SetActive(false);
-            else
+            if (value)
+            {
                 gameObject.SetActive(true);
+                StartCoroutine(Animation());
+            }
+            else
+                _isCanceled = true;
+        }
+
+        private IEnumerator Animation()
+        {
+            while (true)
+            {
+                loadingProgressBar.eulerAngles = new Vector3(0, 0, loadingProgressBar.eulerAngles.z - Time.deltaTime * rotationSpeed);
+                if (_isCanceled)
+                {
+                    _isCanceled = false;
+                    gameObject.SetActive(false);
+                    yield break;
+                }
+
+                yield return null;
+            }
         }
     }
 }

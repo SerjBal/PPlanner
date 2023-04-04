@@ -35,7 +35,7 @@ namespace SerjBal
         {
             _services.RegisterSingle<ITemplatesProvider>(new TemplatesProvider());
             _services.RegisterSingle<IAssetsProvider>(new AssetProvider());
-            _services.RegisterSingle<IDataProvider>(new DataProvider());
+            _services.RegisterSingle<IDataProvider>(new DataProvider(_loaderScreen));
             _services.RegisterSingle<IWindowsFactory>(new WindowsFactory(_services.Single<IAssetsProvider>()));
             _services.RegisterSingle<IMenuFactory>(new MenuFactory(_services, _configurations));
             _services.RegisterSingle<IGUI>(new GUI());

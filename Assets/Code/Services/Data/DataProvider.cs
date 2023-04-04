@@ -6,12 +6,14 @@ namespace SerjBal
 {
     public class DataProvider : IDataProvider
     {
+        private readonly LoaderScreen _loaderScreen;
+
+        public DataProvider(LoaderScreen loaderScreen) => _loaderScreen = loaderScreen;
+
         public DateTime CurrentDate { get; set; }
 
-        public bool PathExists(string path)
-        {
-            return Directory.Exists(path);
-        }
+        public bool PathExists(string path) => 
+            Directory.Exists(path);
 
         public string[] LoadDirectory(string path)
         {
@@ -75,7 +77,7 @@ namespace SerjBal
                 }
                 catch (IOException ex)
                 {
-                    Debug.Log(ex.Message);
+                    Debug.LogError("file delete error");
                 }
         }
     }

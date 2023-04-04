@@ -10,7 +10,6 @@ namespace SerjBal
         public ButtonRemoveCmd(IHierarchical viewModel, Services services)
         {
             _viewModel = viewModel as ButtonViewModel;
-            _selectCommand = new ButtonSelectCmd(_viewModel);
             _data = services.Single<IDataProvider>();
         }
 
@@ -21,7 +20,7 @@ namespace SerjBal
             if (_viewModel.Parent != null)
                 ((ButtonViewModel)_viewModel.Parent).ContentUpdateCommand.Execute();
             else if (_viewModel.IsSelected)
-                _selectCommand.Execute();
+                _viewModel.PushButton();
         }
     }
 }

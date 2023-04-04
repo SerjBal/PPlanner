@@ -13,7 +13,8 @@ namespace SerjBal
         {
             if (_viewModel.IsSelected)
                 foreach (ButtonViewModel child in _viewModel.ChildList)
-                    child.IsSelected = false;
+                    if (child.IsSelected)
+                        child.PushButton();
         }
     }
 }

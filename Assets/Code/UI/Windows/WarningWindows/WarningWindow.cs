@@ -33,8 +33,6 @@ namespace SerjBal
         public Action<int> OnCanvasChanged { get; set; }
         public Action<string> OnInputChanged { get; set; }
 
-        public virtual void Initialize(IWindowViewModel window, string path)
-        {
-        }
+        public abstract void Initialize(IWindowViewModel window, string path);
     }
 }

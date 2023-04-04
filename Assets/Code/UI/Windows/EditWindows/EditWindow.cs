@@ -33,8 +33,6 @@ namespace SerjBal
         public Action OnClose { get; set; }
         public Action<int> OnCanvasChanged { get; set; }
 
-        public virtual void Initialize(IHierarchical splitButton, Services services)
-        {
-        }
+        public abstract void Initialize(IHierarchical splitButton, Services services);
     }
 }

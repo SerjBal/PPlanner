@@ -130,6 +130,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1516001968, guid: 925a172725417436395158d1e6a3adaa, type: 3}
+      propertyPath: speed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1516001968, guid: 925a172725417436395158d1e6a3adaa, type: 3}
+      propertyPath: loadingProgressBar
+      value: 
+      objectReference: {fileID: 1636164258}
     - target: {fileID: 3376533203420417170, guid: 925a172725417436395158d1e6a3adaa, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -340,6 +348,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!224 &1636164258 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1704500684, guid: 925a172725417436395158d1e6a3adaa, type: 3}
+  m_PrefabInstance: {fileID: 77332073}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2105340494
 PrefabInstance:
   m_ObjectHideFlags: 0

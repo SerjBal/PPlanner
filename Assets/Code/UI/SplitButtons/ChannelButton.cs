@@ -6,7 +6,6 @@ namespace SerjBal
         {
             ItemType = MenuItemType.Channel;
 
-            SelectCommand = new ButtonSelectCmd(this);
             RemoveCommand = new ButtonRemoveCmd(this, services);
             EditCommand = new ButtonEditCmd<EditChannelWindow>(this, services);
             CollapseFinishEnd = new ButtonCollapseEndCmd(this);

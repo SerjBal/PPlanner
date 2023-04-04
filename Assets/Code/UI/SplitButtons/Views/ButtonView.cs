@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 namespace SerjBal
 {
-    public class ButtonView : MonoBehaviour, IButtonView
+    public class ButtonView : MonoBehaviour
     {
         [SerializeField] protected Canvas canvas;
-        [SerializeField] private SwipeController controller;
-        [SerializeField] private Button editButton;
-        [SerializeField] private Button removeButton;
-        [SerializeField] private TMP_Text nameText;
+        [SerializeField] protected SwipeController controller;
+        [SerializeField] protected Button editButton;
+        [SerializeField] protected Button removeButton;
+        [SerializeField] protected TMP_Text nameText;
         [SerializeField] protected Transform contentContainer;
         [SerializeField] protected ButtonAnimator animator;
 
@@ -46,14 +46,8 @@ namespace SerjBal
             {
                 editButton.onClick.AddListener(() => viewModel.EditCommand.Execute());
                 removeButton.onClick.AddListener(() => viewModel.RemoveCommand.Execute());
-                controller.onSelectedEvent = () => viewModel.SelectCommand.Execute(animator);
+                controller.onSelectedEvent = viewModel.PushButton;
             }
         }
-    }
-
-    public interface IButtonView
-    {
-        void Initialize(ButtonConfigs configs);
-        void Setup(ButtonViewModel viewModel);
     }
 }

@@ -6,7 +6,6 @@ namespace SerjBal
         {
             ItemType = MenuItemType.Date;
 
-            SelectCommand = new ButtonSelectCmd(this);
             RemoveCommand = new ButtonRemoveCmd(this, services);
             EditCommand = new ButtonEditCmd<EditDateWindow>(this, services);
             CollapseFinishEnd = new ButtonCollapseEndCmd(this);

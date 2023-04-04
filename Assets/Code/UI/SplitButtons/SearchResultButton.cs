@@ -4,7 +4,6 @@ namespace SerjBal
     {
         public override void Initialize(Services services)
         {
-            SelectCommand = new ButtonSelectCmd(this);
             RemoveCommand = default;
             EditCommand = default;
             CollapseFinishEnd = new SearchCollapseEndCmd(this);

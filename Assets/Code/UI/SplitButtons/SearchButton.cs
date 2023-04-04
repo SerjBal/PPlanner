@@ -11,7 +11,6 @@ namespace SerjBal
             ItemType = MenuItemType.Search;
             
             _searchEngine = new SearchEngine(services);
-            SelectCommand = new ButtonSelectCmd(this);
             CollapseFinishEnd = new ButtonCollapseEndCmd(this);
             CollapseStartCommand = new ButtonCollapseStartCmd(this);
             ExpandEndCommand = new ButtonExpandEndCmd();
@@ -25,7 +24,7 @@ namespace SerjBal
             if (value.Length > 0)
                 SearchStart(value);
             else
-                IsSelected = false;
+            if (IsSelected) PushButton();
         }
 
         private async Task SearchStart(string value)
@@ -39,12 +38,10 @@ namespace SerjBal
             if (isFounded)
             {
                 ContentUpdateCommand.Execute();
-                IsSelected = true;
+                if (!IsSelected) PushButton();
             }
-            else
-            {
-                IsSelected = false;
-            }
+            else if (IsSelected) PushButton();
         }
+        
     }
 }

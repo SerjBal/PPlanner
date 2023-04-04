@@ -43,6 +43,9 @@ MonoBehaviour:
   m_GroupAssets:
   - {fileID: 11400000, guid: 54316015650754d55b5b84670e5cf429, type: 2}
   - {fileID: 11400000, guid: 55f12205ccbde4f5ab2dac04177a9da4, type: 2}
+  - {fileID: 11400000, guid: 38878e69c271448ea94d25752d38d9f2, type: 2}
+  - {fileID: 11400000, guid: 29a3281632a5d48fc86718e1189dc600, type: 2}
+  - {fileID: 11400000, guid: cb55e5856f4854a9095eb43696b4c635, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -98,6 +101,9 @@ MonoBehaviour:
   m_LabelTable:
     m_LabelNames:
     - default
+    - Locale
+    - Locale-en
+    - Preload
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 6b75d9a6d4f944be187da6bc77d3c418, type: 2}
@@ -128,7 +134,7 @@ MonoBehaviour:
           m_Key: HostingServiceUploadSpeed
         - m_AssemblyName: mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
           m_ClassName: System.String
-          m_Data: Library/com.unity.addressables/aa/Android/Android
+          m_Data: Library/com.unity.addressables/aa/iOS/iOS
           m_Key: ContentRoot
         - m_AssemblyName: mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
           m_ClassName: System.Boolean

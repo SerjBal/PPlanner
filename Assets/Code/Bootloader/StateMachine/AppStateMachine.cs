@@ -18,7 +18,7 @@ namespace SerjBal
             {
                 [typeof(BootloaderState)] =
                     new BootloaderState(this, configurations, services, fadeScreen, loaderScreen),
-                [typeof(GUIState)] = new GUIState(this, services, fadeScreen),
+                [typeof(GUIState)] = new GUIState(this, services, fadeScreen, loaderScreen),
                 [typeof(TutorialState)] = new TutorialState(this)
             };
         }
