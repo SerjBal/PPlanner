@@ -43,7 +43,7 @@ namespace SerjBal
 
         private void CreateDirectory(string newItem)
         {
-            var newPath = Path.Combine(_itemViewModel.Path, newItem);
+            var newPath = Path.Combine(_itemViewModel.ContentPath, newItem);
             _dataProvider.CreateDirectory(newPath);
         }
     }

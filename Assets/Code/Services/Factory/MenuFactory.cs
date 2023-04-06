@@ -52,7 +52,7 @@ namespace SerjBal
                     var itemViewModel = CreateViewModel<SearchResultButton>(parent, path);
                     var itemView = await _assets.Instantiate<SearchResultButtonView>(Const.SearchResultItemPath, parent.ContentContainer);
                     itemView.Setup(itemViewModel);
-                    itemView.Initialize(_configs.buttonConfigs);
+                    itemView.Initialize(_configs.buttonConfig);
                     return itemViewModel as IHierarchical;
                 default:
                     Debug.LogError("Wrong button type");
@@ -60,12 +60,12 @@ namespace SerjBal
             }
         }
         
-        private async Task<IHierarchical> CreateButton<TButton>(string instance, IHierarchical parent, string path) where TButton : ButtonViewModel, new()
+        public async Task<IHierarchical> CreateButton<TButton>(string addressablePath, IHierarchical parent, string path) where TButton : ButtonViewModel, new()
         {
             var itemViewModel = CreateViewModel<TButton>(parent, path);
-            var itemView = await _assets.Instantiate<ButtonView>(instance, parent.ContentContainer);
+            var itemView = await _assets.Instantiate<ButtonView>(addressablePath, parent.ContentContainer);
             itemView.Setup(itemViewModel);
-            itemView.Initialize(_configs.buttonConfigs);
+            itemView.Initialize(_configs.buttonConfig);
             return itemViewModel as IHierarchical;
         }
 
@@ -86,7 +86,8 @@ namespace SerjBal
             return textItem;
         }
 
-        public async Task<Button> CreateAddButtonItem(Transform parent) => 
+        public async Task<Button> CreateAddButton(Transform parent) => 
             await _assets.Instantiate<Button>(Const.AddItemButtonPath, parent);
+
     }
 }

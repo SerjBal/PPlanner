@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace SerjBal
 {
@@ -16,9 +17,10 @@ namespace SerjBal
         {
             _viewModel.ChildList = new List<IHierarchical>();
             _viewModel.ContentContainer.Clear();
-            _viewModel.ContentContainer.gameObject.SetActive(false);
             ((Canvas)param)!.overrideSorting = false;
             foreach (Transform item in _viewModel.ContentContainer) Object.Destroy(item.gameObject);
+            var layout = _viewModel.ContentContainer.GetComponent<VerticalLayoutGroup>();
+            if (layout) layout.enabled = true;
         }
     }
 }

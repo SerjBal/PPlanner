@@ -15,10 +15,10 @@ namespace SerjBal
         [SerializeField] protected Transform contentContainer;
         [SerializeField] protected ButtonAnimator animator;
 
-        public void Initialize(ButtonConfigs configs)
+        public void Initialize(ButtonConfig config)
         {
-            if (animator) animator.Initialize(configs.expandAnimationCurve);
-            if (controller) controller.Initialize(configs);
+            if (animator) animator.Initialize(config.expandAnimationCurve);
+            if (controller) controller.Initialize(config);
             contentContainer.gameObject.SetActive(false);
         }
 

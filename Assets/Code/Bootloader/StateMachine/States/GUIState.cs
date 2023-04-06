@@ -8,7 +8,7 @@ namespace SerjBal
         private readonly LoaderScreen _loaderScreen;
         private readonly Services _services;
         private readonly AppStateMachine _stateMachine;
-        private ButtonConfigs _buttonConfigs;
+        private ButtonConfig _buttonConfig;
         private IDataProvider _data;
         private IGUI _iguiView;
         private ITemplatesProvider _templates;

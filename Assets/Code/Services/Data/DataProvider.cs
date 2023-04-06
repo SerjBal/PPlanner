@@ -46,10 +46,12 @@ namespace SerjBal
 
         public void CreateFile<T>(string path, T data)
         {
+            var parent = Path.GetDirectoryName(path);
+            CreateDirectory(parent);
             try
             {
                 var json = JsonUtility.ToJson(data);
-                File.WriteAllText(path, json);
+                File.WriteAllText(path, json);   
             }
             catch
             {

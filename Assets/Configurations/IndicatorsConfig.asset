@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd1c3b793f0744fa495fa78d7c352db6, type: 3}
+  m_Name: IndicatorsConfig
+  m_EditorClassIdentifier: 
+  contentPostActiveColor: {r: 0, g: 0, b: 0, a: 0}
+  contentPostInactiveColor: {r: 0, g: 0, b: 0, a: 0}
+  adsPostActiveColor: {r: 0, g: 0, b: 0, a: 0}
+  adsPostInactiveColor: {r: 0, g: 0, b: 0, a: 0}
+  timeProgressBarColor: {r: 0, g: 0, b: 0, a: 0}

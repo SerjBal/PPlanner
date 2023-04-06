@@ -7,6 +7,7 @@ namespace SerjBal
 {
     public class SwipeController : MonoBehaviour, IPointerDownHandler, IPointerExitHandler
     {
+        [SerializeField] private bool isSwipeEnable = true;
         [SerializeField] private RectTransform frontButtonTransform;
         [SerializeField] private RectTransform rightButtonsTransform;
         private bool _isOnButtonClickAllowed;
@@ -33,10 +34,14 @@ namespace SerjBal
         {
             if (_isOnPointerDown)
             {
-                var mousePosition = _mouseStartPosition - Input.mousePosition;
-                var offset = mousePosition.x * -1;
-                ButtonResize(offset);
-                ClickDisallow(offset);
+                if (isSwipeEnable)
+                {
+                    var mousePosition = _mouseStartPosition - Input.mousePosition;
+                    var offset = mousePosition.x * -1;
+
+                    ButtonResize(offset);
+                    ClickDisallow(offset);
+                }
 
                 if (Input.GetMouseButtonUp(0)) OnPointerUp();
             }
@@ -62,11 +67,11 @@ namespace SerjBal
             if (_isOnPointerDown) OnPointerUp();
         }
 
-        public void Initialize(ButtonConfigs configs)
+        public void Initialize(ButtonConfig config)
         {
             _width = frontButtonTransform.rect.width / 2;
-            _onOnButtonClickTimer = configs.clickTimer;
-            _maxSliceDistance = configs.swipeDistance;
+            _onOnButtonClickTimer = config.clickTimer;
+            _maxSliceDistance = config.swipeDistance;
         }
 
         private async Task Snap()

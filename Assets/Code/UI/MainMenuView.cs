@@ -28,7 +28,7 @@ namespace SerjBal
             searchButton.Initialize(services);
             GetSearchButtonView.Setup(searchButton);
             CalendarView.Initialize();
-            GetSearchButtonView.Initialize(configs.buttonConfigs);
+            GetSearchButtonView.Initialize(configs.buttonConfig);
         }
 
         private void OnApplicationQuit() => _assets.Cleanup();

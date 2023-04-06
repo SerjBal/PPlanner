@@ -7,6 +7,7 @@ namespace SerjBal
     {
         MenuItemType ItemType { get; set; }
         string Path { get; set; }
+        string ContentPath { get; }
         IHierarchical Parent { get; set; }
         List<IHierarchical> ChildList { get; set; }
         Transform ContentContainer { get; set; }

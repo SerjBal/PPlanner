@@ -36,9 +36,14 @@ namespace SerjBal
         public const string ReplaceWarningText = "The data already exists! Replace?";
         public const string ReplaceButtonText = "Ok";
 
+        public const string CommentsButtonPath = "comments-item";
+
         public const int MenuWindowSortingOrder = 10;
         public const int WarningWindowSortingOrder = 11;
-        public const string TextItemName = "text";
+       
         public static readonly string DataPath = Application.persistentDataPath;
+        public const string TextFileName = "text.json";
+        public const string CommentsName = "Comments";
+        public const string ContentDrectory = "content";
     }
 }

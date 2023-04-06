@@ -59,7 +59,7 @@ namespace SerjBal
 
         private void SetPath(string path)
         {
-            this.path = Path.Combine(path, $"{Const.TextItemName}.json");
+            this.path = Path.Combine(path, Const.TextFileName);
             inputField.text = _data.LoadFile<PostData>(this.path).text;
         }
 

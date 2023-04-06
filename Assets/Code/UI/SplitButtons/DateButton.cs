@@ -12,7 +12,7 @@ namespace SerjBal
             CollapseStartCommand = new ButtonCollapseStartCmd(this);
             ExpandEndCommand = new ButtonExpandEndCmd();
             ExpandStartCommand = new ButtonExpandStartCmd(this);
-            ContentUpdateCommand = new ButtonUpdateCmd(this, services);
+            ContentUpdateCommand = new DateUpdateCmd(this, services);
             AddNewContentCommand = new ButtonEditCmd<NewChannelWindow>(this, services);
         }
     }

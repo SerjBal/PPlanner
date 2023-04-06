@@ -1,12 +1,13 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SerjBal
 {
     public class ButtonUpdateCmd : ICommand
     {
-        private readonly IDataProvider _data;
-        private readonly IMenuFactory _factory;
-        private readonly IHierarchical _item;
+        private protected readonly IMenuFactory factory;
+        private protected readonly IHierarchical item;
+        private protected readonly IDataProvider data;
         private readonly ButtonExpandEndCmd _buttonExpandEndCmd;
         private readonly ButtonViewModel _viewModel;
 
@@ -14,23 +15,38 @@ namespace SerjBal
         {
             _buttonExpandEndCmd = new ButtonExpandEndCmd();
             _viewModel = item as ButtonViewModel;
-            _item = item;
-            _factory = services.Single<IMenuFactory>();
-            _data = services.Single<IDataProvider>();
+            this.item = item;
+            factory = services.Single<IMenuFactory>();
+            data = services.Single<IDataProvider>();
         }
 
-        public async void Execute(object param = null)
+        public virtual async void Execute(object param = null)
         {
-            _item.ContentContainer.Clear();
-            _item.ChildList = new List<IHierarchical>();
+            ClearContent();
+            await AddContent();
+            await AddNewItemButton();
+            EndCommand();
+        }
 
-            var content = _data.LoadDirectory(_item.Path);
-            for (var i = 0; i < content.Length; i++)
-                _item.ChildList.Add(await _factory.CreateButton(_item, content[i]));
+        private protected void EndCommand() => _buttonExpandEndCmd.Execute();
 
-            var addButton = await _factory.CreateAddButtonItem(_item.ContentContainer);
+        private protected async Task AddNewItemButton()
+        {
+            var addButton = await factory.CreateAddButton(item.ContentContainer);
             addButton.onClick.AddListener(() => _viewModel.AddNewContentCommand.Execute());
-            _buttonExpandEndCmd.Execute();
+        }
+
+        private protected async Task AddContent()
+        {
+            var content = data.LoadDirectory(item.ContentPath);
+            for (var i = 0; i < content.Length; i++)
+                item.ChildList.Add(await factory.CreateButton(item, content[i]));
+        }
+
+        private protected void ClearContent()
+        {
+            item.ContentContainer.Clear();
+            item.ChildList = new List<IHierarchical>();
         }
     }
 }

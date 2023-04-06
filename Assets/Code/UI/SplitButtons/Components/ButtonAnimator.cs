@@ -81,12 +81,12 @@ namespace SerjBal
 
         private void OnExpandStart()
         {
+            if (_layout) _layout.enabled = false;
             _iguiView.InteractionEnable(true);
             contentScrollRect.vertical = true;
             _yPos = buttonTransform.anchoredPosition.y;
             var parentYPositionInWorldSpace = buttonTransform.parent.position.y;
             _sizeB = parentYPositionInWorldSpace;
-            if (_layout) _layout.enabled = false;
             onExpandStartEvent?.Invoke();
         }
 
@@ -107,10 +107,10 @@ namespace SerjBal
 
         private void OnCollapseFinish()
         {
+            if (_layout) _layout.enabled = true;
             buttonTransform.anchoredPosition = new Vector2(buttonTransform.anchoredPosition.x, _yPos);
             buttonTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, _buttonHeight);
             _iguiView.InteractionEnable(false);
-            if (_layout) _layout.enabled = true;
             onCollapseFinishEvent?.Invoke();
         }
     }

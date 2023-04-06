@@ -46,6 +46,11 @@ namespace SerjBal
                 OnKeyChanged?.Invoke(value);
             }
         }
+        
+        public string ContentPath
+        {
+            get => System.IO.Path.Combine(_path, Const.ContentDrectory);
+        }
 
         public abstract void Initialize(Services services);
 

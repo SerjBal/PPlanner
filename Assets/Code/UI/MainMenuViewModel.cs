@@ -22,6 +22,7 @@ namespace SerjBal
         }
 
         public string Path { get; set; }
+        public string ContentPath { get; }
         public MenuItemType ItemType { get; set; }
         public IHierarchical Parent { get; set; }
         public List<IHierarchical> ChildList { get; set; }
