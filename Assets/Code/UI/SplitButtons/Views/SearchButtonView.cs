@@ -8,7 +8,7 @@ namespace SerjBal
         [SerializeField] private TMP_InputField inputField;
         public void Setup(SearchButton button)
         {
-            base.Setup(button);
+            base.ReleaseSetup(button);
             inputField.onValueChanged.AddListener(button.SearchInitialize);
         }
     }

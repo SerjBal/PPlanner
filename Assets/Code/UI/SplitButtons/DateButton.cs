@@ -8,7 +8,7 @@ namespace SerjBal
 
             RemoveCommand = new ButtonRemoveCmd(this, services);
             EditCommand = new ButtonEditCmd<EditDateWindow>(this, services);
-            CollapseFinishEnd = new ButtonCollapseEndCmd(this);
+            CollapseEndCommand = new ButtonCollapseEndCmd(this);
             CollapseStartCommand = new ButtonCollapseStartCmd(this);
             ExpandEndCommand = new ButtonExpandEndCmd();
             ExpandStartCommand = new ButtonExpandStartCmd(this);

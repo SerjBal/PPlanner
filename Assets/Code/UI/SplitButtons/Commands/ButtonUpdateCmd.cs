@@ -7,17 +7,17 @@ namespace SerjBal
     {
         private protected readonly IMenuFactory factory;
         private protected readonly IHierarchical item;
-        private protected readonly IDataProvider data;
+        private readonly IDataProvider _data;
         private readonly ButtonExpandEndCmd _buttonExpandEndCmd;
-        private readonly ButtonViewModel _viewModel;
+        private protected readonly ButtonViewModel viewModel;
 
         public ButtonUpdateCmd(IHierarchical item, Services services)
         {
             _buttonExpandEndCmd = new ButtonExpandEndCmd();
-            _viewModel = item as ButtonViewModel;
+            viewModel = item as ButtonViewModel;
             this.item = item;
             factory = services.Single<IMenuFactory>();
-            data = services.Single<IDataProvider>();
+            _data = services.Single<IDataProvider>();
         }
 
         public virtual async void Execute(object param = null)
@@ -33,12 +33,12 @@ namespace SerjBal
         private protected async Task AddNewItemButton()
         {
             var addButton = await factory.CreateAddButton(item.ContentContainer);
-            addButton.onClick.AddListener(() => _viewModel.AddNewContentCommand.Execute());
+            addButton.onClick.AddListener(() => viewModel.AddNewContentCommand.Execute());
         }
 
         private protected async Task AddContent()
         {
-            var content = data.LoadDirectory(item.ContentPath);
+            var content = _data.LoadDirectory(item.ContentPath);
             for (var i = 0; i < content.Length; i++)
                 item.ChildList.Add(await factory.CreateButton(item, content[i]));
         }

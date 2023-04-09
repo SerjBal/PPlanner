@@ -6,10 +6,12 @@ namespace SerjBal
 {
     public abstract class ButtonViewModel
     {
-        private bool _isCanvasActive;
+        private bool _isOverrideSorting;
         private string _path;
+        private List<GameObject> _contentContainer;
         public MenuItemType ItemType { get; set; }
         public IHierarchical Parent { get; set; }
+
         public List<IHierarchical> ChildList { get; set; }
         public Transform ContentContainer { get; set; }
 
@@ -17,29 +19,26 @@ namespace SerjBal
         public ICommand EditCommand { get; set; }
         public ICommand ContentUpdateCommand { get; set; }
         public ICommand AddNewContentCommand { get; set; }
-        public ICommand CollapseFinishEnd { get; set; }
+        public ICommand CollapseEndCommand { get; set; }
         public ICommand CollapseStartCommand { get; set; }
         public ICommand ExpandEndCommand { get; set; }
         public ICommand ExpandStartCommand { get; set; }
-
+ 
+        public Action<List<GameObject>> OnContentUpdate { get; set; }
         public Action<string> OnKeyChanged { get; set; }
         public Action<bool> OnExpandStateChanged { get; set; }
-        public Action<bool> OnCanvasChanged { get; set; }
+        public Action<bool> OnOverrideSortingChanged { get; set; }
         
         public bool IsSelected { get; private set; }
-        public bool IsCanvasActive
-        {
-            get => _isCanvasActive;
+        public bool IsOverrideSorting  { get => _isOverrideSorting;
             set
             {
-                _isCanvasActive = value;
-                OnCanvasChanged?.Invoke(value);
+                _isOverrideSorting = value;
+                OnOverrideSortingChanged?.Invoke(value);
             }
         }
 
-        public string Path
-        {
-            get => _path;
+        public string Path { get => _path;
             set
             {
                 _path = value;
@@ -47,10 +46,7 @@ namespace SerjBal
             }
         }
         
-        public string ContentPath
-        {
-            get => System.IO.Path.Combine(_path, Const.ContentDrectory);
-        }
+        public string ContentPath => System.IO.Path.Combine(_path, Const.ContentDrectory);
 
         public abstract void Initialize(Services services);
 

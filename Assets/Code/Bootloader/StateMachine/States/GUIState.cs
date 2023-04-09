@@ -1,8 +1,9 @@
 using System;
+using SerjBal.Indication;
 
 namespace SerjBal
 {
-    public class GUIState : IState
+    public class GUIState : IState, IExitableState
     {
         private readonly FadeScreen _fadeScreen;
         private readonly LoaderScreen _loaderScreen;
@@ -24,8 +25,9 @@ namespace SerjBal
 
         public async void Enter()
         {
-            var data = _services.Single<IDataProvider>();
-            data.CurrentDate = DateTime.Today;
+            var currentDate = DateTime.Today;
+            _services.Single<IDataProvider>().CurrentDate = currentDate;
+            _services.Single<IPostIndication>().Initialize(currentDate);
 
             var guiService = _services.Single<IGUI>();
             await guiService.Initialize(_services);

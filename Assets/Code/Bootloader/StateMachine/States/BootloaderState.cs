@@ -1,3 +1,6 @@
+using SerjBal.Indication;
+using SerjBal.Searching;
+
 namespace SerjBal
 {
     public class BootloaderState : IState
@@ -17,18 +20,13 @@ namespace SerjBal
             _services = services;
             _fadeScreen = fadeScreen;
             _loaderScreen = loaderScreen;
-
-            RegisterServices();
         }
 
         public void Enter()
         {
+            RegisterServices();
             _fadeScreen.Show(true);
             _stateMachine.Enter<GUIState>();
-        }
-
-        public void Exit()
-        {
         }
 
         private void RegisterServices()
@@ -39,6 +37,9 @@ namespace SerjBal
             _services.RegisterSingle<IWindowsFactory>(new WindowsFactory(_services.Single<IAssetsProvider>()));
             _services.RegisterSingle<IMenuFactory>(new MenuFactory(_services, _configurations));
             _services.RegisterSingle<IGUI>(new GUI());
+            _services.RegisterSingle<ISearchingEngine>(new SearchingEngine(_services.Single<IDataProvider>()));
+            _services.RegisterSingle<IPostIndication>(new PostIndication(_services.Single<IDataProvider>()));
+            
 
             _services.Single<IAssetsProvider>().Initialize();
             _services.Single<IWindowsFactory>().WarmUp();

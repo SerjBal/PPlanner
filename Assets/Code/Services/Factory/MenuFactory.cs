@@ -26,6 +26,7 @@ namespace SerjBal
             await _assets.Load<GameObject>(Const.TextItemPath);
             await _assets.Load<GameObject>(Const.AddItemButtonPath);
             await _assets.Load<GameObject>(Const.SearchResultItemPath);
+            await _assets.Load<GameObject>(Const.CommentsButtonPath);
         }
 
         public async Task<MainMenuViewModel> CreateMainMenu()
@@ -40,44 +41,54 @@ namespace SerjBal
 
         public async Task<IHierarchical> CreateButton(IHierarchical parent, string path)
         {
+            ButtonViewModel buttonViewModel;
+            ButtonView buttonView;
+            
             switch (parent.ItemType)
             {
                 case MenuItemType.None:
                     return await CreateButton<DateButton>(Const.DateItemPath, parent, path);
+                
                 case MenuItemType.Date:
-                    return await CreateButton<ChannelButton>(Const.ChannelItemPath, parent, path);
+                    return await CreateChannel(parent, path);
+                
                 case MenuItemType.Channel:
-                    return await CreateButton<TimeButton>(Const.TimeItemPath, parent, path);
+                    var timeViewModel = await CreateButton<TimeButton>(Const.TimeItemPath, parent, path);
+                    timeViewModel.CreateMetaData();
+                    return timeViewModel;
+                
                 case MenuItemType.Search:
-                    var itemViewModel = CreateViewModel<SearchResultButton>(parent, path);
-                    var itemView = await _assets.Instantiate<SearchResultButtonView>(Const.SearchResultItemPath, parent.ContentContainer);
-                    itemView.Setup(itemViewModel);
-                    itemView.Initialize(_configs.buttonConfig);
-                    return itemViewModel as IHierarchical;
+                    buttonViewModel = CreateViewModel<SearchResultButton>(parent, path);
+                    buttonView = await CreateView<SearchResultButtonView>(Const.SearchResultItemPath, parent);
+                    buttonView.ReleaseSetup(buttonViewModel);
+                    return (IHierarchical)buttonViewModel;
+                
                 default:
                     Debug.LogError("Wrong button type");
                     return null;
             }
         }
+
+        private async Task<IHierarchical> CreateChannel(IHierarchical parent, string path)
+        {
+            var buttonViewModel = CreateViewModel<ChannelButton>(parent, path);
+            var channelView = await CreateView<ButtonView>(Const.ChannelItemPath, parent);
+            channelView.ReleaseSetup(buttonViewModel);
+            var widget = channelView.GetComponent<PostsWidget>();
+            widget.Initialize(_services, buttonViewModel, _configs.indicatorsConfig);
+            buttonViewModel.SetWidget(widget);
+            buttonViewModel.UpdateWidget();
+            return buttonViewModel;
+        }
+
+        public async Task<TButton> CreateButton<TButton>(string addressablePath, IHierarchical parent, string path) where TButton : ButtonViewModel, new()
+        {
+            var buttonViewModel = CreateViewModel<TButton>(parent, path);
+            var buttonView = await CreateView<ButtonView>(addressablePath, parent);
+            buttonView.ReleaseSetup(buttonViewModel);
+            return buttonViewModel;
+        }
         
-        public async Task<IHierarchical> CreateButton<TButton>(string addressablePath, IHierarchical parent, string path) where TButton : ButtonViewModel, new()
-        {
-            var itemViewModel = CreateViewModel<TButton>(parent, path);
-            var itemView = await _assets.Instantiate<ButtonView>(addressablePath, parent.ContentContainer);
-            itemView.Setup(itemViewModel);
-            itemView.Initialize(_configs.buttonConfig);
-            return itemViewModel as IHierarchical;
-        }
-
-        private ButtonViewModel CreateViewModel<TButton>(IHierarchical parent, string path) where TButton : ButtonViewModel, new()
-        {
-            ButtonViewModel itemViewModel = new TButton();
-            itemViewModel.Parent = parent;
-            itemViewModel.Path = path;
-            itemViewModel.Initialize(_services);
-            return itemViewModel;
-        }
-
         public async Task<TextEditorViewModel> CreateTextEditor(IHierarchical parent, string path)
         {
             var textItem = await _assets.Instantiate<TextEditorViewModel>(Const.TextItemPath, parent.ContentContainer);
@@ -88,6 +99,20 @@ namespace SerjBal
 
         public async Task<Button> CreateAddButton(Transform parent) => 
             await _assets.Instantiate<Button>(Const.AddItemButtonPath, parent);
+        
+        private TButton CreateViewModel<TButton>(IHierarchical parent, string path) where TButton : ButtonViewModel, new()
+        {
+            var itemViewModel = new TButton { Parent = parent, Path = path };
+            itemViewModel.Initialize(_services);
+            return itemViewModel;
+        }
+        
+        private async Task<TView> CreateView<TView>(string addressablePath, IHierarchical parent) where TView : IView
+        {
+            var buttonView = await _assets.Instantiate<TView>(addressablePath, parent.ContentContainer);
+            buttonView.Initialize(_configs.buttonConfig);
+            return buttonView;
+        }
 
     }
 }

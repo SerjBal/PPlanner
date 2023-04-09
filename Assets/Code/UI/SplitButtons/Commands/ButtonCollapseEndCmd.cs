@@ -15,12 +15,21 @@ namespace SerjBal
 
         public void Execute(object param = null)
         {
-            _viewModel.ChildList = new List<IHierarchical>();
-            _viewModel.ContentContainer.Clear();
+            ContentClear();
+            LayoutUpdate(param);
+        }
+
+        private void LayoutUpdate(object param)
+        {
             ((Canvas)param)!.overrideSorting = false;
-            foreach (Transform item in _viewModel.ContentContainer) Object.Destroy(item.gameObject);
             var layout = _viewModel.ContentContainer.GetComponent<VerticalLayoutGroup>();
             if (layout) layout.enabled = true;
+        }
+
+        private void ContentClear()
+        {
+            _viewModel.ChildList = new List<IHierarchical>();
+            _viewModel.ContentContainer.Clear();
         }
     }
 }

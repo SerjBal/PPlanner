@@ -6,7 +6,7 @@ namespace SerjBal
         {
             RemoveCommand = default;
             EditCommand = default;
-            CollapseFinishEnd = new SearchCollapseEndCmd(this);
+            CollapseEndCommand = new SearchCollapseEndCmd(this);
             CollapseStartCommand = new ButtonCollapseStartCmd(this);
             ExpandEndCommand = new ButtonExpandEndCmd();
             ExpandStartCommand = new ButtonExpandStartCmd( this);

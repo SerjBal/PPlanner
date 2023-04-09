@@ -31,7 +31,11 @@ namespace SerjBal
                     if (i < split.Length)
                         str[i] = Check(split[i], 2);
 
-                _viewModel.InputString = $"{str[0]}:{str[1]}";
+                var hours = Mathf.Clamp(int.Parse(str[0]), 0, 23);
+                var minuts = Mathf.Clamp(int.Parse(str[1]), 0, 59);
+               // var minuts = Mathf.Clamp(Convert.ToInt32(str[1][0]), 0, 5);
+                
+                _viewModel.InputString = $"{hours:D2}:{minuts:D2]}";
                 _defaultSplit = str;
             }
         }

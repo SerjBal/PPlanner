@@ -1,4 +1,5 @@
 using System;
+using SerjBal.Indication;
 
 namespace SerjBal
 {
@@ -6,11 +7,13 @@ namespace SerjBal
     {
         private readonly IDataProvider _data;
         private readonly IGUI _GUI;
+        private readonly IPostIndication _indication;
 
         public CalendarViewModel(Services services)
         {
             _GUI = services.Single<IGUI>();
             _data = services.Single<IDataProvider>();
+            _indication =  services.Single<IPostIndication>();
         }
 
         public bool IsDateExists(DateTime date)
@@ -22,6 +25,7 @@ namespace SerjBal
         public void LoadDate(DateTime date)
         {
             _data.CurrentDate = date;
+            _indication.Initialize(date);
             _GUI.UpdateMenu();
         }
     }

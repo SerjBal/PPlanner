@@ -6,9 +6,7 @@ namespace SerjBal
         {
         }
 
-        public void Exit()
-        {
-        }
+        
 
         public void Enter()
         {

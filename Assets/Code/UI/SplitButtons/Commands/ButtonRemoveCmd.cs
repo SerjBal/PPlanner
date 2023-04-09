@@ -18,7 +18,7 @@ namespace SerjBal
             _data.DeleteDirectory(_viewModel.Path);
 
             if (_viewModel.Parent != null)
-                ((ButtonViewModel)_viewModel.Parent).ContentUpdateCommand.Execute();
+                (_viewModel.Parent as ButtonViewModel)?.ContentUpdateCommand?.Execute();
             else if (_viewModel.IsSelected)
                 _viewModel.PushButton();
         }

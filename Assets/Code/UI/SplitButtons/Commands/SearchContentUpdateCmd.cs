@@ -1,19 +1,20 @@
 using System.Collections.Generic;
+using SerjBal.Searching;
 
 namespace SerjBal
 {
     public class SearchContentUpdateCmd : ICommand
     {
         private readonly IMenuFactory _menuFactory;
-        private readonly SearchEngine _searchEngine;
+        private readonly ISearchingEngine _searchEngine;
         private readonly ButtonViewModel _viewModel;
         private readonly IHierarchical _item;
 
-        public SearchContentUpdateCmd(IHierarchical item, Services services, SearchEngine searchEngine)
+        public SearchContentUpdateCmd(IHierarchical item, Services services)
         {
             _viewModel = item as ButtonViewModel;
             _item = item;
-            _searchEngine = searchEngine;
+            _searchEngine = services.Single<ISearchingEngine>();
             _menuFactory = services.Single<IMenuFactory>();
         }
 

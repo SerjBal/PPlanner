@@ -16,9 +16,9 @@ namespace SerjBal
         private VerticalLayoutGroup _layout;
         private float _sizeB;
         private float _yPos;
-        public Action onCollapseFinishEvent;
+        public Action onCollapseEndEvent;
         public Action onCollapseStartEvent;
-        public Action onExpandFinishEvent;
+        public Action onExpandEndEvent;
         public Action onExpandStartEvent;
 
         public void Initialize(AnimationCurve expandAnimationCurve)
@@ -95,7 +95,7 @@ namespace SerjBal
             buttonTransform.anchoredPosition = new Vector2(buttonTransform.anchoredPosition.x, 0);
             buttonTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, _sizeB);
             _iguiView.InteractionEnable(false);
-            onExpandFinishEvent?.Invoke();
+            onExpandEndEvent?.Invoke();
         }
 
         private void OnCollapseStart()
@@ -111,7 +111,7 @@ namespace SerjBal
             buttonTransform.anchoredPosition = new Vector2(buttonTransform.anchoredPosition.x, _yPos);
             buttonTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, _buttonHeight);
             _iguiView.InteractionEnable(false);
-            onCollapseFinishEvent?.Invoke();
+            onCollapseEndEvent?.Invoke();
         }
     }
 }

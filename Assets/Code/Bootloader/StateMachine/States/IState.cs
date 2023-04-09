@@ -1,6 +1,6 @@
 namespace SerjBal
 {
-    public interface IState : IExitableState
+    public interface IState 
     {
         void Enter();
     }

@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace SerjBal
+namespace SerjBal.Searching
 {
-    public class SearchEngine
+    public class SearchingEngine : ISearchingEngine
     {
-        private readonly IDataProvider _data;
+         private readonly IDataProvider _data;
         private Dictionary<string, PostData> _resultDataList;
 
-        public SearchEngine(Services services) => 
-            _data = services.Single<IDataProvider>();
+        public SearchingEngine(IDataProvider data) => _data = data;
 
         public Task<bool> Search(string goal, int daysRange = 0)
         {

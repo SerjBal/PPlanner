@@ -13,7 +13,7 @@ namespace SerjBal
         {
             _viewModel.ContentUpdateCommand?.Execute();
             _viewModel.ContentContainer.gameObject.SetActive(true);
-            _viewModel.IsCanvasActive = true;
+            _viewModel.IsOverrideSorting = true;
         }
     }
 }

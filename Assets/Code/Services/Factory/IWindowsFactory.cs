@@ -5,7 +5,7 @@ namespace SerjBal
     public interface IWindowsFactory : IService
     {
         Task WarmUp();
-        void CreateEditWindow<T>(IHierarchical viewModel) where T : IWindowViewModel, new();
+        void CreateEditWindow<T>(IHierarchical viewModel, string addressable) where T : IWindowViewModel, new();
         void CreateWarningWindow<T>(IWindowViewModel window, string path) where T : IWindowViewModel, new();
     }
 }

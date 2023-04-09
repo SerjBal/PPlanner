@@ -19,14 +19,15 @@ namespace SerjBal
         {
             await _assets.Load<GameObject>(Const.ItemNamingWindowPath);
             await _assets.Load<GameObject>(Const.WarningWindowPath);
+            await _assets.Load<GameObject>(Const.EditTimeWindow);
         }
 
-        public void CreateEditWindow<T>(IHierarchical viewModel) where T : IWindowViewModel, new()
+        public void CreateEditWindow<T>(IHierarchical viewModel, string addressable) where T : IWindowViewModel, new()
         {
             if (new T() is EditWindow windowViewModel)
             {
                 windowViewModel.Initialize(viewModel, _services);
-                CreateWindowView(Const.ItemNamingWindowPath, windowViewModel);
+                CreateWindowView(addressable, windowViewModel);
             }
         }
 
@@ -43,6 +44,11 @@ namespace SerjBal
         {
             var editView = await _assets.Instantiate<WindowView>(path, null);
             editView.Initialize(viewModel);
+        }
+
+        public async Task<T> CreateWindow<T>(string addressable, IHierarchical viewModel)
+        {
+            return await _assets.Instantiate<T>(addressable, null);
         }
     }
 }

@@ -5,8 +5,8 @@ namespace SerjBal
 {
     public class AppStateMachine
     {
-        private readonly Dictionary<Type, IExitableState> _states;
-        private IExitableState _activeState;
+        private readonly Dictionary<Type, IState> _states;
+        private IState _activeState;
 
         public AppStateMachine(
             Configurations configurations,
@@ -14,10 +14,9 @@ namespace SerjBal
             LoaderScreen loaderScreen,
             Services services)
         {
-            _states = new Dictionary<Type, IExitableState>
+            _states = new Dictionary<Type, IState>
             {
-                [typeof(BootloaderState)] =
-                    new BootloaderState(this, configurations, services, fadeScreen, loaderScreen),
+                [typeof(BootloaderState)] = new BootloaderState(this, configurations, services, fadeScreen, loaderScreen),
                 [typeof(GUIState)] = new GUIState(this, services, fadeScreen, loaderScreen),
                 [typeof(TutorialState)] = new TutorialState(this)
             };
@@ -28,15 +27,15 @@ namespace SerjBal
             ChangeState<TState>().Enter();
         }
 
-        private TState ChangeState<TState>() where TState : class, IExitableState
+        private TState ChangeState<TState>() where TState : class, IState
         {
-            _activeState?.Exit();
+            (_activeState as IExitableState)?.Exit();
             var state = GetState<TState>();
             _activeState = state;
             return state;
         }
 
-        private TState GetState<TState>() where TState : class, IExitableState
+        private TState GetState<TState>() where TState : class, IState
         {
             return _states[typeof(TState)] as TState;
         }
