@@ -6,17 +6,17 @@ namespace SerjBal
     public class ButtonCreateCmd : ICommand
     {
         private readonly IDataProvider _dataProvider;
-        private readonly IHierarchical _itemViewModel;
-        private readonly IWindowViewModel _viewModel;
+        private protected readonly IHierarchical itemViewModel;
+        private protected readonly IWindowViewModel viewModel;
 
         public ButtonCreateCmd(IWindowViewModel viewModel, Services services, IHierarchical itemViewModel)
         {
-            _viewModel = viewModel;
-            _itemViewModel = itemViewModel;
+            this.viewModel = viewModel;
+            this.itemViewModel = itemViewModel;
             _dataProvider = services.Single<IDataProvider>();
         }
 
-        public void Execute(object param = null)
+        public virtual void Execute(object param = null)
         {
             if (param != null)
             {
@@ -32,18 +32,18 @@ namespace SerjBal
 
         private void CloseWindow()
         {
-            _viewModel.OnClose.Invoke();
+            viewModel.OnClose.Invoke();
         }
 
         private void UpdateItemContent()
         {
-            ((ButtonViewModel)_itemViewModel)
+            ((ButtonViewModel)itemViewModel)
                 .ContentUpdateCommand.Execute();
         }
 
         private void CreateDirectory(string newItem)
         {
-            var newPath = Path.Combine(_itemViewModel.ContentPath, newItem);
+            var newPath = Path.Combine(itemViewModel.ContentPath, newItem);
             _dataProvider.CreateDirectory(newPath);
         }
     }

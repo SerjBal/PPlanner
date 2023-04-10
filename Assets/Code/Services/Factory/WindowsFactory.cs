@@ -45,10 +45,5 @@ namespace SerjBal
             var editView = await _assets.Instantiate<WindowView>(path, null);
             editView.Initialize(viewModel);
         }
-
-        public async Task<T> CreateWindow<T>(string addressable, IHierarchical viewModel)
-        {
-            return await _assets.Instantiate<T>(addressable, null);
-        }
     }
 }

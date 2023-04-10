@@ -26,6 +26,11 @@ namespace SerjBal
         {
             if (!PathExists(path))
                 Directory.CreateDirectory(path);
+            else
+            {
+                Directory.Delete(path, true);
+                Directory.CreateDirectory(path);
+            }
         }
 
         public void MoveDirectory(string oldPath, string newPath)

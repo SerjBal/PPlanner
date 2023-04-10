@@ -6,9 +6,9 @@ namespace SerjBal
     {
         public override void Initialize(IHierarchical splitButton, Services services)
         {
-            CheckCmd = new ButtonCheckCmd(this, splitButton.Path);
+            CheckCmd = new ButtonCheckCmd(this, splitButton.Parent.ContentPath);
             СonfirmCmd = new WarningWindowCreateCmd<ConfirmWindow>(this, services);
-            AcceptCmd = new ButtonOverrideCmd(this, services, splitButton);
+            AcceptCmd = new TimeOverrideCmd(this, services, splitButton);
             FormatCmd = new TimeFormatCmd(this);
 
             SortingOrder = Const.MenuWindowSortingOrder;
@@ -16,5 +16,7 @@ namespace SerjBal
             AcceptButtonText = Const.EditTimeWindowButtonText;
             InputString = Path.GetFileName(splitButton.Path);
         }
+
+        public PostType TypeOfPost { get; set; }
     }
 }

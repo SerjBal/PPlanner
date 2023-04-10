@@ -5,8 +5,6 @@ namespace SerjBal
 {
     public class TimeButton : ButtonViewModel, IHierarchical
     {
-        private IPostIndication _indication;
-
         public override void Initialize(Services services)
         {
             ItemType = MenuItemType.Time;
@@ -19,10 +17,6 @@ namespace SerjBal
             ExpandStartCommand = new ButtonExpandStartCmd( this);
             ContentUpdateCommand = new TextEditorAddCmd(this, services);
             AddNewContentCommand = default;
-
-            _indication = services.Single<IPostIndication>();
         }
-
-        public void CreateMetaData() => _indication.CreateDefaultState(Path);
     }
 }

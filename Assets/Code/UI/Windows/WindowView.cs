@@ -13,7 +13,7 @@ namespace SerjBal.Windows
         [SerializeField] private Button acceptButton;
         [SerializeField] private Button closeButton;
 
-        public void Initialize(IWindowViewModel viewModel)
+        public virtual void Initialize(IWindowViewModel viewModel)
         {
             formatText.text = viewModel.HeaderText;
             inputField.text = viewModel.InputString;

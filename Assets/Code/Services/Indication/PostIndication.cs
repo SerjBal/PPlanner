@@ -48,20 +48,10 @@ namespace SerjBal.Indication
             return statesList;
         }
 
-        public void CreateDefaultState(string path)
+        public void SavePostType(string path, PostType state)
         {
             var filePath = Path.Combine(path, Const.TypeFileName);
-            if (!File.Exists(filePath))
-            {
-                _data.CreateFile(filePath, PostType.Content);
-            }
-        }
-
-        private bool GetState(int minute)
-        {
-            if (IsUpdateable)
-                return minute >= _time.Hour * 60 + _time.Minute;
-            return true;
+            _data.CreateFile(filePath, state);
         }
     }
 }

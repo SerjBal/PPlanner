@@ -71,7 +71,7 @@ namespace SerjBal
         private void SetState(Image indicatorView, PostState postState)
         {
             var state = postState.postType;
-            bool isTime = postState.minute >= _currentMinute;
+            bool isTime = postState.minute > _currentMinute;
             switch (state)
             {
                 case PostType.Content:

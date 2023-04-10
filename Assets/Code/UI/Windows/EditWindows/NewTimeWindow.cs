@@ -1,12 +1,12 @@
 namespace SerjBal
 {
-    public class NewTimeWindow : EditWindow
+    public class NewTimeWindow : EditTimeWindow
     {
         public override void Initialize(IHierarchical splitButton, Services services)
         {
-            CheckCmd = new ButtonCheckCmd(this, splitButton.Path);
+            CheckCmd = new ButtonCheckCmd(this, splitButton.ContentPath);
             СonfirmCmd = new WarningWindowCreateCmd<ConfirmWindow>(this, services);
-            AcceptCmd = new ButtonCreateCmd(this, services, splitButton);
+            AcceptCmd = new TimeCreateCmd(this, services, splitButton);
             FormatCmd = new TimeFormatCmd(this);
 
             SortingOrder = Const.MenuWindowSortingOrder;

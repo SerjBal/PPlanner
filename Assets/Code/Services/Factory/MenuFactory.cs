@@ -53,10 +53,8 @@ namespace SerjBal
                     return await CreateChannel(parent, path);
                 
                 case MenuItemType.Channel:
-                    var timeViewModel = await CreateButton<TimeButton>(Const.TimeItemPath, parent, path);
-                    timeViewModel.CreateMetaData();
-                    return timeViewModel;
-                
+                    return await CreateButton<TimeButton>(Const.TimeItemPath, parent, path);
+
                 case MenuItemType.Search:
                     buttonViewModel = CreateViewModel<SearchResultButton>(parent, path);
                     buttonView = await CreateView<SearchResultButtonView>(Const.SearchResultItemPath, parent);

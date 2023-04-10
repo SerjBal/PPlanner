@@ -11,6 +11,7 @@ namespace SerjBal
         {
             ClearContent();
             await AddCommentsButton();
+            UpdatePostsWidget();
             await AddContent();
             await AddNewItemButton();
             EndCommand();
@@ -20,7 +21,8 @@ namespace SerjBal
         {
             string path = Path.Combine(item.Path, Const.CommentsName);
             item.ChildList.Add(await factory.CreateButton<CommentButton>(Const.CommentsButtonPath, item, path));
-            (viewModel as ChannelButton)?.UpdateWidget();
         }
+
+        private void UpdatePostsWidget() => (viewModel as ChannelButton)?.UpdateWidget();
     }
 }

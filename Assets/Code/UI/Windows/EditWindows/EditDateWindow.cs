@@ -8,8 +8,7 @@ namespace SerjBal
         {
             CheckCmd = new ButtonCheckCmd(this, splitButton.Path);
             СonfirmCmd = new WarningWindowCreateCmd<ConfirmWindow>(this, services);
-            var acceptCommand = new ButtonOverrideCmd(this, services, splitButton);
-            AcceptCmd = new DateOverrideCmdAdapter(acceptCommand, services);
+            AcceptCmd = new DateOverrideCmd(this, services, splitButton);
             FormatCmd = new DataFormatCmd(this, services);
 
             SortingOrder = Const.MenuWindowSortingOrder;

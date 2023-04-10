@@ -5,31 +5,31 @@ namespace SerjBal
     public class ButtonOverrideCmd : ICommand
     {
         private readonly IDataProvider _data;
-        private readonly IHierarchical _itemViewModel;
-        private readonly IWindowViewModel _viewModel;
+        private protected readonly IHierarchical itemViewModel;
+        private protected readonly IWindowViewModel viewModel;
 
         public ButtonOverrideCmd(IWindowViewModel viewModel, Services services, IHierarchical itemViewModel)
         {
-            _viewModel = viewModel;
-            _itemViewModel = itemViewModel;
+            this.viewModel = viewModel;
+            this.itemViewModel = itemViewModel;
             _data = services.Single<IDataProvider>();
         }
 
-        public void Execute(object param = null)
+        public virtual void Execute(object param = null)
         {
-            var oldPath = _itemViewModel.Path;
-            var newPath = ChangeDirectoryName(oldPath);
+            var oldPath = itemViewModel.Path;
+            var newPath = GetNewPath();
             if (oldPath!=newPath) 
                 _data.MoveDirectory(oldPath, newPath);
 
-            (_itemViewModel.Parent as ButtonViewModel)?.ContentUpdateCommand.Execute();
-            _viewModel.OnClose.Invoke();
+            (itemViewModel.Parent as ButtonViewModel)?.ContentUpdateCommand.Execute();
+            viewModel.OnClose.Invoke();
         }
 
-        private string ChangeDirectoryName(string oldPath)
+        private protected string GetNewPath()
         {
-            var root = Directory.GetParent(oldPath);
-            return Path.Combine(root.FullName, _viewModel.InputString);
+            var root = Directory.GetParent(itemViewModel.Path);
+            return Path.Combine(root.FullName, viewModel.InputString);
         }
     }
 }

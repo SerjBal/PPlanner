@@ -31,11 +31,10 @@ namespace SerjBal
                     if (i < split.Length)
                         str[i] = Check(split[i], 2);
 
-                var hours = Mathf.Clamp(int.Parse(str[0]), 0, 23);
-                var minuts = Mathf.Clamp(int.Parse(str[1]), 0, 59);
-               // var minuts = Mathf.Clamp(Convert.ToInt32(str[1][0]), 0, 5);
+                int hours = Mathf.Clamp(int.Parse(str[0]), 0, 23);
+                int minutes = Mathf.Clamp(int.Parse(str[1]), 0, 59);
                 
-                _viewModel.InputString = $"{hours:D2}:{minuts:D2]}";
+                _viewModel.InputString = $"{hours:D2}:{minutes:D2}";
                 _defaultSplit = str;
             }
         }
@@ -43,18 +42,14 @@ namespace SerjBal
         private string Check(string input, int max)
         {
             _stringBuilder.Clear();
-            int i = 1;
-            foreach (char c in input)
+            var count = input.Length;
+            for (var index = 0; index < max; index++)
             {
+                var c = count > index ? input[index] : '0';
                 if (Char.IsDigit(c))
                     _stringBuilder.Append(c);
                 else
                     _stringBuilder.Append('0');
-
-                if (i == max)
-                    break;
-                else
-                    i++;
             }
 
             return _stringBuilder.ToString();
