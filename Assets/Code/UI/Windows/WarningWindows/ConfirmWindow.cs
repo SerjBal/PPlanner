@@ -7,7 +7,7 @@ namespace SerjBal
             CheckCmd = new ConfirmCmd(this, window, path);
             FormatCmd = new TimeFormatCmd(this);
             HeaderText = Const.ReplaceWarningText;
-            AcceptButtonText = Const.ReplaceButtonText;
+            AcceptButtonText = Const.EditWindowButtonText;
             SortingOrder = Const.WarningWindowSortingOrder;
         }
     }

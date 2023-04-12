@@ -1,10 +1,10 @@
 namespace SerjBal
 {
-    public class ChannelFormatCmd : ICommand
+    public class NameFormatCmd : ICommand
     {
         private readonly IWindowViewModel _viewModel;
 
-        public ChannelFormatCmd(IWindowViewModel viewModel)
+        public NameFormatCmd(IWindowViewModel viewModel)
         {
             _viewModel = viewModel;
             _viewModel.InputString = "New Channel";

@@ -15,10 +15,22 @@ namespace SerjBal
         public bool PathExists(string path) => 
             Directory.Exists(path);
 
+        public void Copy(string source, string target)
+        {
+            if (!Directory.Exists(target))
+                CreateDirectory(target);
+            if (!Directory.Exists(source))
+                CreateDirectory(source);
+            CopyDir(source, target);
+        }
+
         public string[] LoadDirectory(string path)
         {
             if (PathExists(path))
+            {
+                var x = new DirectoryInfo(path).GetDirectories();
                 return Directory.GetDirectories(path);
+            }
             return Array.Empty<string>();
         }
 
@@ -56,7 +68,7 @@ namespace SerjBal
             try
             {
                 var json = JsonUtility.ToJson(data);
-                File.WriteAllText(path, json);   
+                File.WriteAllTextAsync(path, json);   
             }
             catch
             {
@@ -86,6 +98,27 @@ namespace SerjBal
                 {
                     Debug.LogError("file delete error");
                 }
+        }
+        
+        private void CopyDir(string sourcePath, string targetPath)
+        {
+            var dir = new DirectoryInfo(sourcePath);
+            DirectoryInfo[] dirs = dir.GetDirectories();
+
+            foreach (FileInfo file in dir.GetFiles())
+            {
+                if (file.Name == Const.TextFileName)
+                {
+                    string targetFilePath = Path.Combine(targetPath, file.Name);
+                    file.CopyTo(targetFilePath);
+                }
+            }
+
+            foreach (DirectoryInfo subDir in dirs)
+            {
+                string newDestinationDir = Path.Combine(targetPath, subDir.Name);
+                Copy(subDir.FullName, newDestinationDir);
+            }
         }
     }
 }

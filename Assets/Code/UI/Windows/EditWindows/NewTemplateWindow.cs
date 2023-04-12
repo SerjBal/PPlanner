@@ -1,18 +1,18 @@
 namespace SerjBal
 {
-    public class NewChannelWindow : EditWindow
+    public class NewTemplateWindow : EditWindow
     {
         public override void Initialize(IHierarchical splitButton, Services services)
         {
             CheckCmd = new ButtonCheckNameCmd(this, splitButton.ContentPath);
             СonfirmCmd = new WarningWindowCreateCmd<ConfirmWindow>(this, services);
-            AcceptCmd = new ButtonCreateCmd(this, services, splitButton);
+            AcceptCmd = new TemplateCreateCmd(this, services, splitButton);
             FormatCmd = new NameFormatCmd(this);
 
             SortingOrder = Const.MenuWindowSortingOrder;
-            HeaderText = Const.NewChannelWindowFormatText;
-            AcceptButtonText = Const.NewChannelWindowButtonText;
-            InputString = Const.ChannelDefaultKey;
+            HeaderText = Const.NewTemplateWindowFormatText;
+            AcceptButtonText = Const.NewTimeWindowButtonText;
+            InputString = Const.DefaultTemplateName;
         }
     }
 }

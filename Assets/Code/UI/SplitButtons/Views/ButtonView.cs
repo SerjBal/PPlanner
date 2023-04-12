@@ -31,12 +31,15 @@ namespace SerjBal
             viewModel.ContentContainer = contentContainer;
             viewModel.OnKeyChanged = GetPath;
             viewModel.OnOverrideSortingChanged = OverrideSorting;
-            viewModel.OnExpandStateChanged = Animate;
-            
-            animator.onExpandStartEvent = () => viewModel.CommandExecute(CommandType.ExpandStart, canvas);
-            animator.onExpandEndEvent = () => viewModel.CommandExecute(CommandType.ExpandEnd);
-            animator.onCollapseStartEvent = () => viewModel.CommandExecute(CommandType.CollapseStart);
-            animator.onCollapseEndEvent = () => viewModel.CommandExecute(CommandType.CollapseEnd, canvas);
+            viewModel.OnExpandStateChanged += Animate;
+
+            if (animator)
+            {
+                animator.onExpandStartEvent = () => viewModel.CommandExecute(CommandType.ExpandStart, canvas);
+                animator.onExpandEndEvent = () => viewModel.CommandExecute(CommandType.ExpandEnd);
+                animator.onCollapseStartEvent = () => viewModel.CommandExecute(CommandType.CollapseStart);
+                animator.onCollapseEndEvent = () => viewModel.CommandExecute(CommandType.CollapseEnd, canvas);
+            }
             if (controller)
             {
                 editButton.onClick.AddListener(() => viewModel.CommandExecute(CommandType.Edit));
@@ -52,9 +55,9 @@ namespace SerjBal
         private void Animate(bool value)
         {
             if (value)
-                animator.PlayOpen();
+                animator?.PlayOpen();
             else
-                animator.PlayClose();
+                animator?.PlayClose();
         }
     }
 }

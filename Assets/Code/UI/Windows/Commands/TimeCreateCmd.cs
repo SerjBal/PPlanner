@@ -11,10 +11,8 @@ namespace SerjBal
         private readonly IPostIndication _indication;
 
         public TimeCreateCmd(IWindowViewModel viewModel, Services services, IHierarchical itemViewModel)
-            : base(viewModel, services, itemViewModel)
-        {
+            : base(viewModel, services, itemViewModel) =>
             _indication = services.Single<IPostIndication>();
-        }
 
         public override void Execute(object param = null)
         {

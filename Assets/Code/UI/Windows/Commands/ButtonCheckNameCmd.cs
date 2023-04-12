@@ -2,12 +2,12 @@ using System.IO;
 
 namespace SerjBal
 {
-    public class ButtonCheckCmd : ICommand
+    public class ButtonCheckNameCmd : ICommand
     {
         private readonly string _parentPath;
         private readonly IWindowViewModel _viewModel;
 
-        public ButtonCheckCmd(IWindowViewModel viewModel, string parentPath)
+        public ButtonCheckNameCmd(IWindowViewModel viewModel, string parentPath)
         {
             _viewModel = viewModel;
             _parentPath = parentPath;

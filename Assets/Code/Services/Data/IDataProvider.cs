@@ -13,5 +13,6 @@ namespace SerjBal
         T LoadFile<T>(string path) where T : new();
         void DeleteFile(string path);
         bool PathExists(string path);
+        void Copy(string sourcePath, string targetPath);
     }
 }

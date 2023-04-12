@@ -9,8 +9,6 @@ namespace SerjBal
 
         public override void Initialize(Services services)
         {
-            ItemType = MenuItemType.Search;
-            
             _searchEngine = services.Single<ISearchingEngine>();
             CollapseEndCommand = new ButtonCollapseEndCmd(this);
             CollapseStartCommand = new ButtonCollapseStartCmd(this);

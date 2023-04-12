@@ -2,18 +2,18 @@ using System.IO;
 
 namespace SerjBal
 {
-    public class EditDateWindow : EditWindow
+    public class EditTemplateNameWindow : EditWindow
     {
         public override void Initialize(IHierarchical splitButton, Services services)
         {
             CheckCmd = new ButtonCheckNameCmd(this, splitButton.Path);
             СonfirmCmd = new WarningWindowCreateCmd<ConfirmWindow>(this, services);
-            AcceptCmd = new DateOverrideCmd(this, services, splitButton);
-            FormatCmd = new DataFormatCmd(this, services);
+            AcceptCmd = new ButtonOverrideCmd(this, services, splitButton);
+            FormatCmd = new NameFormatCmd(this);
 
             SortingOrder = Const.MenuWindowSortingOrder;
-            HeaderText = Const.EditDateWindowFormatText;
-            AcceptButtonText = Const.EditDateWindowButtonText;
+            HeaderText = Const.EditTemplateWindowFormatText;
+            AcceptButtonText = Const.EditWindowButtonText;
             InputString = Path.GetFileName(splitButton.Path);
         }
     }

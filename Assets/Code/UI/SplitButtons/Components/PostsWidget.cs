@@ -26,7 +26,7 @@ namespace SerjBal
             _indication = services.Single<IPostIndication>();
             _buttonViewModel = buttonViewModel;
             _config = config;
-            _path = Path.Combine(_buttonViewModel.Path, Const.ContentDrectory);
+            _path = Path.Combine(_buttonViewModel.Path, Const.ContentDirectory);
         }
 
         private void Update()

@@ -14,7 +14,7 @@ namespace SerjBal
         {
             _viewModel = viewModel;
             var date = services.Single<IDataProvider>().CurrentDate;
-            _defaultSplit = new[] { date.Year.ToString(), date.Month.ToString(), date.Day .ToString()};
+            _defaultSplit = new[] { date.Year.ToString(), date.Month.ToString(), date.Day.ToString()};
             _stringBuilder = new StringBuilder();
         }
 

@@ -25,15 +25,10 @@ namespace SerjBal
                 CloseWindow();
             }
             else
-            {
                 Debug.LogError("Parameter is null");
-            }
         }
 
-        private void CloseWindow()
-        {
-            viewModel.OnClose.Invoke();
-        }
+        private void CloseWindow() => viewModel.OnClose.Invoke();
 
         private void UpdateItemContent()
         {

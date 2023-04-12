@@ -2,7 +2,9 @@ namespace SerjBal
 {
     public interface ITemplatesProvider : IService
     {
-        string SelectedTemplatePath { get; set; }
         bool HasTamplates();
+        void Create(string name);
+
+        void Load(string name);
     }
 }

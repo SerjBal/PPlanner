@@ -7,7 +7,7 @@ namespace SerjBal
     {
         private protected readonly IMenuFactory factory;
         private protected readonly IHierarchical item;
-        private readonly IDataProvider _data;
+        private protected readonly IDataProvider _data;
         private readonly ButtonExpandEndCmd _buttonExpandEndCmd;
         private protected readonly ButtonViewModel viewModel;
 
@@ -40,7 +40,7 @@ namespace SerjBal
         {
             var content = _data.LoadDirectory(item.ContentPath);
             for (var i = 0; i < content.Length; i++)
-                item.ChildList.Add(await factory.CreateButton(item, content[i]));
+                item.ChildList.Add(await factory.CreateMenuButton(item, content[i]));
         }
 
         private protected void ClearContent()

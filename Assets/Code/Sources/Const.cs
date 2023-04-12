@@ -4,16 +4,24 @@ namespace SerjBal
 {
     public static class Const
     {
+        public static readonly string DataPath = Application.persistentDataPath;
+        public const int MenuWindowSortingOrder = 10;
+        public const int WarningWindowSortingOrder = 11;
+        public const string TextFileName = "text.json";
+        public const string TypeFileName = "state.json";
+        
         public const string GUITag = "GUI";
 
         public const string AddItemButtonPath = "add-item-button";
         public const string GUIPath = "canvas";
-        public const string DateItemPath = "date-item";
-        public const string ChannelItemPath = "channel-item";
-        public const string TimeItemPath = "time-item";
+        public const string DateItemPath = "date-button";
+        public const string ChannelItemPath = "channel-button";
+        public const string TimeItemPath = "time-button";
         public const string TextItemPath = "text-item";
-        public const string SearchResultItemPath = "search-item";
-        public const string ItemNamingWindowPath = "window-generic";
+        public const string SearchResultItemPath = "search-result-button";
+        public const string CommentsButtonPath = "comments-button";
+        public const string TemplatesItemPath = "templates-button";
+        public const string TemplateItemPath = "template-button";
 
         public const string NewChannelWindowFormatText = "Channel Name";
         public const string NewChannelWindowButtonText = "Create";
@@ -27,27 +35,23 @@ namespace SerjBal
         public const string EditDateWindowButtonText = "Change Date";
 
         public const string EditChannelWindowFormatText = "Change Name";
-        public const string EditChannelWindowButtonText = "Ok";
 
         public const string EditTimeWindowFormatText = "Change Time";
-        public const string EditTimeWindowButtonText = "Ok";
+        public const string EditWindowButtonText = "Ok";
 
+        public const string NewTemplateWindowFormatText = "Enter template name";
+        public const string EditTemplateWindowFormatText = "Change Name";
+
+        public const string ItemNamingWindowPath = "window-generic";
         public const string WarningWindowPath = "warning-window";
-        public const string ReplaceWarningText = "The data already exists! Replace?";
-        public const string ReplaceButtonText = "Ok";
-
-        public const string CommentsButtonPath = "comments-item";
-        public const string CommentsName = "Comments";
-
         public const string EditTimeWindow = "window-timeEdit";
-
-        public const int MenuWindowSortingOrder = 10;
-        public const int WarningWindowSortingOrder = 11;
-
-        public static readonly string DataPath = Application.persistentDataPath;
-        public const string TextFileName = "text.json";
-        public const string TypeFileName = "state.json";
+        public const string ReplaceWarningText = "The data already exists! Replace?";
         
-        public const string ContentDrectory = "content";
+        public const string CommentsName = "Comments";
+        public const string DefaultTemplateName = "New template";
+        public const string TemplatesButtonName = "Templates";
+
+        public const string ContentDirectory = "Content";
+        public const string TemplatesDirectory = "Templates";
     }
 }

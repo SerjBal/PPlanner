@@ -6,14 +6,14 @@ namespace SerjBal
     {
         public override void Initialize(IHierarchical splitButton, Services services)
         {
-            CheckCmd = new ButtonCheckCmd(this, splitButton.Parent.ContentPath);
+            CheckCmd = new ButtonCheckNameCmd(this, splitButton.Parent.ContentPath);
             СonfirmCmd = new WarningWindowCreateCmd<ConfirmWindow>(this, services);
             AcceptCmd = new ButtonOverrideCmd(this, services, splitButton);
-            FormatCmd = new ChannelFormatCmd(this);
+            FormatCmd = new NameFormatCmd(this);
 
             SortingOrder = Const.MenuWindowSortingOrder;
             HeaderText = Const.EditChannelWindowFormatText;
-            AcceptButtonText = Const.EditChannelWindowButtonText;
+            AcceptButtonText = Const.EditWindowButtonText;
             InputString = Path.GetFileName(splitButton.Path);
         }
     }

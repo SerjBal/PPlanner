@@ -46,7 +46,7 @@ namespace SerjBal
             }
         }
         
-        public string ContentPath => System.IO.Path.Combine(_path, Const.ContentDrectory);
+        public string ContentPath => System.IO.Path.Combine(_path, Const.ContentDirectory);
 
         public abstract void Initialize(Services services);
 

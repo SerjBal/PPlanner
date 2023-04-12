@@ -50,9 +50,9 @@ namespace SerjBal.Searching
         private Dictionary<string, PostData> GetTextList(DateTime date)
         {
             var posts = new Dictionary<string, PostData>();
-            var dateContentPath = Path.Combine(date.ToPath(), Const.ContentDrectory);
+            var dateContentPath = Path.Combine(date.ToPath(), Const.ContentDirectory);
             foreach (var channelDir in _data.LoadDirectory(dateContentPath))
-            foreach (var timeDir in _data.LoadDirectory(Path.Combine(channelDir, Const.ContentDrectory)))
+            foreach (var timeDir in _data.LoadDirectory(Path.Combine(channelDir, Const.ContentDirectory)))
             {
                 var filePath = Path.Combine(timeDir, Const.TextFileName);
                 var text = _data.LoadFile<PostData>(filePath);

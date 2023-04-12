@@ -1,3 +1,4 @@
+using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -19,10 +20,11 @@ namespace SerjBal
         public void UpdateMenu()
         {
             if (_mainMenuView.ContentContainer.childCount > 0)
-                Object.Destroy(_mainMenuView.ContentContainer.GetChild(0).gameObject);
+                _mainMenuView.ContentContainer.Clear();
 
             var path = _data.CurrentDate.ToPath();
-            _menuFactory.CreateButton(_mainMenuView, path); //parent as none and date key
+            _menuFactory.CreateMenuButton(_mainMenuView, path);
+            _menuFactory.CreateTemplatesButton(_mainMenuView, Path.Combine(Const.DataPath, Const.TemplatesButtonName));
         }
 
         public void InteractionEnable(bool isTrue) => _mainMenuView.Block(isTrue);

@@ -18,7 +18,6 @@ namespace SerjBal
         None,
         Date,
         Channel,
-        Time,
-        Search
+        Time
     }
 }

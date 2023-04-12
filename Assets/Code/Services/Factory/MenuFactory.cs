@@ -27,6 +27,8 @@ namespace SerjBal
             await _assets.Load<GameObject>(Const.AddItemButtonPath);
             await _assets.Load<GameObject>(Const.SearchResultItemPath);
             await _assets.Load<GameObject>(Const.CommentsButtonPath);
+            await _assets.Load<GameObject>(Const.TemplatesItemPath);
+            await _assets.Load<GameObject>(Const.TemplateItemPath);
         }
 
         public async Task<MainMenuViewModel> CreateMainMenu()
@@ -39,11 +41,8 @@ namespace SerjBal
             return mainMenuVieModel;
         }
 
-        public async Task<IHierarchical> CreateButton(IHierarchical parent, string path)
+        public async Task<IHierarchical> CreateMenuButton(IHierarchical parent, string path)
         {
-            ButtonViewModel buttonViewModel;
-            ButtonView buttonView;
-            
             switch (parent.ItemType)
             {
                 case MenuItemType.None:
@@ -54,17 +53,34 @@ namespace SerjBal
                 
                 case MenuItemType.Channel:
                     return await CreateButton<TimeButton>(Const.TimeItemPath, parent, path);
-
-                case MenuItemType.Search:
-                    buttonViewModel = CreateViewModel<SearchResultButton>(parent, path);
-                    buttonView = await CreateView<SearchResultButtonView>(Const.SearchResultItemPath, parent);
-                    buttonView.ReleaseSetup(buttonViewModel);
-                    return (IHierarchical)buttonViewModel;
                 
                 default:
                     Debug.LogError("Wrong button type");
                     return null;
             }
+        }
+
+        public async void CreateTemplatesButton(IHierarchical parent, string path)
+        {
+            var buttonViewModel = CreateViewModel<TemplatesRootButton>(parent, path);
+            var buttonView = await CreateView<ButtonView>(Const.TemplatesItemPath, parent);
+            buttonView.ReleaseSetup(buttonViewModel);
+        }
+        
+        public async Task<IHierarchical> CreateTemplateButton(IHierarchical parent, string path)
+        {
+            var buttonViewModel = CreateViewModel<TemplateButton>(parent, path);
+            var buttonView = await CreateView<ButtonView>(Const.TemplateItemPath, parent);
+            buttonView.ReleaseSetup(buttonViewModel);
+            return buttonViewModel;
+        }
+
+        public async Task<IHierarchical> CreateSearchResultButton(IHierarchical parent, string path)
+        {
+            var buttonViewModel = CreateViewModel<SearchResultButton>(parent, path);
+            var buttonView = await CreateView<SearchResultButtonView>(Const.SearchResultItemPath, parent);
+            buttonView.ReleaseSetup(buttonViewModel);
+            return buttonViewModel;
         }
 
         private async Task<IHierarchical> CreateChannel(IHierarchical parent, string path)
