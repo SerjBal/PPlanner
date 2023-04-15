@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SerjBal
@@ -24,5 +27,27 @@ namespace SerjBal
         }
 
         private void UpdatePostsWidget() => (viewModel as ChannelButton)?.UpdateWidget();
+        
+        private new async Task AddContent()
+        {
+            var content = _data.LoadDirectory(item.ContentPath);
+            Array.Sort(content, new TimeStringComparer());
+
+            foreach (string button in content) 
+                item.ChildList.Add(await factory.CreateMenuButton(item, button));
+        }
+        
+        class TimeStringComparer : IComparer<string>
+        {
+            public int Compare(string x, string y)
+            {
+                x = Path.GetFileName(x);
+                y = Path.GetFileName(y);
+                TimeSpan timeX = TimeSpan.Parse(x);
+                TimeSpan timeY = TimeSpan.Parse(y);
+
+                return timeX.CompareTo(timeY);
+            }
+        }
     }
 }

@@ -11,21 +11,17 @@ namespace SerjBal
         [SerializeField] private MonthView[] months;
         private Calendar _calendarData;
         private DateTimeFormatInfo _dateTimeFormat;
-        private IsDateExists _onDateCheck;
+        public IsDateExists OnDateCheck { get; set; }
+        public LoadData OnLoadDate { get; set; }
 
-        private LoadData _onLoadDate;
-
-        public void Setup(CalendarViewModel viewModel)
+        private void Awake()
         {
-            _onLoadDate = viewModel.LoadDate;
-            _onDateCheck = viewModel.IsDateExists;
+            _calendarData = new GregorianCalendar();
+            _dateTimeFormat = CultureInfo.CurrentCulture.DateTimeFormat;
         }
 
         public void Initialize()
         {
-            _calendarData = new GregorianCalendar();
-            _dateTimeFormat = CultureInfo.CurrentCulture.DateTimeFormat;
-
             Generate(_calendarData.GetYear(DateTime.Now));
         }
 
@@ -48,8 +44,8 @@ namespace SerjBal
 
                     dayItem.nameText.text = dayName;
                     var dateCopy = date;
-                    dayItem.button.onClick.AddListener(() => _onLoadDate(dateCopy));
-                    dayItem.SetState(_onDateCheck(date));
+                    dayItem.button.onClick.AddListener(() => OnLoadDate(dateCopy));
+                    dayItem.SetState(OnDateCheck(date));
 
                     if (dayOfWeek == 6) j += 1;
                     if (date.Day == daysInMonth) break;
@@ -58,8 +54,8 @@ namespace SerjBal
             }
         }
 
-        private delegate bool IsDateExists(DateTime date);
+        public delegate bool IsDateExists(DateTime date);
 
-        private delegate void LoadData(DateTime data);
+        public delegate void LoadData(DateTime data);
     }
 }

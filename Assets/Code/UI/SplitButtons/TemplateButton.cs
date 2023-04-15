@@ -1,23 +1,28 @@
-using UnityEngine;
-
+using static System.IO.Path;
 namespace SerjBal
 {
     public class TemplateButton : ButtonViewModel, IHierarchical
     {
-        public override void Initialize(Services services)
+        
+        public override void Initialize(ButtonView view, Services services)
+        {
+            ItemType = MenuItemType.Date;
+            InitializeCommands(services);
+            InitializeView(view, GetFileName(Path));
+        }
+        private void InitializeCommands(Services services)
         {
             RemoveCommand = new ButtonRemoveCmd(this, services);
             EditCommand = new ButtonEditCmd<EditTemplateNameWindow>(this, services);
             CollapseEndCommand = default;
             CollapseStartCommand = default;
             ExpandEndCommand = default;
-            ExpandStartCommand = 
+            ExpandStartCommand = default;
             ContentUpdateCommand = new LoadTemplateCmd(this, services);
             AddNewContentCommand = default;
             OnExpandStateChanged += LoadTemplate;
         }
 
-        private void LoadTemplate(bool isTrue) => 
-            ContentUpdateCommand.Execute();
+        private void LoadTemplate(bool isTrue) => ContentUpdateCommand.Execute();
     }
 }

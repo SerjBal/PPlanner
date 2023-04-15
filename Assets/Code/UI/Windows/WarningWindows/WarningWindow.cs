@@ -1,4 +1,6 @@
 using System;
+using SerjBal.Windows;
+using TMPro;
 
 namespace SerjBal
 {
@@ -33,6 +35,18 @@ namespace SerjBal
         public Action<int> OnCanvasChanged { get; set; }
         public Action<string> OnInputChanged { get; set; }
 
-        public abstract void Initialize(IWindowViewModel window, string path);
+        public abstract void Initialize(IWindowViewModel window, string path, WindowView view);
+        private protected void InitializeView(WindowView view)
+        {
+            view.formatText.text = HeaderText;
+            view.inputField.text = InputString;
+            view.buttonText.text = AcceptButtonText;
+            view.inputField.onValueChanged.AddListener(text => FormatCmd?.Execute(text));
+            view.acceptButton.onClick.AddListener(() => CheckCmd?.Execute());
+            view.closeButton.onClick.AddListener(() => UnityEngine.Object.Destroy(view.gameObject));
+            OnInputChanged = value => view.inputField.text = value;
+            OnCanvasChanged = value => view.canvas.sortingOrder = value;
+            OnClose += () => UnityEngine.Object.Destroy(view.gameObject);
+        }
     }
 }

@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+using static System.IO.Path;
 using SerjBal.Searching;
 
 namespace SerjBal
@@ -6,10 +6,23 @@ namespace SerjBal
     public class SearchButton : ButtonViewModel, IHierarchical
     {
         private ISearchingEngine _searchEngine;
-
-        public override void Initialize(Services services)
+        
+        public override void Initialize(ButtonView view, Services services)
         {
             _searchEngine = services.Single<ISearchingEngine>();
+            InitializeCommands(services);
+            InitializeView(view, GetFileName(Path));
+            InitializeSearchView(view);
+        }
+
+        private void InitializeSearchView(ButtonView view)
+        {
+            var searchView = view as SearchButtonView;
+            if (searchView) searchView.inputField.onValueChanged.AddListener(SearchInitialize);
+        }
+
+        private void InitializeCommands(Services services)
+        {
             CollapseEndCommand = new ButtonCollapseEndCmd(this);
             CollapseStartCommand = new ButtonCollapseStartCmd(this);
             ExpandEndCommand = new ButtonExpandEndCmd();
@@ -18,7 +31,7 @@ namespace SerjBal
             AddNewContentCommand = default;
         }
 
-        public void SearchInitialize(string value)
+        private void SearchInitialize(string value)
         {
             if (value.Length > 0)
                 SearchStart(value);
@@ -32,7 +45,7 @@ namespace SerjBal
             ShowResults(isFounded);
         }
 
-        public void ShowResults(bool isFounded)
+        private void ShowResults(bool isFounded)
         {
             if (isFounded)
             {

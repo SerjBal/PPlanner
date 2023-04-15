@@ -1,8 +1,14 @@
+using static System.IO.Path;
 namespace SerjBal
 {
     public class SearchResultButton : ButtonViewModel, IHierarchical
     {
-        public override void Initialize(Services services)
+        public override void Initialize(ButtonView view, Services services)
+        {
+            InitializeCommands(services);
+            InitializeView(view, GetRelativePath(Const.DataPath, Path));
+        }
+        private void InitializeCommands(Services services)
         {
             RemoveCommand = default;
             EditCommand = default;

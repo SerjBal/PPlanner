@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 
 namespace SerjBal
 {

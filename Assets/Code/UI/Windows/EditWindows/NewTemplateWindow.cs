@@ -1,8 +1,10 @@
+using SerjBal.Windows;
+
 namespace SerjBal
 {
     public class NewTemplateWindow : EditWindow
     {
-        public override void Initialize(IHierarchical splitButton, Services services)
+        public override void Initialize(IHierarchical splitButton, Services services, WindowView view)
         {
             CheckCmd = new ButtonCheckNameCmd(this, splitButton.ContentPath);
             СonfirmCmd = new WarningWindowCreateCmd<ConfirmWindow>(this, services);
@@ -12,7 +14,9 @@ namespace SerjBal
             SortingOrder = Const.MenuWindowSortingOrder;
             HeaderText = Const.NewTemplateWindowFormatText;
             AcceptButtonText = Const.NewTimeWindowButtonText;
+            
             InputString = Const.DefaultTemplateName;
+            InitializeView(view);
         }
     }
 }

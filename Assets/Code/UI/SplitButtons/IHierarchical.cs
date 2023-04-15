@@ -10,7 +10,7 @@ namespace SerjBal
         string ContentPath { get; }
         IHierarchical Parent { get; set; }
         List<IHierarchical> ChildList { get; set; }
-        Transform ContentContainer { get; set; }
+        Transform ContentContainer { get;}
     }
     
     public enum MenuItemType

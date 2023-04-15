@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static System.IO.Path;
 
 namespace SerjBal
 {
@@ -8,7 +9,6 @@ namespace SerjBal
     {
         private bool _isOverrideSorting;
         private string _path;
-        private List<GameObject> _contentContainer;
         public MenuItemType ItemType { get; set; }
         public IHierarchical Parent { get; set; }
 
@@ -46,14 +46,51 @@ namespace SerjBal
             }
         }
         
-        public string ContentPath => System.IO.Path.Combine(_path, Const.ContentDirectory);
+        public string ContentPath => Combine(_path, Const.ContentDirectory);
 
-        public abstract void Initialize(Services services);
+        public abstract void Initialize(ButtonView view, Services services);
 
         public void PushButton()
         {
             IsSelected = !IsSelected;
             OnExpandStateChanged?.Invoke(IsSelected);
+        }
+
+        protected void InitializeView(ButtonView view, string name)
+        {
+            var config = Configurations.Instance.buttonConfig;
+
+            view.nameText.text = name;
+            view.canvas.overrideSorting = IsOverrideSorting;
+            ContentContainer = view.contentContainer;
+            ContentContainer.gameObject.SetActive(false);
+
+            if (view.animator)
+            {
+                view.animator.Initialize(config.expandAnimationCurve);
+                view.animator.onExpandStartEvent = () => ExpandStartCommand?.Execute(view.canvas);
+                view.animator.onExpandEndEvent = () => ExpandEndCommand?.Execute();
+                view.animator.onCollapseStartEvent = () => CollapseStartCommand?.Execute();
+                view.animator.onCollapseEndEvent = () => CollapseEndCommand?.Execute(view.canvas);
+                OnExpandStateChanged += value =>
+                {
+                    if (value)
+                        view.animator.PlayOpen();
+                    else
+                        view.animator.PlayClose();
+                };
+            }
+
+            if (view.controller)
+            {
+                view.controller.Initialize(config);
+                view.editButton.onClick.AddListener(() => EditCommand?.Execute());
+                view.removeButton.onClick.AddListener(() => RemoveCommand?.Execute());
+                view.controller.onSelectedEvent = PushButton;
+            }
+            
+            OnKeyChanged = (path) => view.nameText.text = GetFileName(path);
+            OnOverrideSortingChanged = (value) => view.canvas.overrideSorting = value;
         }
     }
 }

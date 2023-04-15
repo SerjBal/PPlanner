@@ -4,7 +4,7 @@ namespace SerjBal
 {
     public class ButtonOverrideCmd : ICommand
     {
-        private readonly IDataProvider _data;
+        private protected readonly IDataProvider data;
         private protected readonly IHierarchical itemViewModel;
         private protected readonly IWindowViewModel viewModel;
 
@@ -12,7 +12,7 @@ namespace SerjBal
         {
             this.viewModel = viewModel;
             this.itemViewModel = itemViewModel;
-            _data = services.Single<IDataProvider>();
+            data = services.Single<IDataProvider>();
         }
 
         public virtual void Execute(object param = null)
@@ -20,13 +20,13 @@ namespace SerjBal
             var oldPath = itemViewModel.Path;
             var newPath = GetNewPath();
             if (oldPath!=newPath) 
-                _data.MoveDirectory(oldPath, newPath);
+                data.MoveDirectory(oldPath, newPath);
 
             (itemViewModel.Parent as ButtonViewModel)?.ContentUpdateCommand.Execute();
             viewModel.OnClose.Invoke();
         }
 
-        private protected string GetNewPath()
+        private protected virtual string GetNewPath()
         {
             var root = Directory.GetParent(itemViewModel.Path);
             return Path.Combine(root.FullName, viewModel.InputString);

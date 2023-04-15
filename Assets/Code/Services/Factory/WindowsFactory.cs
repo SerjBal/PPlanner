@@ -19,31 +19,31 @@ namespace SerjBal
         {
             await _assets.Load<GameObject>(Const.ItemNamingWindowPath);
             await _assets.Load<GameObject>(Const.WarningWindowPath);
-            await _assets.Load<GameObject>(Const.EditTimeWindow);
+            await _assets.Load<GameObject>(Const.EditDateWindowPath);
+            await _assets.Load<GameObject>(Const.EditTimeWindowPath);
         }
 
-        public void CreateEditWindow<T>(IHierarchical viewModel, string addressable) where T : IWindowViewModel, new()
+        public async void CreateEditWindow<T>(IHierarchical viewModel, string addressable) where T : IWindowViewModel, new()
         {
             if (new T() is EditWindow windowViewModel)
             {
-                windowViewModel.Initialize(viewModel, _services);
-                CreateWindowView(addressable, windowViewModel);
+                var view = await CreateWindowView(addressable);
+                windowViewModel.Initialize(viewModel, _services, view);
             }
         }
 
-        public void CreateWarningWindow<T>(IWindowViewModel window, string path) where T : IWindowViewModel, new()
+        public async void CreateWarningWindow<T>(IWindowViewModel window, string path) where T : IWindowViewModel, new()
         {
             if (new T() is WarningWindow windowViewModel)
             {
-                windowViewModel.Initialize(window, path);
-                CreateWindowView(Const.WarningWindowPath, windowViewModel);
+                var view = await CreateWindowView(Const.WarningWindowPath);
+                windowViewModel.Initialize(window, path, view);
             }
         }
 
-        private async void CreateWindowView(string path, IWindowViewModel viewModel)
+        public async Task<WindowView> CreateWindowView(string path)
         {
-            var editView = await _assets.Instantiate<WindowView>(path, null);
-            editView.Initialize(viewModel);
+            return await _assets.Instantiate<WindowView>(path, null);
         }
     }
 }

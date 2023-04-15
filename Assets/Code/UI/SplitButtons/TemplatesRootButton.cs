@@ -1,8 +1,16 @@
+using static System.IO.Path;
 namespace SerjBal
 {
     public class TemplatesRootButton : ButtonViewModel, IHierarchical
     {
-        public override void Initialize(Services services)
+        public override void Initialize(ButtonView view, Services services)
+        {
+            ItemType = MenuItemType.Date;
+            InitializeCommands(services);
+            InitializeView(view, GetFileName(Path));
+        }
+
+        private void InitializeCommands(Services services)
         {
             RemoveCommand = default;
             EditCommand = default;

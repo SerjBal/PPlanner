@@ -42,9 +42,10 @@ namespace SerjBal
         public const string NewTemplateWindowFormatText = "Enter template name";
         public const string EditTemplateWindowFormatText = "Change Name";
 
+        public const string EditDateWindowPath = "window-dateEdit";
         public const string ItemNamingWindowPath = "window-generic";
         public const string WarningWindowPath = "warning-window";
-        public const string EditTimeWindow = "window-timeEdit";
+        public const string EditTimeWindowPath = "window-timeEdit";
         public const string ReplaceWarningText = "The data already exists! Replace?";
         
         public const string CommentsName = "Comments";
@@ -53,5 +54,7 @@ namespace SerjBal
 
         public const string ContentDirectory = "Content";
         public const string TemplatesDirectory = "Templates";
+
+        public static readonly string[] monthEnglish = new [] {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
     }
 }

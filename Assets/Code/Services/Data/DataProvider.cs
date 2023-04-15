@@ -46,10 +46,10 @@ namespace SerjBal
         }
 
         public void MoveDirectory(string oldPath, string newPath)
-        {
+        { 
+            DeleteDirectory(newPath);
             if (PathExists(oldPath))
             {
-                DeleteDirectory(newPath);
                 Directory.Move(oldPath, newPath);
                 DeleteDirectory(oldPath);
             }

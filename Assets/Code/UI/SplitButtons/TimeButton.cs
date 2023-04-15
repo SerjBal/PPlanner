@@ -1,14 +1,17 @@
-using System.IO;
-using SerjBal.Indication;
-
+using static System.IO.Path;
 namespace SerjBal
 {
     public class TimeButton : ButtonViewModel, IHierarchical
     {
-        public override void Initialize(Services services)
+        public override void Initialize(ButtonView view, Services services)
         {
             ItemType = MenuItemType.Time;
+            InitializeCommands(services);
+            InitializeView(view, GetFileName(Path));
+        }
 
+        private void InitializeCommands(Services services)
+        {
             RemoveCommand = new ButtonRemoveCmd(this, services);
             EditCommand = new TimeEditCmd<EditTimeWindow>(this, services);
             CollapseEndCommand = new ButtonCollapseEndCmd(this);

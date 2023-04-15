@@ -5,15 +5,19 @@ namespace SerjBal
 {
     public class CalendarViewModel
     {
-        private readonly IDataProvider _data;
-        private readonly IGUI _GUI;
-        private readonly IPostIndication _indication;
-
-        public CalendarViewModel(Services services)
+        private IDataProvider _data;
+        private IGUI _GUI;
+        private IPostIndication _indication;
+        
+        public void Initialize(CalendarView view, Services services)
         {
             _GUI = services.Single<IGUI>();
             _data = services.Single<IDataProvider>();
             _indication =  services.Single<IPostIndication>();
+
+            view.OnLoadDate = LoadDate;
+            view.OnDateCheck = IsDateExists;
+            view.Initialize();
         }
 
         public bool IsDateExists(DateTime date)

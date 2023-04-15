@@ -13,13 +13,26 @@ namespace SerjBal
             _parentPath = parentPath;
         }
 
-        public void Execute(object param = null)
+        public virtual void Execute(object param = null)
         {
-            var keyData = _viewModel.InputString;
+            var keyData = GetDateName();
+            var keyPath = GetPath(keyData);
+
+            Check(keyPath, keyData);
+        }
+        
+        private protected virtual string GetDateName() => _viewModel.InputString;
+
+        private string GetPath(string keyData)
+        {
             var keyPath = _parentPath == null
                 ? Path.Combine(Const.DataPath, keyData)
                 : Path.Combine(_parentPath, keyData);
+            return keyPath;
+        }
 
+        private void Check(string keyPath, string keyData)
+        {
             if (Directory.Exists(keyPath))
                 _viewModel.СonfirmCmd.Execute(keyData);
             else
