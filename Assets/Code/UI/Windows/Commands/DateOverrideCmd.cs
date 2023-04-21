@@ -10,12 +10,12 @@ namespace SerjBal
         private EditDateWindow _viewModel;
 
 
-        public DateOverrideCmd(IWindowViewModel viewModel, Services services, IHierarchical itemViewModel)
-            : base(viewModel, services, itemViewModel) => _GUI = services.Single<IGUI>();
+        public DateOverrideCmd(IWindowPresenter presenter, Services services, IHierarchical itemViewModel)
+            : base(presenter, services, itemViewModel) => _GUI = services.Single<IGUI>();
 
         public override void Execute(object param = null)
         {
-            _viewModel = viewModel as EditDateWindow; 
+            _viewModel = presenter as EditDateWindow; 
             base.Execute();
             _GUI.UpdateMenu();
         }

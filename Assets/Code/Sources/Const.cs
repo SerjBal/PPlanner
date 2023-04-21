@@ -18,10 +18,11 @@ namespace SerjBal
         public const string ChannelItemPath = "channel-button";
         public const string TimeItemPath = "time-button";
         public const string TextItemPath = "text-item";
-        public const string SearchResultItemPath = "search-result-button";
+        public const string SearchResultItemPath = "searchResult-button";
         public const string CommentsButtonPath = "comments-button";
         public const string TemplatesItemPath = "templates-button";
         public const string TemplateItemPath = "template-button";
+        public const string ColorSettingsButtonPath = "colorsSettings-button";
 
         public const string NewChannelWindowFormatText = "Channel Name";
         public const string NewChannelWindowButtonText = "Create";
@@ -42,10 +43,11 @@ namespace SerjBal
         public const string NewTemplateWindowFormatText = "Enter template name";
         public const string EditTemplateWindowFormatText = "Change Name";
 
-        public const string EditDateWindowPath = "window-dateEdit";
+        public const string EditDateWindowPath = "dateEdit";
         public const string ItemNamingWindowPath = "window-generic";
-        public const string WarningWindowPath = "warning-window";
-        public const string EditTimeWindowPath = "window-timeEdit";
+        public const string WarningWindowPath = "warning";
+        public const string EditTimeWindowPath = "timeEdit";
+        public const string ColorSelectorWindowPath = "colorSelector";
         public const string ReplaceWarningText = "The data already exists! Replace?";
         
         public const string CommentsName = "Comments";
@@ -55,6 +57,12 @@ namespace SerjBal
         public const string ContentDirectory = "Content";
         public const string TemplatesDirectory = "Templates";
 
-        public static readonly string[] monthEnglish = new [] {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+        public static readonly string[] MonthEnglishNames = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+        
+        public const string SettingsDirectoryName = "Settings";
+        public const string PostsColorFileName = "posts";
+        public const string ColorsSettingsFile = "colors.json";
+        public const string ColosSettingsName = "Colors settings";
+        public const string EditColorWindowFormatText = "Select a color";
     }
 }

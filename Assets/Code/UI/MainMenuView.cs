@@ -6,7 +6,8 @@ namespace SerjBal
     public class MainMenuView : MonoBehaviour
     {
         public CalendarView calendarView;
-        public SearchButtonView searchButtonView;
+        public SearchButtonView searchView;
+        public SettingsButtonView settingsView;
         public GameObject dateContainer;
         public GameObject blocker;
         public Action CleanUp { private get; set; }

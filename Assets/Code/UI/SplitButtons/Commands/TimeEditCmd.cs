@@ -1,7 +1,7 @@
 
 namespace SerjBal
 {
-    public class TimeEditCmd<T> : ICommand where T : IWindowViewModel, new()
+    public class TimeEditCmd<T> : ICommand where T : IWindowPresenter, new()
     {
         private readonly IHierarchical _buttonViewModel;
         private readonly IWindowsFactory _factory;

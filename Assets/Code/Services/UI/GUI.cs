@@ -6,7 +6,7 @@ namespace SerjBal
     public class GUI : IGUI
     {
         private IDataProvider _data;
-        private MainMenuViewModel _mainMenuView;
+        private MainMenuPresenter _mainMenuView;
         private IMenuFactory _menuFactory;
 
         public async Task Initialize(Services services)

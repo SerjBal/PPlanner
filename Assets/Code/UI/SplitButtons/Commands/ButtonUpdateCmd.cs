@@ -9,12 +9,12 @@ namespace SerjBal
         private protected readonly IHierarchical item;
         private protected readonly IDataProvider _data;
         private readonly ButtonExpandEndCmd _buttonExpandEndCmd;
-        private protected readonly ButtonViewModel viewModel;
+        private protected readonly SplitButtonPresenter presenter;
 
         public ButtonUpdateCmd(IHierarchical item, Services services)
         {
             _buttonExpandEndCmd = new ButtonExpandEndCmd();
-            viewModel = item as ButtonViewModel;
+            presenter = item as SplitButtonPresenter;
             this.item = item;
             factory = services.Single<IMenuFactory>();
             _data = services.Single<IDataProvider>();
@@ -33,7 +33,7 @@ namespace SerjBal
         private protected async Task AddNewItemButton()
         {
             var addButton = await factory.CreateAddButton(item.ContentContainer);
-            addButton.onClick.AddListener(() => viewModel.AddNewContentCommand.Execute());
+            addButton.onClick.AddListener(() => presenter.AddNewContentCommand.Execute());
         }
 
         private protected async Task AddContent()

@@ -34,11 +34,12 @@ namespace SerjBal
             var dataProvider = new DataProvider(_loaderScreen);
             _services.RegisterSingle<IDataProvider>(dataProvider);
             _services.RegisterSingle<ISearchingEngine>(new SearchingEngine(dataProvider));
-            _services.RegisterSingle<IPostIndication>(new PostIndication(dataProvider));
+            _services.RegisterSingle<IPostIndicator>(new Indication.PostIndicator(dataProvider));
             _services.RegisterSingle<ITemplatesProvider>(new TemplatesProvider(dataProvider));
             _services.RegisterSingle<IAssetsProvider>(new AssetProvider());
             _services.RegisterSingle<IWindowsFactory>(new WindowsFactory(_services.Single<IAssetsProvider>()));
             _services.RegisterSingle<IMenuFactory>(new MenuFactory(_services, _configurations));
+            _services.RegisterSingle<ISettingsProvider>(new SettingsProvider(dataProvider));
             _services.RegisterSingle<IGUI>(new GUI());
 
             _services.Single<IAssetsProvider>().Initialize();

@@ -52,7 +52,7 @@ namespace SerjBal
             var options = new List<TMP_Dropdown.OptionData>();
             
             for (int i = 0; i < 12; i++) 
-                options.Add(new TMP_Dropdown.OptionData { text = Const.monthEnglish[i] });
+                options.Add(new TMP_Dropdown.OptionData { text = Const.MonthEnglishNames[i] });
             return options;
         }
         

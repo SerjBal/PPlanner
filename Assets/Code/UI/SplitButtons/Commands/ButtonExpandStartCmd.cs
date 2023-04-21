@@ -2,18 +2,18 @@ namespace SerjBal
 {
     public class ButtonExpandStartCmd : ICommand
     {
-        private readonly ButtonViewModel _viewModel;
+        private readonly SplitButtonPresenter _presenter;
 
-        public ButtonExpandStartCmd(ButtonViewModel viewModel)
+        public ButtonExpandStartCmd(SplitButtonPresenter presenter)
         {
-            _viewModel = viewModel;
+            _presenter = presenter;
         }
 
         public void Execute(object param = null)
         {
-            _viewModel.ContentUpdateCommand?.Execute();
-            _viewModel.ContentContainer.gameObject.SetActive(true);
-            _viewModel.IsOverrideSorting = true;
+            _presenter.ContentUpdateCommand?.Execute();
+            _presenter.ContentContainer.gameObject.SetActive(true);
+            _presenter.IsOverrideSorting = true;
         }
     }
 }

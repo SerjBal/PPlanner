@@ -2,17 +2,17 @@ namespace SerjBal
 {
     public class ButtonCollapseStartCmd : ICommand
     {
-        private readonly ButtonViewModel _viewModel;
+        private readonly SplitButtonPresenter _presenter;
 
-        public ButtonCollapseStartCmd(ButtonViewModel viewModel)
+        public ButtonCollapseStartCmd(SplitButtonPresenter presenter)
         {
-            _viewModel = viewModel;
+            _presenter = presenter;
         }
 
         public void Execute(object param = null)
         {
-            if (_viewModel.IsSelected)
-                foreach (ButtonViewModel child in _viewModel.ChildList)
+            if (_presenter.IsSelected)
+                foreach (SplitButtonPresenter child in _presenter.ChildList)
                     if (child.IsSelected)
                         child.PushButton();
         }

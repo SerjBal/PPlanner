@@ -6,10 +6,10 @@ namespace SerjBal
     {
         public override void Initialize(IHierarchical splitButton, Services services, WindowView view)
         {
-            CheckCmd = new ButtonCheckNameCmd(this, splitButton.ContentPath);
+            CheckCmd = new ItemCheckNameCmd(this, splitButton.ContentPath);
             СonfirmCmd = new WarningWindowCreateCmd<ConfirmWindow>(this, services);
             AcceptCmd = new TimeCreateCmd(this, services, splitButton);
-            FormatCmd = new TimeFormatCmd(this);
+            FormatCmd = new TimeFormatCmd(this, view.inputField);
 
             SortingOrder = Const.MenuWindowSortingOrder;
             HeaderText = Const.NewTimeWindowFormatText;

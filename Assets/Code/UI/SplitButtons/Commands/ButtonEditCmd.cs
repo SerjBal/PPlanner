@@ -1,6 +1,6 @@
 namespace SerjBal
 {
-    public class ButtonEditCmd<T> : ICommand where T : IWindowViewModel, new()
+    public class ButtonEditCmd<T> : ICommand where T : IWindowPresenter, new()
     {
         private readonly IHierarchical _buttonViewModel;
         private readonly Services _services;

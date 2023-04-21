@@ -27,7 +27,7 @@ namespace SerjBal
         {
             var currentDate = DateTime.Today;
             _services.Single<IDataProvider>().CurrentDate = currentDate;
-            _services.Single<IPostIndication>().Initialize(currentDate);
+            _services.Single<IPostIndicator>().Initialize(currentDate);
 
             var guiService = _services.Single<IGUI>();
             await guiService.Initialize(_services);

@@ -6,11 +6,11 @@ namespace SerjBal
 {
     public class ButtonCollapseEndCmd : ICommand
     {
-        private readonly ButtonViewModel _viewModel;
+        private readonly SplitButtonPresenter _presenter;
 
-        public ButtonCollapseEndCmd(ButtonViewModel viewModel)
+        public ButtonCollapseEndCmd(SplitButtonPresenter presenter)
         {
-            _viewModel = viewModel;
+            _presenter = presenter;
         }
 
         public void Execute(object param = null)
@@ -22,14 +22,14 @@ namespace SerjBal
         private void LayoutUpdate(object param)
         {
             ((Canvas)param)!.overrideSorting = false;
-            var layout = _viewModel.ContentContainer.GetComponent<VerticalLayoutGroup>();
+            var layout = _presenter.ContentContainer.GetComponent<VerticalLayoutGroup>();
             if (layout) layout.enabled = true;
         }
 
         private void ContentClear()
         {
-            _viewModel.ChildList = new List<IHierarchical>();
-            _viewModel.ContentContainer.Clear();
+            _presenter.ChildList = new List<IHierarchical>();
+            _presenter.ContentContainer.Clear();
         }
     }
 }

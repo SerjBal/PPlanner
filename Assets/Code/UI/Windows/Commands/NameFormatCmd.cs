@@ -2,12 +2,12 @@ namespace SerjBal
 {
     public class NameFormatCmd : ICommand
     {
-        private readonly IWindowViewModel _viewModel;
+        private readonly IWindowPresenter _presenter;
 
-        public NameFormatCmd(IWindowViewModel viewModel)
+        public NameFormatCmd(IWindowPresenter presenter)
         {
-            _viewModel = viewModel;
-            _viewModel.InputString = "New Channel";
+            _presenter = presenter;
+            _presenter.InputString = "New Channel";
         }
 
         public void Execute(object param = null)
@@ -17,7 +17,7 @@ namespace SerjBal
                 var value = (string)param;
                 if ( value.Length > 15) 
                     value = value.Substring(0, 15);
-                _viewModel.InputString = value;
+                _presenter.InputString = value;
             }
         }
     }

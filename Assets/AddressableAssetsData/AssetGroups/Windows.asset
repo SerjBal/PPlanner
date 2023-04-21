@@ -18,7 +18,7 @@ MonoBehaviour:
   m_GUID: d2b8b2c8e7b8943719869112476fe321
   m_SerializeEntries:
   - m_GUID: 223636f5e569440f3816f6c35b98a045
-    m_Address: warning-window
+    m_Address: warning
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 859c5b02f576a4440a3c76cbb62eb538
@@ -26,7 +26,15 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: cd39e484ce70d4722a9e8a154cb6fd00
-    m_Address: window-timeEdit
+    m_Address: timeEdit
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0b8fec3779f4c44e7b3fd662b6ed2b03
+    m_Address: colorSelector
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 832f9654feb864fe9938aea980ecf848
+    m_Address: dateEdit
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

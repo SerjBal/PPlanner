@@ -2,21 +2,21 @@ namespace SerjBal
 {
     internal class ConfirmCmd : ICommand
     {
-        private readonly IWindowViewModel _editViewModel;
+        private readonly IWindowPresenter _editPresenter;
         private readonly string _path;
-        private readonly IWindowViewModel _warningViewModel;
+        private readonly IWindowPresenter _warningPresenter;
 
-        public ConfirmCmd(IWindowViewModel warningViewModel, IWindowViewModel windowViewModel, string path)
+        public ConfirmCmd(IWindowPresenter warningPresenter, IWindowPresenter windowPresenter, string path)
         {
-            _warningViewModel = warningViewModel;
-            _editViewModel = windowViewModel;
+            _warningPresenter = warningPresenter;
+            _editPresenter = windowPresenter;
             _path = path;
         }
 
         public void Execute(object param = null)
         {
-            _editViewModel.AcceptCmd.Execute(_path);
-            _warningViewModel.OnClose.Invoke();
+            _editPresenter.AcceptCmd.Execute(_path);
+            _warningPresenter.OnClose.Invoke();
         }
     }
 }

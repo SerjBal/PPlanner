@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd1c3b793f0744fa495fa78d7c352db6, type: 3}
   m_Name: IndicatorsConfig
   m_EditorClassIdentifier: 
-  contentPostActiveColor: {r: 0.106870174, g: 1, b: 0, a: 1}
-  contentPostInactiveColor: {r: 0.7258602, g: 1, b: 0.6933962, a: 1}
-  adsPostActiveColor: {r: 1, g: 0, b: 0.71788883, a: 1}
-  adsPostInactiveColor: {r: 0.9811321, g: 0.6803133, b: 0.89619505, a: 1}
+  contentPostUndoneColor: {r: 0, g: 0.6862745, b: 0.08637089, a: 1}
+  contentPostDoneColor: {r: 0.740566, g: 1, b: 0.7731806, a: 1}
+  adsPostUndoneColor: {r: 1, g: 0.47843137, b: 0, a: 1}
+  adsPostDoneColor: {r: 1, g: 0.8253237, b: 0.6650944, a: 1}
   timeProgressBarColor: {r: 0, g: 0, b: 0, a: 1}

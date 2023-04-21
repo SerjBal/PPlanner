@@ -5,22 +5,22 @@ namespace SerjBal
         private readonly IDataProvider _data;
         private readonly ICommand _selectCommand;
         private readonly Services _services;
-        private readonly ButtonViewModel _viewModel;
+        private readonly SplitButtonPresenter _presenter;
 
         public ButtonRemoveCmd(IHierarchical viewModel, Services services)
         {
-            _viewModel = viewModel as ButtonViewModel;
+            _presenter = viewModel as SplitButtonPresenter;
             _data = services.Single<IDataProvider>();
         }
 
         public void Execute(object param = null)
         {
-            _data.DeleteDirectory(_viewModel.Path);
+            _data.DeleteDirectory(_presenter.Path);
 
-            if (_viewModel.Parent != null)
-                (_viewModel.Parent as ButtonViewModel)?.ContentUpdateCommand?.Execute();
-            else if (_viewModel.IsSelected)
-                _viewModel.PushButton();
+            if (_presenter.Parent != null)
+                (_presenter.Parent as SplitButtonPresenter)?.ContentUpdateCommand?.Execute();
+            else if (_presenter.IsSelected)
+                _presenter.PushButton();
         }
     }
 }

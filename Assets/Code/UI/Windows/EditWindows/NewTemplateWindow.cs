@@ -6,7 +6,7 @@ namespace SerjBal
     {
         public override void Initialize(IHierarchical splitButton, Services services, WindowView view)
         {
-            CheckCmd = new ButtonCheckNameCmd(this, splitButton.ContentPath);
+            CheckCmd = new ItemCheckNameCmd(this, splitButton.ContentPath);
             СonfirmCmd = new WarningWindowCreateCmd<ConfirmWindow>(this, services);
             AcceptCmd = new TemplateCreateCmd(this, services, splitButton);
             FormatCmd = new NameFormatCmd(this);

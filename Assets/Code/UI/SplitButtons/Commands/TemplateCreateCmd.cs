@@ -4,13 +4,13 @@ namespace SerjBal
 {
     public class TemplateCreateCmd : ICommand
     {
-        private readonly IWindowViewModel _newTemplateWindow;
+        private readonly IWindowPresenter _newTemplateWindow;
         private readonly IHierarchical _itemViewModel;
         private readonly ITemplatesProvider _templates;
         private readonly IDataProvider _data;
         private readonly object _viewModel;
 
-        public TemplateCreateCmd(IWindowViewModel newTemplateWindow, Services services, IHierarchical itemViewModel)
+        public TemplateCreateCmd(IWindowPresenter newTemplateWindow, Services services, IHierarchical itemViewModel)
         {
             _newTemplateWindow = newTemplateWindow;
             _itemViewModel = itemViewModel;
@@ -21,7 +21,7 @@ namespace SerjBal
         public void Execute(object param = null)
         {
             _templates.Create(_newTemplateWindow.InputString);
-            (_itemViewModel as ButtonViewModel)?.ContentUpdateCommand?.Execute();
+            (_itemViewModel as SplitButtonPresenter)?.ContentUpdateCommand?.Execute();
             _newTemplateWindow.OnClose.Invoke();
         }
     }

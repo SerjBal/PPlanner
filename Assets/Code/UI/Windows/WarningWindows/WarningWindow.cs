@@ -4,7 +4,7 @@ using TMPro;
 
 namespace SerjBal
 {
-    public abstract class WarningWindow : IWindowViewModel
+    public abstract class WarningWindow : IWindowPresenter
     {
         private string _inputString;
         public ICommand FormatCmd { get; set; }
@@ -35,7 +35,7 @@ namespace SerjBal
         public Action<int> OnCanvasChanged { get; set; }
         public Action<string> OnInputChanged { get; set; }
 
-        public abstract void Initialize(IWindowViewModel window, string path, WindowView view);
+        public abstract void Initialize(IWindowPresenter window, string path, WindowView view);
         private protected void InitializeView(WindowView view)
         {
             view.formatText.text = HeaderText;

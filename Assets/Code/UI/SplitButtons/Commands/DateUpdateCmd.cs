@@ -19,7 +19,7 @@ namespace SerjBal
         private async Task AddCommentsButton()
         {
             string path = Path.Combine(item.Path, Const.CommentsName);
-            item.ChildList.Add(await factory.CreateButton<CommentButton>(Const.CommentsButtonPath, item, path));   
+            item.ChildList.Add(await factory.CreateButton<CommentSplitButton>(Const.CommentsButtonPath, item, path));   
         }
     }
 }

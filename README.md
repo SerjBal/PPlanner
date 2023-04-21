@@ -1,5 +1,5 @@
 # PPlanner
-v. 0.41
+v. 0.42
 
 ## Introduction
 This Unity project showcases the implementation of OOP design patterns, code readability and the Unity engine's features like UI, addressables, and also working with a files, dirictories, strings and async methods in the Unity context without any external assets.

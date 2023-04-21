@@ -4,10 +4,10 @@ namespace SerjBal
 {
     public class TimeOverrideCmd : ButtonOverrideCmd
     {
-        private readonly IPostIndication _indication;
+        private readonly IPostIndicator _indicator;
 
-        public TimeOverrideCmd(IWindowViewModel viewModel, Services services, IHierarchical itemViewModel)
-            : base(viewModel, services, itemViewModel) => _indication = services.Single<IPostIndication>();
+        public TimeOverrideCmd(IWindowPresenter presenter, Services services, IHierarchical itemViewModel)
+            : base(presenter, services, itemViewModel) => _indicator = services.Single<IPostIndicator>();
 
         public override void Execute(object param = null)
         {
@@ -18,8 +18,8 @@ namespace SerjBal
         private void SavePostType()
         {
             var path = GetNewPath();
-            var postType = (viewModel as EditTimeWindow)?.TypeOfPost;
-            _indication.SavePostType(path, postType ?? PostType.Content);
+            var postType = (presenter as EditTimeWindow)?.TypeOfPost;
+            _indicator.SavePostType(path, postType ?? PostType.Content);
         }
     }
 }

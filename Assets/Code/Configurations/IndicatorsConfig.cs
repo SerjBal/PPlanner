@@ -7,10 +7,10 @@ namespace SerjBal
     [CreateAssetMenu(fileName = "IndicatorsConfig")]
     public class IndicatorsConfig : ScriptableObject
     {
-        public Color contentPostActiveColor;
-        public Color contentPostInactiveColor;
-        public Color adsPostActiveColor;
-        public Color adsPostInactiveColor;
+        public Color contentPostUndoneColor;
+        public Color contentPostDoneColor;
+        public Color adsPostUndoneColor;
+        public Color adsPostDoneColor;
         public Color timeProgressBarColor;
     }
 }

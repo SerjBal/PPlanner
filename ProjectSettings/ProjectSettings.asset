@@ -157,7 +157,7 @@ PlayerSettings:
   applicationIdentifier:
     Android: com.DefaultCompany.PostNavigator
     Standalone: com.Sergei-Baluberdin.PPlanner
-    iPhone: com.Sergei-Baluberdin.PPlanner
+    iPhone: com.com.Sergei-Balyberdin.PPlanner
   buildNumber:
     Standalone: 0
     iPhone: 0

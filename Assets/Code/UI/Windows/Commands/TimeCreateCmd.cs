@@ -7,12 +7,12 @@ namespace SerjBal
     {
         private readonly IDataProvider _dataProvider;
         private readonly IHierarchical _itemViewModel;
-        private readonly IWindowViewModel _viewModel;
-        private readonly IPostIndication _indication;
+        private readonly IWindowPresenter _presenter;
+        private readonly IPostIndicator _indicator;
 
-        public TimeCreateCmd(IWindowViewModel viewModel, Services services, IHierarchical itemViewModel)
-            : base(viewModel, services, itemViewModel) =>
-            _indication = services.Single<IPostIndication>();
+        public TimeCreateCmd(IWindowPresenter presenter, Services services, IHierarchical itemViewModel)
+            : base(presenter, services, itemViewModel) =>
+            _indicator = services.Single<IPostIndicator>();
 
         public override void Execute(object param = null)
         {
@@ -22,8 +22,8 @@ namespace SerjBal
         private void SavePostType(string newItem)
         {
             var newPath = Path.Combine(itemViewModel.ContentPath, newItem);
-            var postType = (viewModel as EditTimeWindow)?.TypeOfPost;
-            _indication.SavePostType(newPath, postType ?? PostType.Content);
+            var postType = (presenter as EditTimeWindow)?.TypeOfPost;
+            _indicator.SavePostType(newPath, postType ?? PostType.Content);
         }
     }
 }

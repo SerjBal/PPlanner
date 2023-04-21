@@ -31,43 +31,5 @@ namespace SerjBal
             var split = time.Split(':');
             return int.Parse(split[0]) * 60 + int.Parse(split[1]);
         }
-        
-        public static void CommandExecute(this ButtonViewModel button, CommandType commandType, Object param = null)
-        {
-            switch (commandType)
-            {
-                case CommandType.Remove:
-                    button.RemoveCommand?.Execute(param);
-                    break;
-                case CommandType.Edit:
-                    button.EditCommand?.Execute(param);
-                    break;
-                case CommandType.UpdateContent:
-                    button.ContentUpdateCommand?.Execute(param);
-                    break;
-                case CommandType.AddNewContent:
-                    button.AddNewContentCommand?.Execute(param);
-                    break;
-                case CommandType.CollapseEnd:
-                    button.CollapseEndCommand?.Execute(param);
-                    break;
-                case CommandType.CollapseStart:
-                    button.CollapseStartCommand?.Execute(param);
-                    break;
-                case CommandType.ExpandEnd:
-                    button.ExpandEndCommand?.Execute(param);
-                    break;
-                case CommandType.ExpandStart:
-                    button.ExpandStartCommand?.Execute(param);
-                    break;
-                default:
-                    Debug.LogError("Unknown command");
-                    break;
-            }
-        }
-    }
-    public enum CommandType
-    {
-        Remove, Edit, UpdateContent, AddNewContent, CollapseEnd, CollapseStart, ExpandEnd, ExpandStart
     }
 }

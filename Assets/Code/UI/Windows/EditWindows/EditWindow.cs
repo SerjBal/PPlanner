@@ -3,7 +3,7 @@ using SerjBal.Windows;
 
 namespace SerjBal
 {
-    public abstract class EditWindow : IWindowViewModel
+    public abstract class EditWindow : IWindowPresenter
     {
         public ICommand FormatCmd { get; set; }
         public ICommand CheckCmd { get; set; }

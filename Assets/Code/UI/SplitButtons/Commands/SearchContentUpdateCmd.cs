@@ -7,12 +7,12 @@ namespace SerjBal
     {
         private readonly IMenuFactory _menuFactory;
         private readonly ISearchingEngine _searchEngine;
-        private readonly ButtonViewModel _viewModel;
+        private readonly SplitButtonPresenter _presenter;
         private readonly IHierarchical _item;
 
         public SearchContentUpdateCmd(IHierarchical item, Services services)
         {
-            _viewModel = item as ButtonViewModel;
+            _presenter = item as SplitButtonPresenter;
             _item = item;
             _searchEngine = services.Single<ISearchingEngine>();
             _menuFactory = services.Single<IMenuFactory>();
@@ -28,7 +28,7 @@ namespace SerjBal
             foreach (var result in content) 
                 _item.ChildList.Add(await _menuFactory.CreateSearchResultButton(_item, result.Key));
 
-            _viewModel.ExpandEndCommand?.Execute();
+            _presenter.ExpandEndCommand?.Execute();
         }
     }
 }

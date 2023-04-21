@@ -1,13 +1,13 @@
 namespace SerjBal
 {
-    public class DateCheckNameCmd : ButtonCheckNameCmd
+    public class DateCheckNameCmd : ItemCheckNameCmd
     {
         private EditDateWindow _viewModel;
         private readonly IDataProvider _data;
 
-        public DateCheckNameCmd(IWindowViewModel viewModel, string parentPath, Services services) : base(viewModel, parentPath)
+        public DateCheckNameCmd(IWindowPresenter presenter, string parentPath, Services services) : base(presenter, parentPath)
         {
-            _viewModel = viewModel as EditDateWindow;
+            _viewModel = presenter as EditDateWindow;
             _data = services.Single<IDataProvider>();
         }
 

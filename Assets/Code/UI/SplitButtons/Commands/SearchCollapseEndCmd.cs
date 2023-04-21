@@ -2,18 +2,18 @@ namespace SerjBal
 {
     public class SearchCollapseEndCmd : ICommand
     {
-        private readonly ButtonViewModel _viewModel;
+        private readonly SplitButtonPresenter _presenter;
 
-        public SearchCollapseEndCmd(ButtonViewModel viewModel)
+        public SearchCollapseEndCmd(SplitButtonPresenter presenter)
         {
-            _viewModel = viewModel;
+            _presenter = presenter;
         }
 
         public void Execute(object param = null)
         {
-            _viewModel.ContentContainer.Clear();
-            _viewModel.ContentContainer.gameObject.SetActive(false);
-            _viewModel.IsOverrideSorting = false;
+            _presenter.ContentContainer.Clear();
+            _presenter.ContentContainer.gameObject.SetActive(false);
+            _presenter.IsOverrideSorting = false;
         }
     }
 }

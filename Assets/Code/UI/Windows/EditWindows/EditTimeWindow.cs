@@ -7,16 +7,17 @@ namespace SerjBal
     {
         public override void Initialize(IHierarchical splitButton, Services services, WindowView view)
         {
-            CheckCmd = new ButtonCheckNameCmd(this, splitButton.Parent.ContentPath);
+            CheckCmd = new ItemCheckNameCmd(this, splitButton.Parent.ContentPath);
             СonfirmCmd = new WarningWindowCreateCmd<ConfirmWindow>(this, services);
             AcceptCmd = new TimeOverrideCmd(this, services, splitButton);
-            FormatCmd = new TimeFormatCmd(this);
+            FormatCmd = new TimeFormatCmd(this, view.inputField);
 
             SortingOrder = Const.MenuWindowSortingOrder;
             HeaderText = Const.EditTimeWindowFormatText;
             AcceptButtonText = Const.EditWindowButtonText;
             
             InputString = Path.GetFileName(splitButton.Path);
+           
             InitializeView(view);
             InitializeTimeEditView(view);
         }
